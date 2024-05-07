@@ -1,0 +1,6 @@
+@SnackHub_Poc_HostAddress = http://localhost:5224
+
+GET {{SnackHub_Poc_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
