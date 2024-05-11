@@ -8,7 +8,7 @@ namespace SnackHub.Application.UseCases
     {
         public void Execute(RegisterClientRequest registerClientRequest)
         {
-            var client = new Client() { Name = registerClientRequest.Name };
+            var client = new Client(registerClientRequest.Name);
             clientRepository.Add(client);
         }
     }
