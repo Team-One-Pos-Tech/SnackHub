@@ -1,7 +1,15 @@
-﻿namespace SnackHub.Domain.Entities
+﻿using SnackHub.Domain.Base;
+
+namespace SnackHub.Domain.Entities
 {
-    public class Client
+    public class Client : IAggregateRoot
     {
-        public string Name { get; set; }
+        public Client(string name)
+        {
+            Name = name;
+        }
+
+        public string Name { get; private set; }
+
     }
 }
