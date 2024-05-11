@@ -1,12 +1,4 @@
-﻿namespace SnackHub.Domain.Tests
+﻿namespace SnackHub.Application.Tests
 {
-    internal class RegisterClientRequest
-    {
-        public RegisterClientRequest()
-        {
-        }
-
-        public string Name { get; set; }
-        public string CPF { get; set; }
-    }
+    public record RegisterClientRequest(string Name);
 }

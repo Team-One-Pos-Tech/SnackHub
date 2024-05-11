@@ -1,4 +1,5 @@
 using Moq;
+using SnackHub.Application.Tests;
 
 namespace SnackHub.Domain.Tests
 {
@@ -13,10 +14,7 @@ namespace SnackHub.Domain.Tests
         public void Register_With_Name()
         {
             // Arrange
-            var registerClientRequest = new RegisterClientRequest()
-            {
-                Name = "Ednaldo"
-            };
+            var registerClientRequest = new RegisterClientRequest(Name: "John Doe");
 
             var mockClientRepository = new Mock<IClientRepository>();
 

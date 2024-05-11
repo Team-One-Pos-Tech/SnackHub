@@ -1,15 +1,14 @@
 ﻿
+using SnackHub.Application.Tests;
+
 namespace SnackHub.Domain.Tests
 {
-    internal class RegisterClientCase
+    public class RegisterClientCase(IClientRepository clientRepository)
     {
-        public RegisterClientCase(IClientRepository @object)
+        public void Execute(RegisterClientRequest registerClientRequest)
         {
-        }
-
-        internal void Execute(RegisterClientRequest registerClientRequest)
-        {
-            throw new NotImplementedException();
+            var client = new Client() { Name = registerClientRequest.Name };
+            clientRepository.Add(client);
         }
     }
 }
