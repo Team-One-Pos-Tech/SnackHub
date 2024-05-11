@@ -1,8 +1,7 @@
 ﻿namespace SnackHub.Domain.Entities
 {
-    public class Client(string name, string cPF)
+    public class Client
     {
-        public string Name { get; set; } = name;
-        public string CPF { get; set; } = cPF;
+        public string Name { get; set; }
     }
 }

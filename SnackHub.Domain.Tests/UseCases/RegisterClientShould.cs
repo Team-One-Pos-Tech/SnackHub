@@ -1,7 +1,10 @@
 using Moq;
-using SnackHub.Application.Tests;
+using SnackHub.Application.Adapters;
+using SnackHub.Application.Models;
+using SnackHub.Application.UseCases;
+using SnackHub.Domain.Entities;
 
-namespace SnackHub.Domain.Tests
+namespace SnackHub.Application.Tests.UseCases
 {
     public class RegisterClientShould
     {
@@ -26,7 +29,7 @@ namespace SnackHub.Domain.Tests
             // Assert
             mockClientRepository
                 .Verify(repository => repository
-                    .Add(It.Is<Client>(client => client.Name == registerClientRequest.Name)), 
+                    .Add(It.Is<Client>(client => client.Name == registerClientRequest.Name)),
                         Times.Once);
 
         }

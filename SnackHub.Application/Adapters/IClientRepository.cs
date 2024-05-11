@@ -1,4 +1,6 @@
-﻿namespace SnackHub.Domain.Tests
+﻿using SnackHub.Domain.Entities;
+
+namespace SnackHub.Application.Adapters
 {
     public interface IClientRepository
     {
