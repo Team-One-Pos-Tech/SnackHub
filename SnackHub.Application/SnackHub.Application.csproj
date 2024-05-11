@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SnackHub.Api\SnackHub.Domain.csproj" />
+    <ProjectReference Include="..\SnackHub.Domain\SnackHub.Domain.csproj" />
   </ItemGroup>
 
 </Project>
