@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>SnackHub_Poc</RootNamespace>
+    <RootNamespace>SnackHub</RootNamespace>
     <UserSecretsId>e87b634e-cabe-4a5c-8e9b-9bfea7181565</UserSecretsId>
     <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
   </PropertyGroup>
