@@ -17,7 +17,7 @@ namespace SnackHub.Application.Tests.UseCases
         public void Register_With_Name()
         {
             // Arrange
-            var registerClientRequest = new RegisterClientRequest(Name: "John Doe");
+            var registerClientRequest = new RegisterClientRequest(Name: "John Doe", CPF: "000.555.414-44");
 
             var mockClientRepository = new Mock<IClientRepository>();
 
@@ -30,6 +30,27 @@ namespace SnackHub.Application.Tests.UseCases
             mockClientRepository
                 .Verify(repository => repository
                     .Add(It.Is<Client>(client => client.Name == registerClientRequest.Name)),
+                        Times.Once);
+
+        }
+
+        [Test]
+        public void Register_With_CPF()
+        {
+            // Arrange
+            var registerClientRequest = new RegisterClientRequest(Name: "John Doe", CPF: "000.555.414-44");
+
+            var mockClientRepository = new Mock<IClientRepository>();
+
+            var registerClientCase = new RegisterClientCase(mockClientRepository.Object);
+
+            // Act
+            registerClientCase.Execute(registerClientRequest);
+
+            // Assert
+            mockClientRepository
+                .Verify(repository => repository
+                    .Add(It.Is<Client>(client => client.CPF == registerClientRequest.CPF)),
                         Times.Once);
 
         }
