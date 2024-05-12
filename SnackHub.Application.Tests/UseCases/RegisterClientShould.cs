@@ -3,6 +3,7 @@ using SnackHub.Application.Models;
 using SnackHub.Application.UseCases;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Entities;
+using SnackHub.Domain.ValueObjects;
 
 namespace SnackHub.Application.Tests.UseCases
 {
@@ -48,9 +49,11 @@ namespace SnackHub.Application.Tests.UseCases
             registerClientCase.Execute(registerClientRequest);
 
             // Assert
+            var expectedCpf = new CPF(registerClientRequest.CPF);
+
             mockClientRepository
                 .Verify(repository => repository
-                    .Add(It.Is<Client>(client => client.CPF == registerClientRequest.CPF)),
+                    .Add(It.Is<Client>(client => client.CPF.Equals(expectedCpf))),
                         Times.Once);
 
         }
@@ -69,7 +72,6 @@ namespace SnackHub.Application.Tests.UseCases
             var response = registerClientCase.Execute(registerClientRequest);
 
             // Assert
-
             response.IsValid.Equals(false);
 
             mockClientRepository
