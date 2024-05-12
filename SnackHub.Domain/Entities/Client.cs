@@ -5,11 +5,14 @@ namespace SnackHub.Domain.Entities
 {
     public class Client : IAggregateRoot
     {
-        public Client(string name, CPF cPF)
+        public Client(Guid id, string name, CPF cPF)
         {
+            Id = id;
             Name = name;
             CPF = cPF;
         }
+
+        public Guid Id { get; private set; }
 
         public string Name { get; private set; }
 

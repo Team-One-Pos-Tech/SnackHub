@@ -28,6 +28,7 @@ namespace SnackHub.Application.UseCases
         private static Client CreateClient(RegisterClientRequest registerClientRequest)
         {
             return new Client(
+                Guid.NewGuid(),
                 registerClientRequest.Name,
                 new CPF(registerClientRequest.CPF)
             );
