@@ -3,8 +3,9 @@ using SnackHub.Application.Contracts;
 using SnackHub.Application.Models;
 using SnackHub.Application.UseCases;
 using SnackHub.Domain.Contracts;
+using SnackHub.Infra.Repositories;
 
-namespace SnackHub_Poc.Controllers
+namespace SnackHub.Controllers
 {
     [ApiController]
     [Route("[controller]")]

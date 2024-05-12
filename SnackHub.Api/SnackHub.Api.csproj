@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SnackHub.Application\SnackHub.Application.csproj" />
+    <ProjectReference Include="..\SnackHub.Infra\SnackHub.Infra.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 using SnackHub.Domain.Entities;
 using SnackHub.Domain.ValueObjects;
 
-namespace SnackHub_Poc.Controllers
+namespace SnackHub.Infra.Repositories
 {
     public class ClientRepository : IClientRepository
     {
@@ -12,8 +12,7 @@ namespace SnackHub_Poc.Controllers
             new Client(new Guid("21b394fc-ee9a-4dbd-8eef-407139468657"), "Jane Doe", new CPF("078.607.110-95"))
         };
 
-
-        public ClientRepository() 
+        public ClientRepository()
         {
         }
 
