@@ -1,9 +1,10 @@
-﻿using SnackHub.Application.Models;
+﻿using SnackHub.Application.Contracts;
+using SnackHub.Application.Models;
 using SnackHub.Domain.Contracts;
 
 namespace SnackHub.Application.UseCases
 {
-    public class GetClientUseCase(IClientRepository clientRepository)
+    public class GetClientUseCase(IClientRepository clientRepository) : IGetClientUseCase
     {
         public GetClientResponse Execute(Guid id)
         {
