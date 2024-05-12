@@ -24,7 +24,7 @@ namespace SnackHub.Application.Tests.UseCases
 
             var id = Guid.NewGuid();
 
-            var clientMock = new Client("Ednaldo Pereira", new CPF("728.607.630-23"));
+            var clientMock = new Client(id, "Ednaldo Pereira", new CPF("728.607.630-23"));
 
             mockClientRepository.Setup(repository => repository.Get(It.IsAny<Guid>()))
                 .Returns(clientMock);
