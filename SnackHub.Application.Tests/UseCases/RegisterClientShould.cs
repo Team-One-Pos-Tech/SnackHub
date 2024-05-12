@@ -6,7 +6,7 @@ using SnackHub.Domain.Entities;
 
 namespace SnackHub.Application.Tests.UseCases
 {
-    public class RegisterShould
+    public class RegisterClientShould
     {
         [SetUp]
         public void Setup()
@@ -14,14 +14,14 @@ namespace SnackHub.Application.Tests.UseCases
         }
 
         [Test]
-        public void Register_Client_With_Name()
+        public void Register_With_Name()
         {
             // Arrange
-            var registerClientRequest = new RegisterRequest(Name: "John Doe", CPF: "000.555.414-44");
+            var registerClientRequest = new RegisterClientRequest(Name: "John Doe", CPF: "000.555.414-44");
 
             var mockClientRepository = new Mock<IClientRepository>();
 
-            var registerClientCase = new RegisterUseCase(mockClientRepository.Object);
+            var registerClientCase = new RegisterClientUseCase(mockClientRepository.Object);
 
             // Act
             registerClientCase.Execute(registerClientRequest);
@@ -35,14 +35,14 @@ namespace SnackHub.Application.Tests.UseCases
         }
 
         [Test]
-        public void Register_Client_With_CPF()
+        public void Register_With_CPF()
         {
             // Arrange
-            var registerClientRequest = new RegisterRequest(Name: "John Doe", CPF: "000.555.414-44");
+            var registerClientRequest = new RegisterClientRequest(Name: "John Doe", CPF: "000.555.414-44");
 
             var mockClientRepository = new Mock<IClientRepository>();
 
-            var registerClientCase = new RegisterUseCase(mockClientRepository.Object);
+            var registerClientCase = new RegisterClientUseCase(mockClientRepository.Object);
 
             // Act
             registerClientCase.Execute(registerClientRequest);

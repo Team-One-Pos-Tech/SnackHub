@@ -4,9 +4,9 @@ using SnackHub.Domain.Entities;
 
 namespace SnackHub.Application.UseCases
 {
-    public class RegisterUseCase(IClientRepository clientRepository)
+    public class RegisterClientUseCase(IClientRepository clientRepository)
     {
-        public void Execute(RegisterRequest registerClientRequest)
+        public void Execute(RegisterClientRequest registerClientRequest)
         {
             var client = new Client(registerClientRequest.Name, registerClientRequest.CPF);
             clientRepository.Add(client);
