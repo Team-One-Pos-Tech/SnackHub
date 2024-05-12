@@ -17,11 +17,11 @@ namespace SnackHub.Application.Tests.UseCases
         public void Register_With_Name()
         {
             // Arrange
-            var registerClientRequest = new RegisterClientRequest(Name: "John Doe", CPF: "000.555.414-44");
+            var registerClientRequest = new RegisterRequest(Name: "John Doe", CPF: "000.555.414-44");
 
             var mockClientRepository = new Mock<IClientRepository>();
 
-            var registerClientCase = new RegisterClientCase(mockClientRepository.Object);
+            var registerClientCase = new RegisterUseCase(mockClientRepository.Object);
 
             // Act
             registerClientCase.Execute(registerClientRequest);
@@ -38,11 +38,11 @@ namespace SnackHub.Application.Tests.UseCases
         public void Register_With_CPF()
         {
             // Arrange
-            var registerClientRequest = new RegisterClientRequest(Name: "John Doe", CPF: "000.555.414-44");
+            var registerClientRequest = new RegisterRequest(Name: "John Doe", CPF: "000.555.414-44");
 
             var mockClientRepository = new Mock<IClientRepository>();
 
-            var registerClientCase = new RegisterClientCase(mockClientRepository.Object);
+            var registerClientCase = new RegisterUseCase(mockClientRepository.Object);
 
             // Act
             registerClientCase.Execute(registerClientRequest);
