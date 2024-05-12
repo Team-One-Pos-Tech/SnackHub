@@ -6,10 +6,12 @@ namespace SnackHub.Application.UseCases
 {
     public class RegisterClientUseCase(IClientRepository clientRepository)
     {
-        public void Execute(RegisterClientRequest registerClientRequest)
+        public RegisterClientResponse Execute(RegisterClientRequest registerClientRequest)
         {
             var client = new Client(registerClientRequest.Name, registerClientRequest.CPF);
             clientRepository.Add(client);
+
+            return new RegisterClientResponse(IsValid: true);
         }
     }
 }

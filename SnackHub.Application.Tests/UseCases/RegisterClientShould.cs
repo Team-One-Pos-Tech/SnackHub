@@ -54,5 +54,28 @@ namespace SnackHub.Application.Tests.UseCases
                         Times.Once);
 
         }
+
+        [Test]
+        public void Validate_Invalid_CPF()
+        {
+            // Arrange
+            var registerClientRequest = new RegisterClientRequest(Name: "John Doe", CPF: "000.555.414-44");
+
+            var mockClientRepository = new Mock<IClientRepository>();
+
+            var registerClientCase = new RegisterClientUseCase(mockClientRepository.Object);
+
+            // Act
+            var response = registerClientCase.Execute(registerClientRequest);
+
+            // Assert
+
+            response.IsValid.Equals(false);
+
+            mockClientRepository
+                .Verify(repository => repository
+                    .Add(It.IsAny<Client>()), Times.Never);
+
+        }
     }
 }
