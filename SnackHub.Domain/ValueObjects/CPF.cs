@@ -13,8 +13,9 @@ namespace SnackHub.Domain.ValueObjects
         }
 
         // fonte: https://www.macoratti.net/11/09/c_val1.htm
-        public static bool IsValid(string cpf)
+        public bool IsValid()
         {
+            var cpf = Value;
             int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             int[] multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             string tempCpf;

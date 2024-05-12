@@ -11,13 +11,13 @@ namespace SnackHub.Application.UseCases
         {
             var response = new RegisterClientResponse(IsValid: true);
 
-            if (!CPF.IsValid(registerClientRequest.CPF))
+            var client = CreateClient(registerClientRequest);
+
+            if (!client.CPF.IsValid())
             {
                 response.IsValid = false;
                 return response;
             }
-
-            var client = CreateClient(registerClientRequest);
 
             clientRepository.Add(client);
 
