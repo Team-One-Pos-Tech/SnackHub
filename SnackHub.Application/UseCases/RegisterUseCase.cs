@@ -1,5 +1,5 @@
-﻿using SnackHub.Application.Adapters;
-using SnackHub.Application.Models;
+﻿using SnackHub.Application.Models;
+using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Entities;
 
 namespace SnackHub.Application.UseCases

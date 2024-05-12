@@ -1,6 +1,6 @@
 ﻿using SnackHub.Domain.Entities;
 
-namespace SnackHub.Application.Adapters
+namespace SnackHub.Domain.Contracts
 {
     public interface IClientRepository
     {

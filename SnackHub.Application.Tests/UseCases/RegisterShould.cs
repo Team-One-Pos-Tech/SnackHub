@@ -1,12 +1,12 @@
 using Moq;
-using SnackHub.Application.Adapters;
 using SnackHub.Application.Models;
 using SnackHub.Application.UseCases;
+using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Entities;
 
 namespace SnackHub.Application.Tests.UseCases
 {
-    public class RegisterClientShould
+    public class RegisterShould
     {
         [SetUp]
         public void Setup()
@@ -14,7 +14,7 @@ namespace SnackHub.Application.Tests.UseCases
         }
 
         [Test]
-        public void Register_With_Name()
+        public void Register_Client_With_Name()
         {
             // Arrange
             var registerClientRequest = new RegisterRequest(Name: "John Doe", CPF: "000.555.414-44");
@@ -35,7 +35,7 @@ namespace SnackHub.Application.Tests.UseCases
         }
 
         [Test]
-        public void Register_With_CPF()
+        public void Register_Client_With_CPF()
         {
             // Arrange
             var registerClientRequest = new RegisterRequest(Name: "John Doe", CPF: "000.555.414-44");

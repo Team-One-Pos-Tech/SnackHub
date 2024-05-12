@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ValueObjects\" />
+    <Compile Remove="ValueObjects\**" />
+    <EmbeddedResource Remove="ValueObjects\**" />
+    <None Remove="ValueObjects\**" />
   </ItemGroup>
 
 </Project>
