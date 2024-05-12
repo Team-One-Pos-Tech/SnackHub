@@ -17,11 +17,19 @@ namespace SnackHub.Application.UseCases
                 return response;
             }
 
-            var client = new Client(registerClientRequest.Name, new CPF(registerClientRequest.CPF));
+            var client = CreateClient(registerClientRequest);
+
             clientRepository.Add(client);
 
             return response;
         }
 
+        private static Client CreateClient(RegisterClientRequest registerClientRequest)
+        {
+            return new Client(
+                registerClientRequest.Name, 
+                new CPF(registerClientRequest.CPF)
+            );
+        }
     }
 }
