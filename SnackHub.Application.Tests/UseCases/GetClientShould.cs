@@ -18,9 +18,11 @@ namespace SnackHub.Application.Tests.UseCases
         public void Get()
         {
             // Arrange
-            var getClientUseCase = new GetClientUseCase();
-
             var mockClientRepository = new Mock<IClientRepository>();
+
+            var getClientUseCase = new GetClientUseCase(mockClientRepository.Object);
+
+            var id = Guid.NewGuid();
 
             var clientMock = new Client("Ednaldo Pereira", new CPF("728.607.630-23"));
 
@@ -28,7 +30,7 @@ namespace SnackHub.Application.Tests.UseCases
                 .Returns(clientMock);
 
             // Act
-            var response = getClientUseCase.Execute();
+            var response = getClientUseCase.Execute(id);
 
             // Assert
             response.Should().NotBeNull(); 

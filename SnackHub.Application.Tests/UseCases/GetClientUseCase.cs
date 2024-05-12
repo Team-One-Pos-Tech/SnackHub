@@ -1,15 +1,15 @@
 ﻿
+using SnackHub.Domain.Contracts;
+
 namespace SnackHub.Application.Tests.UseCases
 {
-    internal class GetClientUseCase
+    internal class GetClientUseCase(IClientRepository clientRepository)
     {
-        public GetClientUseCase()
+        internal GetClientResponse Execute(Guid id)
         {
-        }
+            var client = clientRepository.Get(id);
 
-        internal GetClientResponse Execute()
-        {
-            throw new NotImplementedException();
+            return new GetClientResponse(client.Name, client.CPF);
         }
     }
 }

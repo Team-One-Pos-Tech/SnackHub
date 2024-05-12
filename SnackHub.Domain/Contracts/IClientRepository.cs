@@ -6,6 +6,6 @@ namespace SnackHub.Domain.Contracts
     {
         void Add(Client client);
 
-        object Get(Guid id);
+        Client Get(Guid id);
     }
 }
