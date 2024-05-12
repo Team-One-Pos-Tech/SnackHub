@@ -1,9 +1,9 @@
 using FluentAssertions;
 using Moq;
+using SnackHub.Application.UseCases;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Entities;
 using SnackHub.Domain.ValueObjects;
-using System.Xml.Linq;
 
 namespace SnackHub.Application.Tests.UseCases
 {
