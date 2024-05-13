@@ -13,17 +13,22 @@ namespace SnackHub.Application.UseCases
             var cpf = new CPF(registerClientRequest.CPF);
 
             if (!cpf.IsValid())
-            {
-                return new RegisterClientResponse(isValid: false);
-            }
+                return new RegisterClientResponse { IsValid = false };
 
             var client = CreateClient(registerClientRequest);
 
             clientRepository.Add(client);
 
-            var response = new RegisterClientResponse(isValid: true);
-            response.Id = client.Id;
-            return response;
+            return CreateResponse(client);
+        }
+
+        private static RegisterClientResponse CreateResponse(Client client)
+        {
+            return new RegisterClientResponse 
+            {
+                Id = client.Id,
+                IsValid = true
+            };
         }
 
         private static Client CreateClient(RegisterClientRequest registerClientRequest)
