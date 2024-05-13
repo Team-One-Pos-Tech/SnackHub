@@ -1,7 +1,9 @@
 ﻿namespace SnackHub.Application.Models
 {
-    public class RegisterClientResponse(bool IsValid)
+    public class RegisterClientResponse(bool isValid)
     {
-        public bool IsValid { get; set; } = IsValid;
+        public Guid? Id { get; set; }
+
+        public bool IsValid { get; set; } = isValid;
     };
 }

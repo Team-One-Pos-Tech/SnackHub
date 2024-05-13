@@ -79,5 +79,23 @@ namespace SnackHub.Application.Tests.UseCases
                     .Add(It.IsAny<Client>()), Times.Never);
 
         }
+
+        [Test]
+        public void Response_With_Id_When_Register_Client()
+        {
+            // Arrange
+            var registerClientRequest = new RegisterClientRequest(Name: "John Doe", CPF: "728.607.630-23");
+
+            var mockClientRepository = new Mock<IClientRepository>();
+
+            var registerClientCase = new RegisterClientUseCase(mockClientRepository.Object);
+
+            // Act
+            var response = registerClientCase.Execute(registerClientRequest);
+
+            // Assert
+            Assert.That(response.Id, Is.Not.Null);
+
+        }
     }
 }

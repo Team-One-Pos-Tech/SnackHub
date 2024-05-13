@@ -10,7 +10,7 @@ namespace SnackHub.Application.UseCases
     {
         public RegisterClientResponse Execute(RegisterClientRequest registerClientRequest)
         {
-            var response = new RegisterClientResponse(IsValid: true);
+            var response = new RegisterClientResponse(isValid: true);
 
             var client = CreateClient(registerClientRequest);
 
