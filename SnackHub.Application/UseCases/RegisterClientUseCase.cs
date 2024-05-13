@@ -10,18 +10,19 @@ namespace SnackHub.Application.UseCases
     {
         public RegisterClientResponse Execute(RegisterClientRequest registerClientRequest)
         {
-            var response = new RegisterClientResponse(isValid: true);
+            var cpf = new CPF(registerClientRequest.CPF);
+
+            if (!cpf.IsValid())
+            {
+                return new RegisterClientResponse(isValid: false);
+            }
 
             var client = CreateClient(registerClientRequest);
 
-            if (!client.CPF.IsValid())
-            {
-                response.IsValid = false;
-                return response;
-            }
-
             clientRepository.Add(client);
 
+            var response = new RegisterClientResponse(isValid: true);
+            response.Id = client.Id;
             return response;
         }
 
