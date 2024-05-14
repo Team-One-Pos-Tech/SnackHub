@@ -9,18 +9,10 @@ namespace SnackHub.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ClientController : ControllerBase
+    public class ClientController(
+            IGetClientUseCase getClientUseCase,
+            IRegisterClientUseCase registerClientUseCase) : ControllerBase
     {
-        private readonly IGetClientUseCase getClientUseCase;
-        private readonly IRegisterClientUseCase registerClientUseCase;
-        private readonly IClientRepository clientRepository;
-
-        public ClientController()
-        {
-            clientRepository = new ClientRepository();
-            getClientUseCase = new GetClientUseCase(clientRepository);
-            registerClientUseCase = new RegisterClientUseCase(clientRepository);
-        }
 
         [HttpGet(Name = "Get")]
         public GetClientResponse Get(Guid id)
