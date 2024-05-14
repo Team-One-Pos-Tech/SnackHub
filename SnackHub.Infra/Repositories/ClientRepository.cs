@@ -6,7 +6,7 @@ namespace SnackHub.Infra.Repositories
 {
     public class ClientRepository : IClientRepository
     {
-        IEnumerable<Client> clients = new List<Client>
+        List<Client> clients = new List<Client>
         {
             new Client(new Guid("0ca4d991-b4dd-4e38-984b-c26c67dd6db1"), "John Doe", new CPF("924.142.390-00")),
             new Client(new Guid("21b394fc-ee9a-4dbd-8eef-407139468657"), "Jane Doe", new CPF("078.607.110-95"))
@@ -18,7 +18,7 @@ namespace SnackHub.Infra.Repositories
 
         public void Add(Client client)
         {
-            throw new NotImplementedException();
+            clients.Add(client);
         }
 
         public Client Get(Guid id)
