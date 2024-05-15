@@ -19,6 +19,7 @@ jobs:
         run: dotnet test --no-build --verbosity normal
   
   create-and-publish-image:
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:     
       - uses: actions/checkout@v4
@@ -28,7 +29,7 @@ jobs:
           registry: ghcr.io
           username: '${{github.actor}}'
           password: '${{secrets.GITHUB_TOKEN}}'
-      - name: Build and Push SnackHub Image
-        run: |
-          docker build -t --tag ghcr.io/team-one-pos-tech/snack-hub:${GITHUB_SHA::7} -f ./deploy/Dockerfile .
-          docker push ghcr.io/team-one-pos-tech/snack-hub:${GITHUB_SHA::7}
+      - name: Build Image
+        run: docker build -t ghcr.io/team-one-pos-tech/snack-hub:${GITHUB_SHA::7} -f ./deploy/Dockerfile .
+      - name: Push Image
+        run: docker push ghcr.io/team-one-pos-tech/snack-hub:${GITHUB_SHA::7}
