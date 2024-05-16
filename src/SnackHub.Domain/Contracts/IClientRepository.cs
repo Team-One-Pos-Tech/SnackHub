@@ -1,11 +1,13 @@
 ﻿using SnackHub.Domain.Entities;
+using SnackHub.Domain.ValueObjects;
 
 namespace SnackHub.Domain.Contracts
 {
     public interface IClientRepository
     {
-        void Add(Client client);
+        Task AddAsync(Client client);
 
-        Client Get(Guid id);
+        Task<Client?> GetClientByIdAsync(Guid id);
+        Task<Client?> GetClientByCpfAsync(CPF cpf);
     }
 }

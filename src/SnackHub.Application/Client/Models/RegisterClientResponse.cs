@@ -1,4 +1,4 @@
-﻿namespace SnackHub.Application.Models
+﻿namespace SnackHub.Application.Client.Models
 {
     public class RegisterClientResponse()
     {
