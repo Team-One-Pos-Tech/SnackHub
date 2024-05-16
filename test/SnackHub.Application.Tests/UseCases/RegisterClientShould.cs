@@ -1,4 +1,5 @@
 using Moq;
+using SnackHub.Application.Contracts;
 using SnackHub.Application.Models;
 using SnackHub.Application.UseCases;
 using SnackHub.Domain.Contracts;
@@ -9,9 +10,16 @@ namespace SnackHub.Application.Tests.UseCases
 {
     public class RegisterClientShould
     {
+        IRegisterClientUseCase registerClientCase;
+        Mock<IClientRepository> mockClientRepository;
+
         [SetUp]
         public void Setup()
         {
+            var validator = new RegisterClientValidator();
+            mockClientRepository = new Mock<IClientRepository>();
+
+            registerClientCase = new RegisterClientUseCase(mockClientRepository.Object, validator);
         }
 
         [Test]
@@ -19,10 +27,6 @@ namespace SnackHub.Application.Tests.UseCases
         {
             // Arrange
             var registerClientRequest = new RegisterClientRequest(name: "John Doe", cpf: "728.607.630-23");
-
-            var mockClientRepository = new Mock<IClientRepository>();
-
-            var registerClientCase = new RegisterClientUseCase(mockClientRepository.Object);
 
             // Act
             registerClientCase.Execute(registerClientRequest);
@@ -40,10 +44,6 @@ namespace SnackHub.Application.Tests.UseCases
         {
             // Arrange
             var registerClientRequest = new RegisterClientRequest(name: "John Doe", cpf: "728.607.630-23");
-
-            var mockClientRepository = new Mock<IClientRepository>();
-
-            var registerClientCase = new RegisterClientUseCase(mockClientRepository.Object);
 
             // Act
             registerClientCase.Execute(registerClientRequest);
@@ -64,10 +64,6 @@ namespace SnackHub.Application.Tests.UseCases
             // Arrange
             var registerClientRequest = new RegisterClientRequest(name: "John Doe", cpf: "000.555.414-44");
 
-            var mockClientRepository = new Mock<IClientRepository>();
-
-            var registerClientCase = new RegisterClientUseCase(mockClientRepository.Object);
-
             // Act
             var response = registerClientCase.Execute(registerClientRequest);
 
@@ -85,10 +81,6 @@ namespace SnackHub.Application.Tests.UseCases
         {
             // Arrange
             var registerClientRequest = new RegisterClientRequest(name: "John Doe", cpf: "728.607.630-23");
-
-            var mockClientRepository = new Mock<IClientRepository>();
-
-            var registerClientCase = new RegisterClientUseCase(mockClientRepository.Object);
 
             // Act
             var response = registerClientCase.Execute(registerClientRequest);

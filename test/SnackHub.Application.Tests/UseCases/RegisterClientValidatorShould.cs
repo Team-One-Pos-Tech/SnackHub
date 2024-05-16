@@ -1,4 +1,5 @@
 ﻿using SnackHub.Application.Models;
+using SnackHub.Application.UseCases;
 
 namespace SnackHub.Application.Tests.UseCases
 {

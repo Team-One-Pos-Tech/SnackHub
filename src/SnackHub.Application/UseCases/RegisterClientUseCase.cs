@@ -6,17 +6,14 @@ using SnackHub.Domain.ValueObjects;
 
 namespace SnackHub.Application.UseCases
 {
-    public class RegisterClientUseCase(IClientRepository clientRepository) : IRegisterClientUseCase
+    public class RegisterClientUseCase(IClientRepository clientRepository, IRegisterClientValidator validator) : IRegisterClientUseCase
     {
         public RegisterClientResponse Execute(RegisterClientRequest registerClientRequest)
         {
-            var cpf = new CPF(registerClientRequest.CPF);
-
             var response = new RegisterClientResponse();
 
-            if (!cpf.IsValid())
+            if(!validator.IsValid(registerClientRequest, out response))
             {
-                response.AddNotification("CPF", "CPF is invalid");
                 return response;
             }
 
@@ -24,10 +21,9 @@ namespace SnackHub.Application.UseCases
 
             clientRepository.Add(client);
 
-            return new RegisterClientResponse
-            {
-                Id = client.Id,
-            };
+            response.Id = client.Id;
+
+            return response;
         }
 
         private static Client CreateClient(RegisterClientRequest registerClientRequest)
