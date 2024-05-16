@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using FluentAssertions;
+using Moq;
 using SnackHub.Application.Models;
 using SnackHub.Application.UseCases;
 using SnackHub.Domain.Contracts;
@@ -25,11 +26,36 @@ namespace SnackHub.Application.Tests.UseCases
 
             var registerClientRequest = new RegisterClientRequest(name: "John Doe", cpf: "728.607.630-23");
 
+            var response = new RegisterClientResponse();
+
             // Act
-            var response = validator.IsValid(registerClientRequest);
+            var isValid = validator.IsValid(registerClientRequest, out response);
 
             // Assert
-            Assert.That(response, Is.True);
+            Assert.That(isValid, Is.True);
+        }
+
+        [Test]
+        public void Validate_Invalid_CPF()
+        {
+            // Arrange
+            var validator = new RegisterClientValidator();
+
+            var registerClientRequest = new RegisterClientRequest(name: "John Doe", cpf: "111.111.111-23");
+
+            var response = new RegisterClientResponse();
+
+            // Act
+            var isValid = validator.IsValid(registerClientRequest, out response);
+
+            // Assert
+            Assert.That(isValid, Is.False);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Notifications.First().Key, Is.EqualTo("CPF"));
+                Assert.That(response.Notifications.First().Message, Is.EqualTo("CPF is invalid."));
+            });
         }
     }
 }
