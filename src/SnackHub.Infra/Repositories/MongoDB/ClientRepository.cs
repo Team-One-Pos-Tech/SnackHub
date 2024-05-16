@@ -4,27 +4,21 @@ using SnackHub.Domain.Entities;
 
 namespace SnackHub.Infra.Repositories.MongoDB;
 
-public class ClientRepository : IClientRepository
+public sealed class ClientRepository : BaseRepository<Client>, IClientRepository
 {
-    private readonly IMongoCollection<Client> _mongoCollection;
-
-    public ClientRepository(IMongoDatabase mongoDatabase, string collectionName = "Clients")
+    public ClientRepository(IMongoDatabase mongoDatabase, string collectionName = "Clients") 
+        : base(mongoDatabase, collectionName)
     {
-        if (mongoDatabase is null)
-            throw new ArgumentException("MongoDatabase could not be null");
-
-        _mongoCollection =
-            mongoDatabase.GetCollection<Client>(collectionName == string.Empty ? nameof(Client) : collectionName);
     }
     
     public void Add(Client client)
     {
-        _mongoCollection.InsertOne(client);
+        MongoCollection.InsertOne(client);
     }
 
     public Client Get(Guid id)
     {
-        return _mongoCollection
+        return MongoCollection
             .Find(px => px.Id.Equals(id))
             .FirstOrDefault();
     }
