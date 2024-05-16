@@ -1,13 +1,4 @@
-﻿using FluentAssertions;
-using Moq;
-using SnackHub.Application.Models;
-using SnackHub.Application.UseCases;
-using SnackHub.Domain.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SnackHub.Application.Models;
 
 namespace SnackHub.Application.Tests.UseCases
 {

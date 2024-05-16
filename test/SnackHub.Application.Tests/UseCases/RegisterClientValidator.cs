@@ -12,10 +12,12 @@ namespace SnackHub.Application.Tests.UseCases
         public bool IsValid(RegisterClientRequest registerClientRequest, out RegisterClientResponse response)
         {
             var cpf = new CPF(registerClientRequest.CPF);
+            response = new RegisterClientResponse();
 
             if (!cpf.IsValid())
             {
-                return response;
+                response.AddNotification("CPF", "CPF is invalid.");
+                return false;
             }
 
             return true;
