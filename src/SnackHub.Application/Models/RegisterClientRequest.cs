@@ -1,4 +1,16 @@
-﻿namespace SnackHub.Application.Models
+﻿using Flunt.Notifications;
+
+namespace SnackHub.Application.Models
 {
-    public record RegisterClientRequest(string Name, string CPF);
+    public class RegisterClientRequest : Notifiable<Notification>
+    {
+        public RegisterClientRequest(string name, string cpf)
+        {
+            Name = name;
+            CPF = cpf;
+        }
+
+        public string Name { get; set; }
+        public string CPF { get; set; }
+    }
 }

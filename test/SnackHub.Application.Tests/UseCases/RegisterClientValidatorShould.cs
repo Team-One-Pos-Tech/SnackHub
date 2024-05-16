@@ -1,0 +1,35 @@
+﻿using Moq;
+using SnackHub.Application.Models;
+using SnackHub.Application.UseCases;
+using SnackHub.Domain.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SnackHub.Application.Tests.UseCases
+{
+    public class RegisterClientValidatorShould
+    {
+        [SetUp]
+        public void Setup()
+        {
+        }
+
+        [Test]
+        public void Validate_With_Valid_CPF()
+        {
+            // Arrange
+            var validator = new RegisterClientValidator();
+
+            var registerClientRequest = new RegisterClientRequest(name: "John Doe", cpf: "728.607.630-23");
+
+            // Act
+            var response = validator.IsValid(registerClientRequest);
+
+            // Assert
+            Assert.That(response, Is.True);
+        }
+    }
+}

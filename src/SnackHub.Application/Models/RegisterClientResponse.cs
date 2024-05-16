@@ -1,9 +1,10 @@
-﻿namespace SnackHub.Application.Models
+﻿using Flunt.Notifications;
+
+namespace SnackHub.Application.Models
 {
-    public class RegisterClientResponse()
+    public class RegisterClientResponse() : Notifiable<Notification>
     {
         public Guid? Id { get; set; }
 
-        public bool IsValid { get; set; }
     };
 }

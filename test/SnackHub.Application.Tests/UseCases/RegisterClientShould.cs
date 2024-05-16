@@ -18,7 +18,7 @@ namespace SnackHub.Application.Tests.UseCases
         public void Register_With_Name()
         {
             // Arrange
-            var registerClientRequest = new RegisterClientRequest(Name: "John Doe", CPF: "728.607.630-23");
+            var registerClientRequest = new RegisterClientRequest(name: "John Doe", cpf: "728.607.630-23");
 
             var mockClientRepository = new Mock<IClientRepository>();
 
@@ -39,7 +39,7 @@ namespace SnackHub.Application.Tests.UseCases
         public void Register_With_CPF()
         {
             // Arrange
-            var registerClientRequest = new RegisterClientRequest(Name: "John Doe", CPF: "728.607.630-23");
+            var registerClientRequest = new RegisterClientRequest(name: "John Doe", cpf: "728.607.630-23");
 
             var mockClientRepository = new Mock<IClientRepository>();
 
@@ -62,7 +62,7 @@ namespace SnackHub.Application.Tests.UseCases
         public void Validate_Invalid_CPF()
         {
             // Arrange
-            var registerClientRequest = new RegisterClientRequest(Name: "John Doe", CPF: "000.555.414-44");
+            var registerClientRequest = new RegisterClientRequest(name: "John Doe", cpf: "000.555.414-44");
 
             var mockClientRepository = new Mock<IClientRepository>();
 
@@ -84,7 +84,7 @@ namespace SnackHub.Application.Tests.UseCases
         public void Response_With_Id_When_Register_Client()
         {
             // Arrange
-            var registerClientRequest = new RegisterClientRequest(Name: "John Doe", CPF: "728.607.630-23");
+            var registerClientRequest = new RegisterClientRequest(name: "John Doe", cpf: "728.607.630-23");
 
             var mockClientRepository = new Mock<IClientRepository>();
 
