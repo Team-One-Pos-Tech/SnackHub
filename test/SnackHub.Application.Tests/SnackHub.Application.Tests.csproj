@@ -20,11 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SnackHub.Application\SnackHub.Application.csproj" />
+    <Using Include="NUnit.Framework" />
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="NUnit.Framework" />
+    <ProjectReference Include="..\..\src\SnackHub.Application\SnackHub.Application.csproj" />
+    <ProjectReference Include="..\..\src\SnackHub.Domain\SnackHub.Domain.csproj" />
   </ItemGroup>
 
 </Project>

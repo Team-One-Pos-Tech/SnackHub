@@ -7,13 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F46F38CF-F0C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7F39817D-A167-467A-8EAE-F5336FFEF4B7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnackHub.Application", "SnackHub.Application\SnackHub.Application.csproj", "{5D89C7AB-333E-491D-94EF-969E1E75A4B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnackHub.Application", "src\SnackHub.Application\SnackHub.Application.csproj", "{5D89C7AB-333E-491D-94EF-969E1E75A4B1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnackHub.Domain", "SnackHub.Domain\SnackHub.Domain.csproj", "{65B5503B-54BF-4E7B-9C33-466BC93927E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnackHub.Domain", "src\SnackHub.Domain\SnackHub.Domain.csproj", "{65B5503B-54BF-4E7B-9C33-466BC93927E6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnackHub.Api", "SnackHub.Api\SnackHub.Api.csproj", "{BCFB28FA-5FC2-43D6-AD36-F7822D1B9E4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnackHub.Api", "src\SnackHub.Api\SnackHub.Api.csproj", "{BCFB28FA-5FC2-43D6-AD36-F7822D1B9E4F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnackHub.Application.Tests", "SnackHub.Application.Tests\SnackHub.Application.Tests.csproj", "{64265A30-49A4-41E5-92E0-ED20641BFF98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnackHub.Application.Tests", "test\SnackHub.Application.Tests\SnackHub.Application.Tests.csproj", "{64265A30-49A4-41E5-92E0-ED20641BFF98}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{28C4CE38-ACB0-4968-9D7C-3C6158126F66}"
 EndProject
@@ -23,7 +23,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driver", "Driver", "{E3DC0D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driven", "Driven", "{A71BA3D8-55C6-491E-977E-66D6457F3F9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnackHub.Infra", "SnackHub.Infra\SnackHub.Infra.csproj", "{4CBC465F-2FE8-464E-AFE0-725436ED5813}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnackHub.Infra", "src\SnackHub.Infra\SnackHub.Infra.csproj", "{4CBC465F-2FE8-464E-AFE0-725436ED5813}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{77933C05-627E-4FB3-B6FA-4B1020DA9695}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\docker-compose.yml = deploy\docker-compose.yml
+		deploy\Dockerfile = deploy\Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
