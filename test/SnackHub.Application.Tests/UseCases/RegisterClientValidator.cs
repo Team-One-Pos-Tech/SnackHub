@@ -1,4 +1,5 @@
 ﻿using SnackHub.Application.Models;
+using SnackHub.Domain.ValueObjects;
 
 namespace SnackHub.Application.Tests.UseCases
 {
@@ -10,7 +11,14 @@ namespace SnackHub.Application.Tests.UseCases
 
         public bool IsValid(RegisterClientRequest registerClientRequest)
         {
-            throw new NotImplementedException();
+            var cpf = new CPF(registerClientRequest.CPF);
+
+            if (!cpf.IsValid())
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
