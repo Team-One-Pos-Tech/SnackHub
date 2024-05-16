@@ -1,6 +1,6 @@
 ﻿using Flunt.Notifications;
 
-namespace SnackHub.Application.Models
+namespace SnackHub.Application.Client.Models
 {
     public class RegisterClientResponse() : Notifiable<Notification>
     {

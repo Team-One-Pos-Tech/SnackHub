@@ -14,4 +14,8 @@
     <ProjectReference Include="..\SnackHub.Domain\SnackHub.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Contracts\" />
+  </ItemGroup>
+
 </Project>

@@ -1,14 +1,13 @@
-﻿using SnackHub.Application.Contracts;
-using SnackHub.Application.Models;
+﻿using SnackHub.Application.Client.Contracts;
+using SnackHub.Application.Client.Models;
 using SnackHub.Domain.Contracts;
-using SnackHub.Domain.Entities;
 using SnackHub.Domain.ValueObjects;
 
-namespace SnackHub.Application.UseCases
+namespace SnackHub.Application.Client.UseCases
 {
     public class RegisterClientUseCase(IClientRepository clientRepository, IRegisterClientValidator validator) : IRegisterClientUseCase
     {
-        public RegisterClientResponse Execute(RegisterClientRequest registerClientRequest)
+        public async Task<RegisterClientResponse> Execute(RegisterClientRequest registerClientRequest)
         {
             var response = new RegisterClientResponse();
 
@@ -19,16 +18,16 @@ namespace SnackHub.Application.UseCases
 
             var client = CreateClient(registerClientRequest);
 
-            clientRepository.Add(client);
+            await clientRepository.AddAsync(client);
 
             response.Id = client.Id;
 
             return response;
         }
 
-        private static Client CreateClient(RegisterClientRequest registerClientRequest)
+        private static Domain.Entities.Client CreateClient(RegisterClientRequest registerClientRequest)
         {
-            return new Client(
+            return new Domain.Entities.Client(
                 Guid.NewGuid(),
                 registerClientRequest.Name,
                 new CPF(registerClientRequest.CPF)

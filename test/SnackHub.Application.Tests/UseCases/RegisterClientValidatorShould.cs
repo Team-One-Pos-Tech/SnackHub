@@ -1,5 +1,5 @@
-﻿using SnackHub.Application.Models;
-using SnackHub.Application.UseCases;
+﻿using SnackHub.Application.Client.Models;
+using SnackHub.Application.Client.UseCases;
 
 namespace SnackHub.Application.Tests.UseCases
 {

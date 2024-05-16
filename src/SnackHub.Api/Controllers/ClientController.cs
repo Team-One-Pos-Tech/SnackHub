@@ -1,31 +1,51 @@
 using Microsoft.AspNetCore.Mvc;
-using SnackHub.Application.Contracts;
-using SnackHub.Application.Models;
+using SnackHub.Application.Client.Contracts;
+using SnackHub.Application.Client.Models;
 
 namespace SnackHub.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class ClientController(
-        IGetClientUseCase getClientUseCase,
-        IRegisterClientUseCase registerClientUseCase) : ControllerBase
+    [Route("api/[controller]/v1")]
+    public class ClientController: ControllerBase
     {
-        [HttpGet(Name = "Get")]
-        public GetClientResponse Get(Guid id)
+        private readonly IGetClientUseCase _getClientUseCase;
+        private readonly IRegisterClientUseCase _registerClientUseCase;
+
+        public ClientController(IGetClientUseCase getClientUseCase, IRegisterClientUseCase registerClientUseCase)
         {
-            var response = getClientUseCase.Execute(id);
-            return response;
+            _getClientUseCase = getClientUseCase;
+            _registerClientUseCase = registerClientUseCase;
+        }
+        
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<GetClientResponse>> GetById([FromRoute] Guid id)
+        {
+            var clientResponse = await _getClientUseCase.Execute(id);
+            if (clientResponse is null)
+                return NotFound();
+            
+            return Ok(clientResponse);
+        }
+        
+        [HttpGet("{cpf:minlength(11):maxlength(11)}")]
+        public async Task<ActionResult<GetClientResponse>> GetByCpf([FromRoute] string cpf)
+        {
+            var clientResponse = await _getClientUseCase.Execute(cpf);
+            if (clientResponse is null)
+                return NotFound();
+            
+            return Ok(clientResponse);
         }
 
         [HttpPost(Name = "Post")]
-        public ActionResult<RegisterClientResponse> Post(RegisterClientRequest request)
+        public async Task<ActionResult<RegisterClientResponse>> Post(RegisterClientRequest request)
         {
-            var response = registerClientUseCase.Execute(request);
+            var response = await _registerClientUseCase.Execute(request);
 
             if (!response.IsValid)
                 return BadRequest();
 
-            return response;
+            return Ok(response);
         }
     }
 }

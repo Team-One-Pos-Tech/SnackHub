@@ -1,8 +1,8 @@
-﻿using SnackHub.Application.Contracts;
-using SnackHub.Application.Models;
+﻿using SnackHub.Application.Client.Contracts;
+using SnackHub.Application.Client.Models;
 using SnackHub.Domain.ValueObjects;
 
-namespace SnackHub.Application.UseCases
+namespace SnackHub.Application.Client.UseCases
 {
     public class RegisterClientValidator : IRegisterClientValidator
     {
