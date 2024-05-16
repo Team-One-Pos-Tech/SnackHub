@@ -1,5 +1,5 @@
-using SnackHub.Application.Contracts;
-using SnackHub.Application.UseCases;
+using SnackHub.Application.Client.Contracts;
+using SnackHub.Application.Client.UseCases;
 
 namespace SnackHub.Extensions;
 

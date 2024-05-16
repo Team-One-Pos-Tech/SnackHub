@@ -17,10 +17,15 @@ namespace SnackHub.Infra.Repositories.InMemory
             await Task.Run(() => clients.Add(client));
         }
 
-        public async Task<Client> GetClientByIdAsync(Guid id)
+        public async Task<Client?> GetClientByIdAsync(Guid id)
         {
             // TODO: Scenario for null reference exception
-            return await Task.FromResult(clients.FirstOrDefault(client => client.Id == id)!);
+            return await Task.FromResult(clients.FirstOrDefault(client => client.Id == id));
+        }
+
+        public async Task<Client?> GetClientByCpfAsync(CPF cpf)
+        {
+            return await Task.FromResult(clients.FirstOrDefault(client => client.CPF.Equals(cpf)));
         }
     }
 }

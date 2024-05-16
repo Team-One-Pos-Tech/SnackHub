@@ -1,4 +1,5 @@
 ﻿using SnackHub.Domain.Entities;
+using SnackHub.Domain.ValueObjects;
 
 namespace SnackHub.Domain.Contracts
 {
@@ -6,6 +7,7 @@ namespace SnackHub.Domain.Contracts
     {
         Task AddAsync(Client client);
 
-        Task<Client> GetClientByIdAsync(Guid id);
+        Task<Client?> GetClientByIdAsync(Guid id);
+        Task<Client?> GetClientByCpfAsync(CPF cpf);
     }
 }

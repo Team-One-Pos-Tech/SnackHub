@@ -1,6 +1,6 @@
-﻿using SnackHub.Application.Models;
+﻿using SnackHub.Application.Client.Models;
 
-namespace SnackHub.Application.Contracts
+namespace SnackHub.Application.Client.Contracts
 {
     public interface IRegisterClientUseCase
     {

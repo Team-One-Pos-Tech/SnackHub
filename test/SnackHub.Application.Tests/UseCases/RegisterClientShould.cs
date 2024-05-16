@@ -1,9 +1,8 @@
 using FluentAssertions;
 using Moq;
-using SnackHub.Application.Models;
-using SnackHub.Application.UseCases;
+using SnackHub.Application.Client.Models;
+using SnackHub.Application.Client.UseCases;
 using SnackHub.Domain.Contracts;
-using SnackHub.Domain.Entities;
 using SnackHub.Domain.ValueObjects;
 
 namespace SnackHub.Application.Tests.UseCases
@@ -31,7 +30,7 @@ namespace SnackHub.Application.Tests.UseCases
             // Assert
             mockClientRepository
                 .Verify(repository => repository
-                    .AddAsync(It.Is<Client>(client => client.Name == registerClientRequest.Name)),
+                    .AddAsync(It.Is<Domain.Entities.Client>(client => client.Name == registerClientRequest.Name)),
                         Times.Once);
 
         }
@@ -54,7 +53,7 @@ namespace SnackHub.Application.Tests.UseCases
 
             mockClientRepository
                 .Verify(repository => repository
-                    .AddAsync(It.Is<Client>(client => client.CPF.Equals(expectedCpf))),
+                    .AddAsync(It.Is<Domain.Entities.Client>(client => client.CPF.Equals(expectedCpf))),
                         Times.Once);
 
         }
@@ -80,7 +79,7 @@ namespace SnackHub.Application.Tests.UseCases
 
             mockClientRepository
                 .Verify(repository => repository
-                    .AddAsync(It.IsAny<Client>()), Times.Never);
+                    .AddAsync(It.IsAny<Domain.Entities.Client>()), Times.Never);
 
         }
 

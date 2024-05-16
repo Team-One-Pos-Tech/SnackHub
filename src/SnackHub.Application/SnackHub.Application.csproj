@@ -10,4 +10,8 @@
     <ProjectReference Include="..\SnackHub.Domain\SnackHub.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Client\" />
+  </ItemGroup>
+
 </Project>
