@@ -6,21 +6,28 @@ namespace SnackHub.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ClientController(
-        IGetClientUseCase getClientUseCase,
-        IRegisterClientUseCase registerClientUseCase) : ControllerBase
+    public class ClientController: ControllerBase
     {
+        private readonly IGetClientUseCase _getClientUseCase;
+        private readonly IRegisterClientUseCase _registerClientUseCase;
+
+        public ClientController(IGetClientUseCase getClientUseCase, IRegisterClientUseCase registerClientUseCase)
+        {
+            _getClientUseCase = getClientUseCase;
+            _registerClientUseCase = registerClientUseCase;
+        }
+        
         [HttpGet(Name = "Get")]
         public GetClientResponse Get(Guid id)
         {
-            var response = getClientUseCase.Execute(id);
+            var response = _getClientUseCase.Execute(id);
             return response;
         }
 
         [HttpPost(Name = "Post")]
         public ActionResult<RegisterClientResponse> Post(RegisterClientRequest request)
         {
-            var response = registerClientUseCase.Execute(request);
+            var response = _registerClientUseCase.Execute(request);
 
             if (!response.IsValid)
                 return BadRequest();

@@ -2,7 +2,7 @@
 using SnackHub.Domain.Entities;
 using SnackHub.Domain.ValueObjects;
 
-namespace SnackHub.Infra.Repositories
+namespace SnackHub.Infra.Repositories.InMemory
 {
     public class ClientRepository : IClientRepository
     {
