@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Moq;
 using SnackHub.Application.Models;
 using SnackHub.Application.UseCases;
@@ -15,7 +16,7 @@ namespace SnackHub.Application.Tests.UseCases
         }
 
         [Test]
-        public void Register_With_Name()
+        public async Task Register_With_Name()
         {
             // Arrange
             var registerClientRequest = new RegisterClientRequest(Name: "John Doe", CPF: "728.607.630-23");
@@ -25,18 +26,18 @@ namespace SnackHub.Application.Tests.UseCases
             var registerClientCase = new RegisterClientUseCase(mockClientRepository.Object);
 
             // Act
-            registerClientCase.Execute(registerClientRequest);
+            await registerClientCase.Execute(registerClientRequest);
 
             // Assert
             mockClientRepository
                 .Verify(repository => repository
-                    .Add(It.Is<Client>(client => client.Name == registerClientRequest.Name)),
+                    .AddAsync(It.Is<Client>(client => client.Name == registerClientRequest.Name)),
                         Times.Once);
 
         }
 
         [Test]
-        public void Register_With_CPF()
+        public async Task Register_With_CPF()
         {
             // Arrange
             var registerClientRequest = new RegisterClientRequest(Name: "John Doe", CPF: "728.607.630-23");
@@ -46,20 +47,20 @@ namespace SnackHub.Application.Tests.UseCases
             var registerClientCase = new RegisterClientUseCase(mockClientRepository.Object);
 
             // Act
-            registerClientCase.Execute(registerClientRequest);
+            await registerClientCase.Execute(registerClientRequest);
 
             // Assert
             var expectedCpf = new CPF(registerClientRequest.CPF);
 
             mockClientRepository
                 .Verify(repository => repository
-                    .Add(It.Is<Client>(client => client.CPF.Equals(expectedCpf))),
+                    .AddAsync(It.Is<Client>(client => client.CPF.Equals(expectedCpf))),
                         Times.Once);
 
         }
 
         [Test]
-        public void Validate_Invalid_CPF()
+        public async Task Validate_Invalid_CPF()
         {
             // Arrange
             var registerClientRequest = new RegisterClientRequest(Name: "John Doe", CPF: "000.555.414-44");
@@ -69,14 +70,17 @@ namespace SnackHub.Application.Tests.UseCases
             var registerClientCase = new RegisterClientUseCase(mockClientRepository.Object);
 
             // Act
-            var response = registerClientCase.Execute(registerClientRequest);
+            var response = await registerClientCase.Execute(registerClientRequest);
 
             // Assert
-            response.IsValid.Equals(false);
+            response
+                .IsValid
+                .Should()
+                .Be(false);
 
             mockClientRepository
                 .Verify(repository => repository
-                    .Add(It.IsAny<Client>()), Times.Never);
+                    .AddAsync(It.IsAny<Client>()), Times.Never);
 
         }
 
@@ -94,8 +98,14 @@ namespace SnackHub.Application.Tests.UseCases
             var response = registerClientCase.Execute(registerClientRequest);
 
             // Assert
-            Assert.That(response.Id, Is.Not.Null);
-
+            response
+                .Should()
+                .NotBeNull();
+            
+            response
+                .Id
+                .Should()
+                .NotBe(null);
         }
     }
 }

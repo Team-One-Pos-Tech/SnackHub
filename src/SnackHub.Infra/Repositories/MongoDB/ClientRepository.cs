@@ -11,15 +11,14 @@ public sealed class ClientRepository : BaseRepository<Client>, IClientRepository
     {
     }
     
-    public void Add(Client client)
+    public async Task AddAsync(Client client)
     {
-        MongoCollection.InsertOne(client);
+        await InsertAsync(client);
     }
 
-    public Client Get(Guid id)
+    public async Task<Client> GetClientByIdAsync(Guid id)
     {
-        return MongoCollection
-            .Find(px => px.Id.Equals(id))
-            .FirstOrDefault();
+        return await FindByPredicateAsync(px => px.Id.Equals(id));
+        
     }
 }

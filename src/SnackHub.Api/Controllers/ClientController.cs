@@ -18,21 +18,21 @@ namespace SnackHub.Controllers
         }
         
         [HttpGet(Name = "Get")]
-        public GetClientResponse Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            var response = _getClientUseCase.Execute(id);
-            return response;
+            var clientResponse = await _getClientUseCase.Execute(id);
+            return Ok(clientResponse);
         }
 
         [HttpPost(Name = "Post")]
-        public ActionResult<RegisterClientResponse> Post(RegisterClientRequest request)
+        public async Task<IActionResult> Post(RegisterClientRequest request)
         {
-            var response = _registerClientUseCase.Execute(request);
+            var response = await _registerClientUseCase.Execute(request);
 
             if (!response.IsValid)
                 return BadRequest();
 
-            return response;
+            return Ok(response);
         }
     }
 }

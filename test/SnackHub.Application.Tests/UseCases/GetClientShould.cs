@@ -15,7 +15,7 @@ namespace SnackHub.Application.Tests.UseCases
         }
 
         [Test]
-        public void Get()
+        public async Task Get()
         {
             // Arrange
             var mockClientRepository = new Mock<IClientRepository>();
@@ -26,17 +26,26 @@ namespace SnackHub.Application.Tests.UseCases
 
             var clientMock = new Client(id, "Ednaldo Pereira", new CPF("728.607.630-23"));
 
-            mockClientRepository.Setup(repository => repository.Get(It.IsAny<Guid>()))
-                .Returns(clientMock);
+            mockClientRepository.Setup(repository => repository.GetClientByIdAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(clientMock);
 
             // Act
-            var response = getClientUseCase.Execute(id);
+            var response = await getClientUseCase.Execute(id);
 
             // Assert
-            response.Should().NotBeNull(); 
+            response
+                .Should()
+                .NotBeNull(); 
 
-            response.Name.Should().Be(clientMock.Name);
-            response.CPF.Should().Be(clientMock.CPF);
+            response
+                .Name
+                .Should()
+                .Be(clientMock.Name);
+            
+            response
+                .CPF
+                .Should()
+                .Be(clientMock.CPF);
 
         }
     }

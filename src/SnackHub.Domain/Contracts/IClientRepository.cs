@@ -4,8 +4,8 @@ namespace SnackHub.Domain.Contracts
 {
     public interface IClientRepository
     {
-        void Add(Client client);
+        Task AddAsync(Client client);
 
-        Client Get(Guid id);
+        Task<Client> GetClientByIdAsync(Guid id);
     }
 }

@@ -8,7 +8,7 @@ namespace SnackHub.Application.UseCases
 {
     public class RegisterClientUseCase(IClientRepository clientRepository) : IRegisterClientUseCase
     {
-        public RegisterClientResponse Execute(RegisterClientRequest registerClientRequest)
+        public async Task<RegisterClientResponse> Execute(RegisterClientRequest registerClientRequest)
         {
             var cpf = new CPF(registerClientRequest.CPF);
 
@@ -17,8 +17,7 @@ namespace SnackHub.Application.UseCases
 
             var client = CreateClient(registerClientRequest);
 
-            clientRepository.Add(client);
-
+            await clientRepository.AddAsync(client);
             return CreateResponse(client);
         }
 

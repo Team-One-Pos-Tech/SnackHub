@@ -16,7 +16,7 @@ public abstract class BaseRepository<TModel> : IBaseRepository<TModel> where TMo
         MongoCollection = mongoDatabase.GetCollection<TModel>(collectionName == string.Empty ? nameof(TModel) : collectionName);
     }
 
-    public async Task AddAsync(TModel model)
+    public async Task InsertAsync(TModel model)
     {
         await MongoCollection.InsertOneAsync(model);
     }

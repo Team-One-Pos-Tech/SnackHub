@@ -4,6 +4,6 @@ namespace SnackHub.Application.Contracts
 {
     public interface IGetClientUseCase
     {
-        GetClientResponse Execute(Guid id);
+        Task<GetClientResponse> Execute(Guid id);
     }
 }

@@ -6,10 +6,9 @@ namespace SnackHub.Application.UseCases
 {
     public class GetClientUseCase(IClientRepository clientRepository) : IGetClientUseCase
     {
-        public GetClientResponse Execute(Guid id)
+        public async Task<GetClientResponse> Execute(Guid id)
         {
-            var client = clientRepository.Get(id);
-
+            var client = await clientRepository.GetClientByIdAsync(id);
             return new GetClientResponse(client.Name, client.CPF);
         }
     }
