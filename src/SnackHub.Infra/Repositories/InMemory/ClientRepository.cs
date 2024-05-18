@@ -4,7 +4,7 @@ using SnackHub.Domain.ValueObjects;
 
 namespace SnackHub.Infra.Repositories.InMemory
 {
-    public class ClientRepository : IClientRepository
+    public class ClientRepositoryMemory : IClientRepository
     {
         List<Client> clients = new List<Client>
         {

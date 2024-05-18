@@ -9,6 +9,7 @@ public static class UseCasesExtensions
     {
         return serviceCollection
             .AddScoped<IRegisterClientUseCase, RegisterClientUseCase>()
-            .AddScoped<IGetClientUseCase, GetClientUseCase>();
+            .AddScoped<IGetClientUseCase, GetClientUseCase>()
+            .AddScoped<IRegisterClientValidator, RegisterClientValidator>();
     }
 }

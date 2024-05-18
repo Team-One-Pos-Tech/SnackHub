@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SnackHub.Application.Client.Contracts;
 using SnackHub.Application.Client.Models;
+using SnackHub.Extensions;
 
 namespace SnackHub.Controllers
 {
@@ -38,12 +39,19 @@ namespace SnackHub.Controllers
         }
 
         [HttpPost(Name = "Post")]
+        [ProducesResponseType(typeof(RegisterClientResponse),
+            StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails),
+            StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<RegisterClientResponse>> Post(RegisterClientRequest request)
         {
             var response = await _registerClientUseCase.Execute(request);
 
-            if (!response.IsValid)
-                return BadRequest();
+            if (!response.IsValid) 
+            {
+                return ValidationProblem(ModelState.AddNofifications(response.Notifications));
+            }
 
             return Ok(response);
         }
