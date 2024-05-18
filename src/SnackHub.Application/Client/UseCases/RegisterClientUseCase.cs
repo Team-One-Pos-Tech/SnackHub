@@ -11,7 +11,9 @@ namespace SnackHub.Application.Client.UseCases
         {
             var response = new RegisterClientResponse();
 
-            if(!validator.IsValid(registerClientRequest, out response))
+            var isValid = await validator.IsValid(registerClientRequest, response);
+
+            if(!isValid)
             {
                 return response;
             }

@@ -1,24 +1,27 @@
 ﻿using Moq;
+using SnackHub.Application.Client.Contracts;
 using SnackHub.Application.Client.Models;
 using SnackHub.Application.Client.UseCases;
 using SnackHub.Domain.Contracts;
+using SnackHub.Domain.Entities;
 using SnackHub.Domain.ValueObjects;
 
 namespace SnackHub.Application.Tests.UseCases
 {
     public class RegisterClientValidatorShould
     {
-        RegisterClientValidator _registerClientValidator;
-        
+        IRegisterClientValidator _registerClientValidator;
+        Mock<IClientRepository> _clientReposioryMock;
+
         [SetUp]
         public void Setup()
         {
-            var clientReposioryMock = new Mock<IClientRepository>();
-            _registerClientValidator = new RegisterClientValidator(clientReposioryMock.Object);
+            _clientReposioryMock = new Mock<IClientRepository>();
+            _registerClientValidator = new RegisterClientValidator(_clientReposioryMock.Object);
         }
 
         [Test]
-        public void Validate_With_Valid_CPF()
+        public async Task Validate_With_Valid_CPFAsync()
         {
             // Arrange
 
@@ -27,14 +30,14 @@ namespace SnackHub.Application.Tests.UseCases
             var response = new RegisterClientResponse();
 
             // Act
-            var isValid = _registerClientValidator.IsValid(registerClientRequest, out response);
+            var isValid = await _registerClientValidator.IsValid(registerClientRequest, response);
 
             // Assert
             Assert.That(isValid, Is.True);
         }
 
         [Test]
-        public void Validate_Invalid_CPF()
+        public async Task Validate_Invalid_CPFAsync()
         {
             // Arrange
 
@@ -43,7 +46,7 @@ namespace SnackHub.Application.Tests.UseCases
             var response = new RegisterClientResponse();
 
             // Act
-            var isValid = _registerClientValidator.IsValid(registerClientRequest, out response);
+            var isValid = await _registerClientValidator.IsValid(registerClientRequest, response);
 
             // Assert
             Assert.That(isValid, Is.False);
@@ -62,8 +65,19 @@ namespace SnackHub.Application.Tests.UseCases
             var registerClientRequest = new RegisterClientRequest(name: "John Doe", cpf: "728.607.630-23");
             var response = new RegisterClientResponse();
 
+            var cpf = new CPF(registerClientRequest.CPF);
+
+            _clientReposioryMock.Setup(repository => repository
+                .GetClientByCpfAsync(cpf))
+                    .ReturnsAsync(
+                        new Domain.Entities.Client(
+                            Guid.NewGuid(), 
+                            registerClientRequest.Name, 
+                            cpf)
+                        );
+
             // Act
-            var isValid = await _registerClientValidator.IsValid(registerClientRequest, out response);
+            var isValid = await _registerClientValidator.IsValid(registerClientRequest, response);
 
             // Assert
             Assert.IsFalse(isValid);

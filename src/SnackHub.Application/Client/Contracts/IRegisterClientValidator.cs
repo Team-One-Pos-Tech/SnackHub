@@ -4,6 +4,6 @@ namespace SnackHub.Application.Client.Contracts
 {
     public interface IRegisterClientValidator
     {
-        bool IsValid(RegisterClientRequest registerClientRequest, out RegisterClientResponse response);
+        Task<bool> IsValid(RegisterClientRequest registerClientRequest, RegisterClientResponse response);
     }
 }

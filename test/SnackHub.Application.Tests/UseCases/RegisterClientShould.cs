@@ -16,8 +16,8 @@ namespace SnackHub.Application.Tests.UseCases
         [SetUp]
         public void Setup()
         {
-            var validator = new RegisterClientValidator();
             mockClientRepository = new Mock<IClientRepository>();
+            var validator = new RegisterClientValidator(mockClientRepository.Object);
 
             registerClientCase = new RegisterClientUseCase(mockClientRepository.Object, validator);
         }
