@@ -49,7 +49,7 @@ namespace SnackHub.Application.Tests.UseCases
             await registerClientCase.Execute(registerClientRequest);
 
             // Assert
-            var expectedCpf = new CPF(registerClientRequest.CPF);
+            var expectedCpf = new CPF("72860763023");
 
             mockClientRepository
                 .Verify(repository => repository

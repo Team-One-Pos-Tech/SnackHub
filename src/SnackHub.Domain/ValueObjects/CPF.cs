@@ -9,10 +9,19 @@ namespace SnackHub.Domain.ValueObjects
 
         public CPF(string value)
         {
-            Value = value;
+            string cpf = Sanitize(value);
+
+            Value = cpf;
         }
 
-        // fonte: https://www.macoratti.net/11/09/c_val1.htm
+        private static string Sanitize(string value)
+        {
+            var cpf = value.Trim();
+            cpf = cpf.Replace(".", "").Replace("-", "");
+            return cpf;
+        }
+
+        // source: https://www.macoratti.net/11/09/c_val1.htm
         public bool IsValid()
         {
             var cpf = Value;
