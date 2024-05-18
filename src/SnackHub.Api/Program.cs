@@ -15,7 +15,8 @@ builder
     .Services
     .AddMongoDb(builder.Configuration)
     .AddRepositories()
-    .AddUseCases();
+    .AddUseCases()
+    .AddValidators();
 
 var app = builder.Build();
 
