@@ -1,12 +1,13 @@
 using FluentAssertions;
 using Moq;
+using NUnit.Framework;
 using SnackHub.Domain.Base;
 using SnackHub.Domain.ValueObjects;
 
 using OrderFactory = SnackHub.Domain.Entities.Order.Factory;
 using OrderItemFactory = SnackHub.Domain.ValueObjects.OrderItem.Factory;
 
-namespace SnackHub.Application.Tests.Entities;
+namespace SnackHub.Domain.Tests.Entities;
 
 public class OrderShould
 {

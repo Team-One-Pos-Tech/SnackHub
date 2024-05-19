@@ -1,8 +1,8 @@
 using FluentAssertions;
-
+using NUnit.Framework;
 using OrderItemFactory = SnackHub.Domain.ValueObjects.OrderItem.Factory;
 
-namespace SnackHub.Application.Tests.ValueObjects;
+namespace SnackHub.Domain.Tests.ValueObjects;
 
 public class OrderItemShould
 {
