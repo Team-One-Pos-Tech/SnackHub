@@ -3,6 +3,7 @@ using Moq;
 using SnackHub.Application.Order.Models;
 using SnackHub.Application.Order.UseCases;
 using SnackHub.Domain.Contracts;
+using SnackHub.Domain.Entities;
 
 namespace SnackHub.Application.Tests.UseCases;
 
@@ -130,21 +131,20 @@ public class ConfirmOrderShould
     public async Task SucceedWhenRequirementsAreMet()
     {
         var clientId = Guid.NewGuid();
-        var productId = Guid.NewGuid();
+        var product = new Product("Product", Category.Lanche, 10m, "Description", []);
         var request = new ConfirmOrderRequest
         {
             ClientId = clientId,
-            Items = [new ConfirmOrderRequest.Item(productId, 1)]
+            Items = [new ConfirmOrderRequest.Item(product.Id, 1)]
         };
+        _productRepositoryMock
+            .Setup(repository => repository.GetByIdsAsync(It.IsAny<IEnumerable<Guid>>()))
+            .ReturnsAsync([product]);
         _clientRepositoryMock
             .Setup(repository => repository.ExistsByIdAsync(It.IsAny<Guid>()))
             .ReturnsAsync(true);
-        _productRepositoryMock
-            .Setup(repository => repository.GetByIdsAsync(It.IsAny<IEnumerable<Guid>>()))
-            .ReturnsAsync([(Id: productId, Name: "Product", Price: 10m)]);
         var captures = new List<Domain.Entities.Order>();
-        _orderRepositoryMock
-            .Setup(repository => repository.AddAsync(Capture.In(captures)));
+        _orderRepositoryMock.Setup(repository => repository.AddAsync(Capture.In(captures)));
         
         var response = await _confirmOrderUseCase.Execute(request);
         
@@ -155,7 +155,7 @@ public class ConfirmOrderShould
         _clientRepositoryMock
             .Verify(repository => repository.ExistsByIdAsync(clientId), Times.Once);
         _productRepositoryMock
-            .Verify(repository => repository.GetByIdsAsync(new[] { productId }), Times.Once);
+            .Verify(repository => repository.GetByIdsAsync(new[] { product.Id }), Times.Once);
         _orderRepositoryMock
             .Verify(repository => repository.AddAsync(It.IsAny<Domain.Entities.Order>()), Times.Once);
         captures
@@ -169,7 +169,7 @@ public class ConfirmOrderShould
                 {
                     new
                     {
-                        ProductId = productId,
+                        ProductId = product.Id,
                         ProductName = "Product",
                         UnitPrice = 10m,
                         Quantity = 1
