@@ -12,7 +12,7 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>
         Id = id;
     }
 
-    public TId Id { get; }
+    public virtual TId Id { get; }
 
     public static bool operator ==(Entity<TId> left, Entity<TId> right)
     {
