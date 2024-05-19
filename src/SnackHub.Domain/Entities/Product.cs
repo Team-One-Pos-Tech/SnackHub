@@ -19,10 +19,10 @@
             Image = image ?? new List<string>();
         }
 
-        public void Edit(string name, Category categoria, decimal price, string description, List<string> image)
+        public void Edit(string name, Category category, decimal price, string description, List<string> image)
         {
             Name = name;
-            Category = categoria;
+            Category = category;
             Price = price;
             Description = description;
             Image = image ?? new List<string>();
