@@ -27,5 +27,10 @@ namespace SnackHub.Infra.Repositories.InMemory
         {
             return await Task.FromResult(clients.FirstOrDefault(client => client.CPF.Equals(cpf)));
         }
+        
+        public async Task<bool> ExistsByIdAsync(Guid id)
+        {
+            return await Task.FromResult(clients.Any(client => client.Id == id));
+        }
     }
 }

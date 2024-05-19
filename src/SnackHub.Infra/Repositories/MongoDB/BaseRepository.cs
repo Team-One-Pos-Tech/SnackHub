@@ -20,6 +20,11 @@ public abstract class BaseRepository<TModel> : IBaseRepository<TModel> where TMo
     {
         await MongoCollection.InsertOneAsync(model);
     }
+    
+    public async Task UpdateByPredicateAsync(Expression<Func<TModel, bool>> predicate, TModel model)
+    {
+        await MongoCollection.ReplaceOneAsync(predicate, model);
+    }
 
     public async Task DeleteByPredicateAsync(Expression<Func<TModel, bool>> predicate)
     {
@@ -30,6 +35,12 @@ public abstract class BaseRepository<TModel> : IBaseRepository<TModel> where TMo
     {
         var cursor = await MongoCollection.FindAsync(predicate);
         return await cursor.FirstOrDefaultAsync();
+    }
+    
+    public async Task<bool> ExistsByPredicateAsync(Expression<Func<TModel, bool>> predicate)
+    {
+        var cursor = await MongoCollection.FindAsync(predicate);
+        return await cursor.AnyAsync();
     }
 
     public async Task<IEnumerable<TModel>> ListByPredicateAsync(Expression<Func<TModel, bool>> predicate)
