@@ -56,7 +56,7 @@ namespace SnackHub.Infra.Repositories.InMemory
             return await Task.FromResult(products.AsEnumerable());
         }
 
-        public Task<IEnumerable<Product>> IProductRepository.GetByIdsAsync(IEnumerable<Guid> ids)
+        Task<IEnumerable<Product>> IProductRepository.GetByIdsAsync(IEnumerable<Guid> ids)
         {
           throw new NotImplementedException();
         }
