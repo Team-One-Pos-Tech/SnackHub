@@ -20,8 +20,4 @@
     <ProjectReference Include="..\SnackHub.Domain\SnackHub.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Product\" />
-  </ItemGroup>
-
 </Project>
