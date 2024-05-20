@@ -5,6 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>SnackHub</RootNamespace>
     <UserSecretsId>e87b634e-cabe-4a5c-8e9b-9bfea7181565</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>

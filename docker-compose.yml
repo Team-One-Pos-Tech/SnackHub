@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  mongodb:
+    restart: always
+    image: mongo:7.0
+
+  snackhub.api:
+    image: ${DOCKER_REGISTRY-}snackhubapi
+    container_name: snackhubapi
+    restart: always
+    build:
+      context: .
+      dockerfile: src/SnackHub.Api/Dockerfile
+      args:
+        PASSWORD_ENV_SEEDED: ${PASSWORD_ENV_SEEDED}
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  mongo_data:

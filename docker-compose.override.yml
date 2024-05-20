@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+  mongodb:
+    container_name: ${MONGODB_HOST}
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASS}
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
+    volumes:
+      - mongo_data:/data/db
+
+  snackhub.api:
+    depends_on:
+      - mongodb
+    environment:
+      - Storage:MongoDb:Host=${MONGODB_HOST}
+      - Storage:MongoDb:Port=${MONGODB_PORT}
+      - Storage:MongoDb:UserName=${MONGODB_USER}
+      - Storage:MongoDb:Password=${MONGODB_PASS}
+      - Storage:MongoDb:Database=${MONGODB_DATABASE}
+      - PASSWORD_ENV_SEEDED=${PASSWORD_ENV_SEEDED}
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${PASSWORD_ENV_SEEDED}
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/aspnetapp.pfx
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - "7080:80"
+      - "7443:443" 
+    networks:
+      - backend
