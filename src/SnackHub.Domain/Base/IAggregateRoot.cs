@@ -3,7 +3,7 @@
 
     // How do work with IAggregateRoot from DDD?
     // IAggregateRoot is a marker interface that is used to identify aggregate roots.
-    public class IAggregateRoot
+    public interface IAggregateRoot
     {
     }
 }

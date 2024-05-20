@@ -50,7 +50,7 @@ namespace SnackHub.Controllers
 
             if (!response.IsValid) 
             {
-                return ValidationProblem(ModelState.AddNofifications(response.Notifications));
+                return ValidationProblem(ModelState.AddNotifications(response.Notifications));
             }
 
             return Ok(response);
