@@ -5,7 +5,7 @@ namespace SnackHub.Extensions
 {
     public static class AddNotificationsExtensions
     {
-        public static ModelStateDictionary AddNofifications(this ModelStateDictionary modelState, IEnumerable<Notification> notifications)
+        public static ModelStateDictionary AddNotifications(this ModelStateDictionary modelState, IEnumerable<Notification> notifications)
         {
             foreach (var item in notifications)
             {

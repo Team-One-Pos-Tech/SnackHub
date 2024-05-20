@@ -26,4 +26,9 @@ public sealed class ClientRepository : BaseRepository<Client>, IClientRepository
     {
         return await FindByPredicateAsync(px => px.CPF.Equals(cpf));
     }
+    
+    public async Task<bool> ExistsByIdAsync(Guid id)
+    {
+        return await ExistsByPredicateAsync(px => px.Id.Equals(id));
+    }
 }
