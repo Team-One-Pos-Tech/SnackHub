@@ -45,7 +45,7 @@ namespace SnackHub.Controllers
 
             if (!response.IsValid)
             {
-                return ValidationProblem(ModelState.AddNofifications((IEnumerable<Flunt.Notifications.Notification>)response.Notifications));
+                return ValidationProblem(ModelState.AddNotifications((IEnumerable<Flunt.Notifications.Notification>)response.Notifications));
             }
 
             return Ok(response);
@@ -61,7 +61,7 @@ namespace SnackHub.Controllers
 
             if (!response.IsValid)
             {
-                return ValidationProblem(ModelState.AddNofifications((IEnumerable<Flunt.Notifications.Notification>)response.Notifications));
+                return ValidationProblem(ModelState.AddNotifications((IEnumerable<Flunt.Notifications.Notification>)response.Notifications));
             }
 
             return Ok(response);
