@@ -38,7 +38,7 @@ namespace SnackHub.Controllers
             return Ok(clientResponse);
         }
 
-        [HttpPost(Name = "Post")]
+        [HttpPost]
         [ProducesResponseType(typeof(RegisterClientResponse),
             StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails),

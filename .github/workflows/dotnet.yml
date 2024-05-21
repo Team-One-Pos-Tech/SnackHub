@@ -12,11 +12,11 @@ jobs:
         with:
           dotnet-version: 8.0.x
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore SnackHub.sln
       - name: Build
-        run: dotnet build --no-restore
+        run: dotnet build SnackHub.sln --no-restore
       - name: Test
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test SnackHub.sln --no-build --verbosity normal
   
   create-and-publish-image:
     permissions: write-all

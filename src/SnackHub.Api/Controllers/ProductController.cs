@@ -35,7 +35,7 @@ namespace SnackHub.Controllers
             return Ok(products);
         }
 
-        [HttpPost(Name = "Post")]
+        [HttpPost]
         [ProducesResponseType(typeof(ManageProductResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
