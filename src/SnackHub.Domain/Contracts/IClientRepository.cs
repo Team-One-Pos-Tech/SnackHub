@@ -9,5 +9,7 @@ namespace SnackHub.Domain.Contracts
 
         Task<Client?> GetClientByIdAsync(Guid id);
         Task<Client?> GetClientByCpfAsync(CPF cpf);
+
+        Task<bool> ExistsByIdAsync(Guid id);
     }
 }

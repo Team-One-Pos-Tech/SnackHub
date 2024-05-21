@@ -29,5 +29,6 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseMongoDbConventions();
 app.MapControllers();
 app.Run();
