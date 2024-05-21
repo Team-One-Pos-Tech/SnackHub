@@ -29,7 +29,7 @@ public class CancelOrderUseCase : ICancelOrderUseCase
         {
             order.Cancel();
             
-            await _orderRepository.SaveAsync(order);
+            await _orderRepository.EditAsync(order);
         }
         catch (DomainException e)
         {
