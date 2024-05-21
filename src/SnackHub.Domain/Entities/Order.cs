@@ -43,9 +43,9 @@ public class Order : Entity<Guid>, IAggregateRoot
 
     public void Cancel()
     {
-        if (Status == OrderStatus.Accepted)
+        if (new [] { OrderStatus.Cancelled, OrderStatus.Accepted, OrderStatus.Declined }.Contains(Status))
         {
-            throw new DomainException("Order is already accepted and cannot be cancelled");
+            throw new DomainException($"Order is already {Enum.GetName(Status)?.ToLowerInvariant()} and cannot be cancelled");
         }
         
         Status = OrderStatus.Cancelled;

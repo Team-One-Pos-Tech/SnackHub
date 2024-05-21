@@ -2,6 +2,7 @@ using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using SnackHub.Domain.Base;
+using SnackHub.Domain.Entities;
 using SnackHub.Domain.ValueObjects;
 
 using OrderFactory = SnackHub.Domain.Entities.Order.Factory;
@@ -93,6 +94,36 @@ public class OrderShould
         act.Should()
             .ThrowExactly<DomainException>()
             .WithMessage("Order must have at least one item to be confirmed");
+    }
+    
+    [Test]
+    public void ShouldBeCancelledWhenRequirementsAreMet(
+        [Values(OrderStatus.Pending, OrderStatus.Confirmed, OrderStatus.Cancelled) ] OrderStatus status)
+    {
+        var order = OrderFactory.Create(Guid.NewGuid(), [
+            OrderItemFactory.Create(Guid.NewGuid(), "X-Bacon", 10.0m, 3)
+        ]);
+        
+        order.Cancel();
+        
+        order.Status.Should().Be(OrderStatus.Cancelled);
+    }
+    
+    [Test]
+    public void ShouldFailOnCancelWhenStatusIsNotCancellable(
+        [Values(OrderStatus.Accepted, OrderStatus.Cancelled, OrderStatus.Declined)] OrderStatus status)
+    {
+        var order = new Mock<Order>();
+        order.SetupGet(o => o.Status).Returns(status);
+       
+        var act = () => order.Object.Cancel();
+        
+        act.Should()
+            .ThrowExactly<DomainException>()
+            .Which
+            .Message
+            .Should()
+            .EndWith("cannot be cancelled");
     }
     
     [Test]
