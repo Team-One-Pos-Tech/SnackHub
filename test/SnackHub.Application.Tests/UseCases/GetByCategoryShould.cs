@@ -1,6 +1,8 @@
 using FluentAssertions;
 using Moq;
+using SnackHub.Application.Contracts;
 using SnackHub.Application.Models;
+using SnackHub.Application.UseCases;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Entities;
 
@@ -8,7 +10,7 @@ namespace SnackHub.Application.Tests.UseCases;
 
 public class GetByCategoryShould
 {
-    private GetByCategoryUseCase _getByCategoryUseCase;
+    private IGetByCategoryUseCase _getByCategoryUseCase;
     private Mock<IProductRepository> _productRepositoryMock;
 
     [SetUp]
@@ -63,13 +65,5 @@ public class GetByCategoryShould
         productsResponse.Last().Id.Should().Be(product2.Id);
         productsResponse.Last().Category.Should().Be(product2.Category);
         productsResponse.Last().Name.Should().Be(product2.Name);
-    }
-}
-
-public class GetByCategoryUseCase(IProductRepository productRepository)
-{
-    public Task<IEnumerable<GetProductResponse>> Get(Category category)
-    {
-        throw new NotImplementedException();
     }
 }
