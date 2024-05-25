@@ -31,7 +31,7 @@ public class OrderController : ControllerBase
             : ValidationProblem(ModelState.AddNotifications(response.Notifications));
     }
     
-    [HttpPost(Name = "Cancel")]
+    [HttpPut(Name = "Cancel")]
     [ProducesResponseType(typeof(CancelOrderResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
