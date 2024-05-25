@@ -7,7 +7,7 @@ using SnackHub.Domain.Entities;
 
 namespace SnackHub.Application.Tests.UseCases;
 
-public class GetByCategoryShould
+public class GetProductsByCategoryShould
 {
     private IGetByCategoryUseCase _getByCategoryUseCase;
     private Mock<IProductRepository> _productRepositoryMock;
