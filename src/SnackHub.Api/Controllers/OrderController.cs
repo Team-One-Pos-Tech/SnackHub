@@ -11,11 +11,16 @@ public class OrderController : ControllerBase
 {
     private readonly IConfirmOrderUseCase _confirmOrderUseCase;
     private readonly ICancelOrderUseCase _cancelOrderUseCase;
+    private readonly ICheckoutOrderUseCase _checkoutOrderUseCase;
 
-    public OrderController(IConfirmOrderUseCase confirmOrderUseCase, ICancelOrderUseCase cancelOrderUseCase)
+    public OrderController(
+        IConfirmOrderUseCase confirmOrderUseCase,
+        ICancelOrderUseCase cancelOrderUseCase,
+        ICheckoutOrderUseCase checkoutOrderUseCase)
     {
         _confirmOrderUseCase = confirmOrderUseCase;
         _cancelOrderUseCase = cancelOrderUseCase;
+        _checkoutOrderUseCase = checkoutOrderUseCase;
     }
     
     [HttpPost(Name = "Confirm")]
@@ -44,17 +49,16 @@ public class OrderController : ControllerBase
             : ValidationProblem(ModelState.AddNotifications(response.Notifications));
     }
     
-    // TODO: Implement Checkout endpoint
-    // [HttpPost(Name = "Checkout")]
-    // [ProducesResponseType(typeof(CheckoutOrderResponse), StatusCodes.Status200OK)]
-    // [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    // [ProducesDefaultResponseType]
-    // public async Task<ActionResult<CheckoutOrderResponse>> Checkout(CheckoutOrderRequest request)
-    // {
-    //     var response = await _checkoutOrderUseCase.Execute(request);
-    //
-    //     return response.IsValid
-    //         ? Ok(response) 
-    //         : ValidationProblem(ModelState.AddNotifications(response.Notifications));
-    // }
+    [HttpPost(Name = "Checkout")]
+    [ProducesResponseType(typeof(CheckoutOrderResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult<CheckoutOrderResponse>> Checkout(CheckoutOrderRequest request)
+    {
+        var response = await _checkoutOrderUseCase.Execute(request);
+    
+        return response.IsValid
+            ? Ok(response) 
+            : ValidationProblem(ModelState.AddNotifications(response.Notifications));
+    }
 }
