@@ -148,22 +148,23 @@ public class ConfirmOrderShould
         
         var response = await _confirmOrderUseCase.Execute(request);
         
+        var order = captures.Single();
         response
             .IsValid
             .Should()
             .BeTrue();
-        _clientRepositoryMock
-            .Verify(repository => repository.ExistsByIdAsync(clientId), Times.Once);
-        _productRepositoryMock
-            .Verify(repository => repository.GetByIdsAsync(new[] { product.Id }), Times.Once);
-        _orderRepositoryMock
-            .Verify(repository => repository.AddAsync(It.IsAny<Domain.Entities.Order>()), Times.Once);
-        captures
-            .Single()
+        response
             .Should()
             .BeEquivalentTo(new
             {
-                response.Id,
+                OrderId = order.Id,
+                Total = 10m
+            });
+        order
+            .Should()
+            .BeEquivalentTo(new
+            {
+                Id = response.OrderId,
                 ClientId = clientId,
                 Items = new[]
                 {
@@ -176,5 +177,11 @@ public class ConfirmOrderShould
                     }
                 }
             });
+        _clientRepositoryMock
+            .Verify(repository => repository.ExistsByIdAsync(clientId), Times.Once);
+        _productRepositoryMock
+            .Verify(repository => repository.GetByIdsAsync(new[] { product.Id }), Times.Once);
+        _orderRepositoryMock
+            .Verify(repository => repository.AddAsync(It.IsAny<Domain.Entities.Order>()), Times.Once);
     }
 }

@@ -80,7 +80,6 @@ public class CancelOrderShould
                 Key = nameof(request.OrderId),
                 Message = "Order is already accepted and cannot be cancelled at this time"
             });
-        
     }
     
     [Test]

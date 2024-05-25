@@ -4,5 +4,6 @@ namespace SnackHub.Application.Order.Models;
 
 public class ConfirmOrderResponse : Notifiable<Notification>
 {
-    public Guid? Id { get; set; }
+    public Guid? OrderId { get; set; }
+    public decimal? Total { get; set; }
 }

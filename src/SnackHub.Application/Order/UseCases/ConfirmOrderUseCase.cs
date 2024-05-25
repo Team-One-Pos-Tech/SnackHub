@@ -50,7 +50,8 @@ public class ConfirmOrderUseCase : IConfirmOrderUseCase
             
             await _orderRepository.AddAsync(order);
             
-            response.Id = order.Id;
+            response.OrderId = order.Id;
+            response.Total = order.Total;
         } 
         catch (DomainException e)
         {
