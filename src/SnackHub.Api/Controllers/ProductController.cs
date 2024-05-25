@@ -85,7 +85,7 @@ namespace SnackHub.Controllers
             return NoContent();
         }
         
-        [HttpGet("GetByCategory/{category:int}")]
+        [HttpGet("{category:int}")]
         [ProducesResponseType(typeof(IEnumerable<GetProductResponse>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<GetProductResponse>>> GetByCategory([FromRoute] Category category)
         {
