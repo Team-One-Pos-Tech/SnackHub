@@ -78,7 +78,7 @@ public class CancelOrderShould
             .BeEquivalentTo(new
             {
                 Key = nameof(request.OrderId),
-                Message = "Order is already accepted and cannot be cancelled"
+                Message = "Order is already accepted and cannot be cancelled at this time"
             });
         
     }

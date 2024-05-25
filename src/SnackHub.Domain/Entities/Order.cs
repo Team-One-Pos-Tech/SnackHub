@@ -13,24 +13,24 @@ public class Order : Entity<Guid>, IAggregateRoot
     protected Order() : base(Guid.NewGuid())
     {
         Items = [];
+        Status = OrderStatus.Pending;
     }
     
     protected Order(Guid clientId, IReadOnlyCollection<OrderItem> items) 
-        : base(Guid.NewGuid())
+        : this()
     {
         ArgumentOutOfRangeException.ThrowIfEqual(clientId, Guid.Empty);
         ArgumentNullException.ThrowIfNull(items);
         
         ClientId = clientId;
         Items = items;
-        Status = OrderStatus.Pending;
     }
 
     public void Confirm()
     {
         if (Status != OrderStatus.Pending)
         {
-            throw new DomainException($"Order cannot be confirmed. Current status: {Status}");
+            throw new DomainException($"Order is {GetStatusDescription()} and cannot be confirmed at this time");
         }
 
         if (Items.Count == 0)
@@ -45,10 +45,25 @@ public class Order : Entity<Guid>, IAggregateRoot
     {
         if (new [] { OrderStatus.Cancelled, OrderStatus.Accepted, OrderStatus.Declined }.Contains(Status))
         {
-            throw new DomainException($"Order is already {Enum.GetName(Status)?.ToLowerInvariant()} and cannot be cancelled");
+            throw new DomainException($"Order is already {GetStatusDescription()} and cannot be cancelled at this time");
         }
         
         Status = OrderStatus.Cancelled;
+    }
+    
+    public void Checkout(bool accepted)
+    {
+        if (Status != OrderStatus.Confirmed)
+        {
+            throw new DomainException($"Order is {GetStatusDescription()} and cannot be checkout out at this time");
+        }
+        
+        Status = accepted ? OrderStatus.Accepted : OrderStatus.Declined;
+    }
+    
+    private string? GetStatusDescription()
+    {
+        return Enum.GetName(Status)?.ToLowerInvariant();
     }
     
     public static class Factory

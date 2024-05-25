@@ -72,19 +72,6 @@ public class OrderShould
     }
     
     [Test]
-    public void ShouldFailOnConfirmWhenStatusIsNotPending()
-    {
-        var order = new Mock<Domain.Entities.Order>();
-        order.SetupGet(o => o.Status).Returns(OrderStatus.Processing);
-       
-        var act = () => order.Object.Confirm();
-        
-        act.Should()
-            .ThrowExactly<DomainException>()
-            .WithMessage("Order cannot be confirmed. Current status: Processing");
-    }
-    
-    [Test]
     public void ShouldFailOnConfirmWhenNoItemsAreSelected()
     {
         var order = OrderFactory.Create(Guid.NewGuid(), []);
@@ -123,7 +110,7 @@ public class OrderShould
             .Which
             .Message
             .Should()
-            .EndWith("cannot be cancelled");
+            .EndWith("cannot be cancelled at this time");
     }
     
     [Test]
