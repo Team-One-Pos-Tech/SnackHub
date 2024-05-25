@@ -16,7 +16,7 @@ public sealed class OrderRepository : BaseRepository<Order>, IOrderRepository
         await InsertAsync(order);
     }
     
-    public async Task SaveAsync(Order order)
+    public async Task EditAsync(Order order)
     {
         await UpdateByPredicateAsync(x => x.Id.Equals(order.Id), order);
     }
