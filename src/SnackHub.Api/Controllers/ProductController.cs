@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SnackHub.Application.Contracts;
 using SnackHub.Application.Models;
+using SnackHub.Domain.Entities;
 using SnackHub.Extensions;
 
 namespace SnackHub.Controllers
@@ -11,11 +12,13 @@ namespace SnackHub.Controllers
     {
         private readonly IGetProductUseCase _getProductUseCase;
         private readonly IManageProductUseCase _manageProductUseCase;
+        private readonly IGetByCategoryUseCase _getByCategoryUseCase;
 
-        public ProductController(IGetProductUseCase getProductUseCase, IManageProductUseCase manageProductUseCase)
+        public ProductController(IGetProductUseCase getProductUseCase, IManageProductUseCase manageProductUseCase, IGetByCategoryUseCase getByCategoryUseCase)
         {
             _getProductUseCase = getProductUseCase;
             _manageProductUseCase = manageProductUseCase;
+            _getByCategoryUseCase = getByCategoryUseCase;
         }
 
         [HttpGet("{id:guid}")]
@@ -80,6 +83,20 @@ namespace SnackHub.Controllers
             }
 
             return NoContent();
+        }
+        
+        [HttpGet("GetByCategory")]
+        [ProducesResponseType(typeof(IEnumerable<GetProductResponse>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<GetProductResponse>>> GetByCategory([FromRoute] Category category)
+        {
+            var products = await _getByCategoryUseCase.Get(category);
+
+            if (!products.Any())
+            {
+                return NotFound();
+            }
+            
+            return Ok(products);
         }
     }
 }

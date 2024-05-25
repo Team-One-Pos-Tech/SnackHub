@@ -1,7 +1,6 @@
 using FluentAssertions;
 using Moq;
 using SnackHub.Application.Contracts;
-using SnackHub.Application.Models;
 using SnackHub.Application.UseCases;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Entities;
