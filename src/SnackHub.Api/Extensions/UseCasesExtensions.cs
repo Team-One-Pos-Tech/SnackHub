@@ -17,6 +17,7 @@ public static class UseCasesExtensions
             .AddScoped<IConfirmOrderUseCase, ConfirmOrderUseCase>()
             .AddScoped<ICancelOrderUseCase, CancelOrderUseCase>()
             .AddScoped<IGetProductUseCase, GetProductUseCase>()
-            .AddScoped<IManageProductUseCase, ManageProductUseCase>();
+            .AddScoped<IManageProductUseCase, ManageProductUseCase>()
+            .AddScoped<IGetByCategoryUseCase, GetByCategoryUseCase>();
     }
 }

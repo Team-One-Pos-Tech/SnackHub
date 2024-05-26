@@ -60,5 +60,10 @@ namespace SnackHub.Infra.Repositories.InMemory
         {
             return await Task.FromResult(products.Where(p => ids.Contains(p.Id)));
         }
+        
+        public async Task<IEnumerable<Product>> GetByCategory(Category category)
+        {
+            return await Task.FromResult(products.Where(p => p.Category == category));
+        }
     }
 }

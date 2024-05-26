@@ -42,6 +42,11 @@ namespace SnackHub.Infra.Repositories.MongoDB
         {
             return await ListByPredicateAsync(p => ids.Contains(p.Id));
         }
+        
+        public async Task<IEnumerable<Product>> GetByCategory(Category category)
+        {
+            return await MongoCollection.Find(product => product.Category == category).ToListAsync();
+        }
     }
 
 }
