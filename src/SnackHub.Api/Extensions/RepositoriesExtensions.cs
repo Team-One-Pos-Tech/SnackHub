@@ -1,5 +1,4 @@
 using SnackHub.Domain.Contracts;
-using SnackHub.Infra.Repositories.InMemory;
 using SnackHub.Infra.Repositories.MongoDB;
 
 namespace SnackHub.Extensions;

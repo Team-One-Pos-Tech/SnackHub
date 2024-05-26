@@ -1,3 +1,4 @@
+using SnackHub.Application.Payment.Models;
 using SnackHub.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ builder
     .Services
     .AddMongoDb(builder.Configuration)
     .AddRepositories()
+    .AddServices()
     .AddUseCases()
     .AddValidators();
 
