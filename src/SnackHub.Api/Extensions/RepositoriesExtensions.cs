@@ -10,6 +10,7 @@ public static class RepositoriesExtensions
         return serviceCollection
             .AddScoped<IClientRepository, ClientRepository>()
             .AddScoped<IProductRepository, ProductRepository>()
-            .AddScoped<IOrderRepository, OrderRepository>();
+            .AddScoped<IOrderRepository, OrderRepository>()
+            .AddScoped<IKitchenRequestRepository, KitchenRequestRepository>();
     }
 }
