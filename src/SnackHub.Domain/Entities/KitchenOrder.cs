@@ -34,7 +34,7 @@ public class KitchenOrder : Entity<Guid>, IAggregateRoot
             KitchenOrderStatus.Received => KitchenOrderStatus.Preparing,
             KitchenOrderStatus.Preparing => KitchenOrderStatus.Finished,
             KitchenOrderStatus.Finished => KitchenOrderStatus.Done,
-            _ => KitchenOrderStatus.Received
+            _ => Status
         };
     }
     
