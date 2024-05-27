@@ -31,7 +31,7 @@ This command will automatically build and start the necessary services, includin
 
 **ports**:
 
-- http://localhost:7080
-- https://localhost:7443
+- http://localhost:7080/swagger
+- https://localhost:7443/swagger
 
 ## Dependencies
