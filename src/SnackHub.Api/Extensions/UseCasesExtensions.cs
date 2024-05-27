@@ -2,6 +2,7 @@ using SnackHub.Application.Client.Contracts;
 using SnackHub.Application.Client.UseCases;
 using SnackHub.Application.Contracts;
 using SnackHub.Application.KitchenRequest.Contracts;
+using SnackHub.Application.KitchenRequest.UseCases;
 using SnackHub.Application.Order.Contracts;
 using SnackHub.Application.Order.UseCases;
 using SnackHub.Application.UseCases;
@@ -21,6 +22,6 @@ public static class UseCasesExtensions
             .AddScoped<IGetProductUseCase, GetProductUseCase>()
             .AddScoped<IManageProductUseCase, ManageProductUseCase>()
             .AddScoped<IGetByCategoryUseCase, GetByCategoryUseCase>()
-            .AddScoped<IListKitchenRequestUseCase, IListKitchenRequestUseCase>();
+            .AddScoped<IListKitchenRequestUseCase, ListKitchenRequestUseCase>();
     }
 }

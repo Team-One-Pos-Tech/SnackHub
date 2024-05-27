@@ -20,8 +20,13 @@ public class ListKitchenRequestUseCase : IListKitchenRequestUseCase
         return (from kitchenRequest in kitchenRequests
             let items = kitchenRequest
                 .Items
-                .Select(requestItem => new ListKitchenRequestResponse.Item(requestItem.ProductName, requestItem.Quantity))
+                .Select(requestItem => new ListKitchenRequestResponse.RequestItem(requestItem.ProductName, requestItem.Quantity))
                 .ToList()
-            select new ListKitchenRequestResponse { OrderId = kitchenRequest.OrderId, Items = items }).ToList();
+            select new ListKitchenRequestResponse
+            {
+                OrderId = kitchenRequest.OrderId, 
+                Items = items, 
+                Status = kitchenRequest.Status.ToString()
+            }).ToList();
     }
 }
