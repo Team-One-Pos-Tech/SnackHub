@@ -17,8 +17,8 @@ public class UpdateKitchenOrderStatusUseCase : IUpdateKitchenOrderStatusUseCase
     {
         var response = new UpdateKitchenOrderStatusResponse();
 
-        var kitchenRequest = await _kitchenOrderRepository.GetByOderIdAsync(orderStatusRequest.OrderId);
-        if (kitchenRequest is null)
+        var kitchenOrder = await _kitchenOrderRepository.GetByOderIdAsync(orderStatusRequest.OrderId);
+        if (kitchenOrder is null)
         {
             response.AddNotification(nameof(orderStatusRequest.OrderId), "Kitchen request for order not found!");
             return response;
@@ -26,8 +26,8 @@ public class UpdateKitchenOrderStatusUseCase : IUpdateKitchenOrderStatusUseCase
 
         try
         {
-            kitchenRequest.UpdateStatus();
-            await _kitchenOrderRepository.EditAsync(kitchenRequest);
+            kitchenOrder.UpdateStatus();
+            await _kitchenOrderRepository.EditAsync(kitchenOrder);
         }
         catch (Exception exception)
         {

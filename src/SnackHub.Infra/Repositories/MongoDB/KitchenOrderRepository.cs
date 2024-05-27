@@ -23,7 +23,7 @@ public class KitchenOrderRepository : BaseRepository<KitchenOrder>, IKitchenOrde
 
     public async Task EditAsync(KitchenOrder kitchenOrder)
     {
-        await UpdateByPredicateAsync(request => request.Id.Equals(kitchenOrder.Id), kitchenOrder);
+        await UpdateByPredicateAsync(request => request.OrderId.Equals(kitchenOrder.OrderId), kitchenOrder);
     }
 
     public async Task<IEnumerable<KitchenOrder>> ListAllAsync()

@@ -23,9 +23,9 @@ public class KitchenOrder : Entity<Guid>, IAggregateRoot
         Status = status;
     }
     
-    public virtual Guid OrderId { get; init; }
+    public virtual Guid OrderId { get; private set; }
     public virtual IReadOnlyCollection<KitchenOrdertItem> Items { get; private set; }
-    public virtual KitchenOrderStatus Status { get; private set; } = KitchenOrderStatus.Received;
+    public virtual KitchenOrderStatus Status { get; private set; }
 
     public void UpdateStatus()
     {
@@ -34,7 +34,7 @@ public class KitchenOrder : Entity<Guid>, IAggregateRoot
             KitchenOrderStatus.Received => KitchenOrderStatus.Preparing,
             KitchenOrderStatus.Preparing => KitchenOrderStatus.Finished,
             KitchenOrderStatus.Finished => KitchenOrderStatus.Done,
-            _ => Status
+            _ => KitchenOrderStatus.Received
         };
     }
     
