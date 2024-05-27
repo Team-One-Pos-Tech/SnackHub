@@ -1,6 +1,6 @@
 namespace SnackHub.Domain.ValueObjects;
 
-public enum KitchenRequestStatus
+public enum KitchenOrderStatus
 {
     Received = 0,    // Default status
     Preparing = 1,  // Being prepared by the Kitchen Staff

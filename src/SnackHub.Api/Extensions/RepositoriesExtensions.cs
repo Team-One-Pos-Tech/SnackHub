@@ -11,6 +11,6 @@ public static class RepositoriesExtensions
             .AddScoped<IClientRepository, ClientRepository>()
             .AddScoped<IProductRepository, ProductRepository>()
             .AddScoped<IOrderRepository, OrderRepository>()
-            .AddScoped<IKitchenRequestRepository, KitchenRequestRepository>();
+            .AddScoped<IKitchenOrderRepository, KitchenOrderRepository>();
     }
 }
