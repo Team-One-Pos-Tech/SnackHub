@@ -7,12 +7,12 @@ public class KitchenOrder : Entity<Guid>, IAggregateRoot
 {
     protected KitchenOrder( ): base(Guid.NewGuid()) { }
     
-    public KitchenOrder(Guid orderId, IReadOnlyCollection<KitchenRequestItem> items) 
+    public KitchenOrder(Guid orderId, IReadOnlyCollection<KitchenOrdertItem> items) 
         : this(Guid.NewGuid(), orderId, items, KitchenOrderStatus.Received)
     {
     }
     
-    public KitchenOrder(Guid id, Guid orderId, IReadOnlyCollection<KitchenRequestItem> items, KitchenOrderStatus status)
+    public KitchenOrder(Guid id, Guid orderId, IReadOnlyCollection<KitchenOrdertItem> items, KitchenOrderStatus status)
         : base(id)
     {
         ArgumentOutOfRangeException.ThrowIfEqual(orderId, Guid.Empty);
@@ -24,7 +24,7 @@ public class KitchenOrder : Entity<Guid>, IAggregateRoot
     }
     
     public virtual Guid OrderId { get; init; }
-    public virtual IReadOnlyCollection<KitchenRequestItem> Items { get; }
+    public virtual IReadOnlyCollection<KitchenOrdertItem> Items { get; private set; }
     public virtual KitchenOrderStatus Status { get; private set; } = KitchenOrderStatus.Received;
 
     public void UpdateStatus()
@@ -40,7 +40,7 @@ public class KitchenOrder : Entity<Guid>, IAggregateRoot
     
     public static class Factory
     {
-        public static KitchenOrder Create(Guid orderId, IReadOnlyCollection<KitchenRequestItem> items)
+        public static KitchenOrder Create(Guid orderId, IReadOnlyCollection<KitchenOrdertItem> items)
         {
             return new KitchenOrder(orderId, items);
         }

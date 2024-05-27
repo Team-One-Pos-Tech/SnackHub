@@ -1,11 +1,11 @@
 namespace SnackHub.Domain.ValueObjects;
 
-public class KitchenRequestItem : ValueObject
+public class KitchenOrdertItem : ValueObject
 {
     public string ProductName { get; init; }
     public int Quantity { get; init; }
     
-    protected KitchenRequestItem(string productName, int quantity)
+    protected KitchenOrdertItem(string productName, int quantity)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(productName);
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);
@@ -22,9 +22,9 @@ public class KitchenRequestItem : ValueObject
     
     public static class Factory
     {
-        public static KitchenRequestItem Create(string productName, int quantity)
+        public static KitchenOrdertItem Create(string productName, int quantity)
         {
-            return new KitchenRequestItem(productName, quantity);
+            return new KitchenOrdertItem(productName, quantity);
         }
     }
 }
