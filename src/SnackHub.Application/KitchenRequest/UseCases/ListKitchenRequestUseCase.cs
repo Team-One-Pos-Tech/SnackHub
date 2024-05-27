@@ -13,16 +13,16 @@ public class ListKitchenRequestUseCase : IListKitchenRequestUseCase
         _kitchenRequestRepository = kitchenRequestRepository;
     }
     
-    public async Task<IEnumerable<ListKitchenRequestResponse>> Execute()
+    public async Task<IEnumerable<KitchenRequestResponse>> Execute()
     {
         var kitchenRequests = await _kitchenRequestRepository.ListAllAsync();
 
         return (from kitchenRequest in kitchenRequests
             let items = kitchenRequest
                 .Items
-                .Select(requestItem => new ListKitchenRequestResponse.RequestItem(requestItem.ProductName, requestItem.Quantity))
+                .Select(requestItem => new KitchenRequestResponse.RequestItem(requestItem.ProductName, requestItem.Quantity))
                 .ToList()
-            select new ListKitchenRequestResponse
+            select new KitchenRequestResponse
             {
                 OrderId = kitchenRequest.OrderId, 
                 Items = items, 

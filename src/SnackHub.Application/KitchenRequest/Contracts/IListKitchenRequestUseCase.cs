@@ -4,5 +4,5 @@ namespace SnackHub.Application.KitchenRequest.Contracts;
 
 public interface IListKitchenRequestUseCase
 {
-    Task<IEnumerable<ListKitchenRequestResponse>> Execute();
+    Task<IEnumerable<KitchenRequestResponse>> Execute();
 }

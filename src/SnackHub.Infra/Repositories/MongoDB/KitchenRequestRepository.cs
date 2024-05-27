@@ -11,8 +11,18 @@ public class KitchenRequestRepository : BaseRepository<KitchenRequest>, IKitchen
     {
     }
 
+    public async Task<KitchenRequest?> GetByOderIdAsync(Guid orderId)
+    {
+        return await FindByPredicateAsync(kitchenRequest => kitchenRequest.OrderId.Equals(orderId));
+    }
+    
+    public async Task EditAsync(KitchenRequest kitchenRequest)
+    {
+        await UpdateByPredicateAsync(request => request.Id.Equals(kitchenRequest.Id), kitchenRequest);
+    }
+
     public async Task<IEnumerable<KitchenRequest>> ListAllAsync()
     {
-        return await ListByPredicateAsync(px => px.Id != Guid.Empty); // Todo: Add Better Filter, Possible by date
+        return await ListByPredicateAsync(kitchenRequest => kitchenRequest.Id != Guid.Empty); // Todo: Add Better Filter, Possible by date
     }
 }

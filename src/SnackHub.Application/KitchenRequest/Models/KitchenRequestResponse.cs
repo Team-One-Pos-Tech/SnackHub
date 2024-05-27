@@ -2,7 +2,7 @@ using Flunt.Notifications;
 
 namespace SnackHub.Application.KitchenRequest.Models;
 
-public class ListKitchenRequestResponse : Notifiable<Notification>
+public class KitchenRequestResponse : Notifiable<Notification>
 {
     public required Guid OrderId { get; init; }
     public required IEnumerable<RequestItem> Items { get; init; } = [];
