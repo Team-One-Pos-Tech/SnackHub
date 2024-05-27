@@ -24,7 +24,7 @@ public class GetProductsByCategoryShould
     {
         // Arrange
         var productId = Guid.NewGuid();
-        var category = Category.Lanche;
+        var category = Category.Snack;
         
         var product1 = new Product(
             "Product 1", 

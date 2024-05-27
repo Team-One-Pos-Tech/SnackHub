@@ -131,7 +131,7 @@ public class ConfirmOrderShould
     public async Task SucceedWhenRequirementsAreMet()
     {
         var clientId = Guid.NewGuid();
-        var product = new Product("Product", Category.Lanche, 10m, "Description", []);
+        var product = new Product("Product", Category.Snack, 10m, "Description", []);
         var request = new ConfirmOrderRequest
         {
             ClientId = clientId,

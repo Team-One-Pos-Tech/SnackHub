@@ -2,9 +2,9 @@
 {
     public enum Category
     {
-        Lanche,
-        Acompanhamento,
-        Bebida,
-        Sobremesa
+        Snack,
+        SupportDish,
+        Drink,
+        Dessert
     }
 }
