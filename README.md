@@ -6,6 +6,11 @@ It intends to apply the concepts presented so far, such as Domain Driven Design,
 
 The API handles a few operations on a small fast food restaurant, including:
 
+- basic product management (CRUD)
+- client registration
+- order requests
+- kitchen requests
+
 ## Stack
 
 - C# 12
