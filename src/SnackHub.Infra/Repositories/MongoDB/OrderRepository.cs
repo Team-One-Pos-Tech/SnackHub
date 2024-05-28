@@ -25,4 +25,9 @@ public sealed class OrderRepository : BaseRepository<Order>, IOrderRepository
     {
         return await FindByPredicateAsync(x => x.Id.Equals(id));
     }
+
+    public async Task<IEnumerable<Order>> ListAllAsync()
+    {
+        return await ListByPredicateAsync(order => order.Id != Guid.Empty); // Todo: Add Better Filter, Possible by date
+    }
 }
