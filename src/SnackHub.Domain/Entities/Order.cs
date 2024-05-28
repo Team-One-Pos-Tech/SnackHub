@@ -10,7 +10,10 @@ public class Order : Entity<Guid>, IAggregateRoot
     public virtual OrderStatus Status { get; private set; }
     public decimal Total => Items.Sum(o => o.Total);
 
-    protected Order( ): base(Guid.NewGuid()) { }
+    protected Order( ): base(Guid.NewGuid()) 
+    {
+        Items = [];
+    }
     
     public Order(Guid clientId, IReadOnlyCollection<OrderItem> items) 
         : this(Guid.NewGuid(), clientId, items, OrderStatus.Pending)
