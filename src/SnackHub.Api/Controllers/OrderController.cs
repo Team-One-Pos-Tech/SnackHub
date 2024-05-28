@@ -12,15 +12,27 @@ public class OrderController : ControllerBase
     private readonly IConfirmOrderUseCase _confirmOrderUseCase;
     private readonly ICancelOrderUseCase _cancelOrderUseCase;
     private readonly ICheckoutOrderUseCase _checkoutOrderUseCase;
+    private readonly IListOrderUseCase _listOrderUseCase;
 
     public OrderController(
         IConfirmOrderUseCase confirmOrderUseCase,
         ICancelOrderUseCase cancelOrderUseCase,
-        ICheckoutOrderUseCase checkoutOrderUseCase)
+        ICheckoutOrderUseCase checkoutOrderUseCase, 
+        IListOrderUseCase listOrderUseCase)
     {
         _confirmOrderUseCase = confirmOrderUseCase;
         _cancelOrderUseCase = cancelOrderUseCase;
         _checkoutOrderUseCase = checkoutOrderUseCase;
+        _listOrderUseCase = listOrderUseCase;
+    }
+    
+    [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<OrderResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IEnumerable<OrderResponse>>> GetAll()
+    {
+        var orders = await _listOrderUseCase.Execute();
+        return Ok(orders);
     }
     
     [HttpPost(Name = "Confirm")]
