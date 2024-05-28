@@ -1,3 +1,5 @@
+using SnackHub.Application.KitchenOrder.Contracts;
+using SnackHub.Application.KitchenOrder.Models;
 using SnackHub.Application.Order.Contracts;
 using SnackHub.Application.Order.Models;
 using SnackHub.Application.Payment.Contracts;
@@ -12,13 +14,16 @@ public class CheckoutOrderUseCase : ICheckoutOrderUseCase
 {
     private readonly IOrderRepository _orderRepository;
     private readonly IPaymentGatewayService _paymentGatewayService;
+
+    private readonly ICreateKitchenOrderUseCase _kitchenOrderUseCase;
     
     public CheckoutOrderUseCase(
         IOrderRepository orderRepository, 
-        IPaymentGatewayService paymentGatewayService)
+        IPaymentGatewayService paymentGatewayService, ICreateKitchenOrderUseCase kitchenOrderUseCase)
     {
         _orderRepository = orderRepository;
         _paymentGatewayService = paymentGatewayService;
+        _kitchenOrderUseCase = kitchenOrderUseCase;
     }
     
     public async Task<CheckoutOrderResponse> Execute(CheckoutOrderRequest request)
@@ -50,7 +55,9 @@ public class CheckoutOrderUseCase : ICheckoutOrderUseCase
             order.Checkout(isSuccessful);
             await _orderRepository.EditAsync(order);
             
-            // TODO: raise event that will trigger "Pedido" creation 
+            // TODO: raise event that will trigger "Pedido" creation
+            // TODO: move this function to a event like in a near future(MediatR ??)
+            await SubmitKitchenOrderAsync(order);
         }
         catch (DomainException e)
         {
@@ -58,5 +65,13 @@ public class CheckoutOrderUseCase : ICheckoutOrderUseCase
         }
         
         return response;
+    }
+
+    private async Task SubmitKitchenOrderAsync(Domain.Entities.Order order)
+    {
+        await _kitchenOrderUseCase.Execute(new CreateKitchenOrderRequest
+        {
+            OrderId = order.Id
+        });
     }
 }

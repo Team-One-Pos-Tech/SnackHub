@@ -1,5 +1,7 @@
 using FluentAssertions;
 using Moq;
+using SnackHub.Application.KitchenOrder.Contracts;
+using SnackHub.Application.KitchenOrder.Models;
 using SnackHub.Application.Order.Models;
 using SnackHub.Application.Order.UseCases;
 using SnackHub.Application.Payment.Contracts;
@@ -16,6 +18,8 @@ public class CheckoutOrderShould
 {
     private Mock<IPaymentGatewayService> _paymentGatewayMock;
     private Mock<IOrderRepository> _orderRepositoryMock;
+    private Mock<ICreateKitchenOrderUseCase> _createKitchenOrderUseCase;
+    
     private CheckoutOrderUseCase _checkoutOrderUseCase;
     
     [SetUp]
@@ -23,10 +27,12 @@ public class CheckoutOrderShould
     {
         _paymentGatewayMock = new Mock<IPaymentGatewayService>();
         _orderRepositoryMock = new Mock<IOrderRepository>();
+        _createKitchenOrderUseCase = new Mock<ICreateKitchenOrderUseCase>();
         
         _checkoutOrderUseCase = new CheckoutOrderUseCase(
             _orderRepositoryMock.Object,
-            _paymentGatewayMock.Object
+            _paymentGatewayMock.Object,
+            _createKitchenOrderUseCase.Object
         );
     }
     
@@ -102,6 +108,11 @@ public class CheckoutOrderShould
         _paymentGatewayMock
             .Setup(gateway => gateway.Process(Capture.In(captures)))
             .ReturnsAsync(new PaymentResponse("some-transaction-id", PaymentStatus.Success));
+
+        _createKitchenOrderUseCase
+            .Setup(createKitchenOrderUseCase => createKitchenOrderUseCase.Execute(It.IsAny<CreateKitchenOrderRequest>()))
+            .ReturnsAsync(new CreateKitchenOrderResponse());
+        
         var request = new CheckoutOrderRequest { OrderId = orderId  };
         
         var response = await _checkoutOrderUseCase.Execute(request);
