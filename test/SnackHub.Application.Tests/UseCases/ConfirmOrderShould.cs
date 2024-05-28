@@ -4,11 +4,15 @@ using SnackHub.Application.Order.Models;
 using SnackHub.Application.Order.UseCases;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Entities;
+using SnackHub.Domain.ValueObjects;
+
+using ClientEntity = SnackHub.Domain.Entities.Client;
 
 namespace SnackHub.Application.Tests.UseCases;
 
 public class ConfirmOrderShould
 {
+    private ClientEntity _clientMock;
     private Mock<IClientRepository> _clientRepositoryMock;
     private Mock<IProductRepository> _productRepositoryMock;
     private Mock<IOrderRepository> _orderRepositoryMock;
@@ -17,6 +21,9 @@ public class ConfirmOrderShould
     [SetUp]
     public void Setup()
     {
+        var clientId = Guid.NewGuid();
+        _clientMock = new ClientEntity(clientId, "client", new CPF("123.456.789-09"));
+        
         _clientRepositoryMock = new Mock<IClientRepository>();
         _productRepositoryMock = new Mock<IProductRepository>();
         _orderRepositoryMock = new Mock<IOrderRepository>();
@@ -33,12 +40,12 @@ public class ConfirmOrderShould
     {
         var request = new ConfirmOrderRequest
         {
-            ClientId = Guid.NewGuid(),
+            Identifier = Guid.NewGuid().ToString(),
             Items = []
         };
         _clientRepositoryMock
-            .Setup(repository => repository.ExistsByIdAsync(It.IsAny<Guid>()))
-            .ReturnsAsync(false);
+            .Setup(repository => repository.GetClientByIdAsync(It.IsAny<Guid>()))
+            .ReturnsAsync((ClientEntity)null!);
         
         var response = await _confirmOrderUseCase.Execute(request);
         
@@ -54,7 +61,7 @@ public class ConfirmOrderShould
             .Should()
             .BeEquivalentTo(new
             {
-                Key = nameof(request.ClientId),
+                Key = nameof(request.Identifier),
                 Message = "Client not found"
             });
     }
@@ -64,12 +71,12 @@ public class ConfirmOrderShould
     {
         var request = new ConfirmOrderRequest
         {
-            ClientId = Guid.NewGuid(),
+            Identifier = Guid.NewGuid().ToString(),
             Items = [new ConfirmOrderRequest.Item(Guid.NewGuid(), 1)]
         };
         _clientRepositoryMock
-            .Setup(repository => repository.ExistsByIdAsync(It.IsAny<Guid>()))
-            .ReturnsAsync(true);
+            .Setup(repository => repository.GetClientByIdAsync(It.IsAny<Guid>()))
+            .ReturnsAsync(_clientMock);
         _productRepositoryMock
             .Setup(repository => repository.GetByIdsAsync(It.IsAny<IEnumerable<Guid>>()))
             .ReturnsAsync([]);
@@ -98,12 +105,12 @@ public class ConfirmOrderShould
     {
         var request = new ConfirmOrderRequest
         {
-            ClientId = Guid.NewGuid(),
+            Identifier = _clientMock.Id.ToString(),
             Items = []
         };
         _clientRepositoryMock
-            .Setup(repository => repository.ExistsByIdAsync(It.IsAny<Guid>()))
-            .ReturnsAsync(true);
+            .Setup(repository => repository.GetClientByIdAsync(It.IsAny<Guid>()))
+            .ReturnsAsync(_clientMock);
         _productRepositoryMock
             .Setup(repository => repository.GetByIdsAsync(It.IsAny<IEnumerable<Guid>>()))
             .ReturnsAsync([]);
@@ -128,21 +135,56 @@ public class ConfirmOrderShould
     }
 
     [Test]
+    public async Task SearchClientById()
+    {
+        var request = new ConfirmOrderRequest
+        {
+            Identifier = _clientMock.Id.ToString(),
+            Items = []
+        };
+        _clientRepositoryMock
+            .Setup(repository => repository.GetClientByIdAsync(It.IsAny<Guid>()))
+            .ReturnsAsync(_clientMock);
+        
+        await _confirmOrderUseCase.Execute(request);
+        
+        _clientRepositoryMock
+            .Verify(repository => repository.GetClientByIdAsync(_clientMock.Id), Times.Once);
+    }
+    
+    [Test]
+    public async Task SearchClientByCpf()
+    {
+        var request = new ConfirmOrderRequest
+        {
+            Identifier = _clientMock.CPF.Value,
+            Items = []
+        };
+        _clientRepositoryMock
+            .Setup(repository => repository.GetClientByCpfAsync(It.IsAny<CPF>()))
+            .ReturnsAsync(_clientMock);
+        
+        await _confirmOrderUseCase.Execute(request);
+        
+        _clientRepositoryMock
+            .Verify(repository => repository.GetClientByCpfAsync(_clientMock.CPF), Times.Once);
+    }
+
+    [Test]
     public async Task SucceedWhenRequirementsAreMet()
     {
-        var clientId = Guid.NewGuid();
         var product = new Product("Product", Category.Snack, 10m, "Description", []);
         var request = new ConfirmOrderRequest
         {
-            ClientId = clientId,
+            Identifier = _clientMock.Id.ToString(),
             Items = [new ConfirmOrderRequest.Item(product.Id, 1)]
         };
         _productRepositoryMock
             .Setup(repository => repository.GetByIdsAsync(It.IsAny<IEnumerable<Guid>>()))
             .ReturnsAsync([product]);
         _clientRepositoryMock
-            .Setup(repository => repository.ExistsByIdAsync(It.IsAny<Guid>()))
-            .ReturnsAsync(true);
+            .Setup(repository => repository.GetClientByIdAsync(It.IsAny<Guid>()))
+            .ReturnsAsync(_clientMock);
         var captures = new List<Domain.Entities.Order>();
         _orderRepositoryMock.Setup(repository => repository.AddAsync(Capture.In(captures)));
         
@@ -165,7 +207,7 @@ public class ConfirmOrderShould
             .BeEquivalentTo(new
             {
                 Id = response.OrderId,
-                ClientId = clientId,
+                ClientId = _clientMock.Id,
                 Items = new[]
                 {
                     new
@@ -178,7 +220,7 @@ public class ConfirmOrderShould
                 }
             });
         _clientRepositoryMock
-            .Verify(repository => repository.ExistsByIdAsync(clientId), Times.Once);
+            .Verify(repository => repository.GetClientByIdAsync(_clientMock.Id), Times.Once);
         _productRepositoryMock
             .Verify(repository => repository.GetByIdsAsync(new[] { product.Id }), Times.Once);
         _orderRepositoryMock
