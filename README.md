@@ -17,6 +17,14 @@ The API handles a few operations on a small fast food restaurant, including:
 - .Net 8
 - mongodb
 - Docker
+- Docker compose
+
+## Documentation
+Event Storm:
+https://miro.com/app/board/uXjVKUq0krI=/?share_link_id=69852294691
+
+Ubiquitous Language:
+https://funny-language-87c.notion.site/Linguagem-Ub-qua-4edadb2ca03e438e8df846940bfe90b3
 
 ## Running the Application
 
