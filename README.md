@@ -225,7 +225,7 @@ In order to make it simpler to test, it exposes swagger as a way to interact wit
 
 ## Testing this application
 First of all, the system should have a client to be used. It could be an anonymous one if you wish.
-Bellow, we have a curl command that will create a user name 
+Bellow, we have a curl command that will create a user named: `Anonymous Client` with a [valid brazilian CPF generated at](https://www.4devs.com.br/gerador_de_cpf),
 
 ### Creating a new user
 
@@ -245,7 +245,13 @@ As a response, you should have a return similar to this:
 {"id":"e46569a7-635b-4d05-b488-fa92d9f9fc41","notifications":[],"isValid":true}
 ```
 
-### Get client by Id
+### Verifying clients
+
+At this moment, you can verify client by using one of those endpoints bellow:
+
+<details>
+
+#### Get client by Id
 
 ```shell
 curl -X 'GET' \
@@ -253,12 +259,212 @@ curl -X 'GET' \
   -H 'accept: text/plain'
 ```
 
-### Get client by CPF
+#### Get client by CPF
 ```shell
 curl -X 'GET' \
   'http://localhost:5000/api/Client/v1/{client-cpf}' \
   -H 'accept: text/plain'
 ```
+
+</details>
+
+### Adding products
+
+To allow the client to submit an `Order`, we need to have products available at the system.<br>
+At this moment, we have possibility to enter some product categories, they are:
+
+  - Snack = 0;
+  - SupportDish = 1;
+  - Drink = 2;
+  - Dessert = 3;
+
+We can do that by executing a `POST` request at `api/Product/v1` endpoint. So, supposing a situation to add a snack and a drink, we have to send two requests, like the example bellow:
+
+#### Snack
+```shell
+curl -X 'POST' \
+  'http://localhost:5000/api/Product/v1' \
+  -H 'accept: text/plain' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "X-Tudo",
+  "category": 0,
+  "price": 14.5,
+  "description": "Delicious Brazilian sandwich"
+}'
+```
+
+#### Drink
+
+```shell
+curl -X 'POST' \
+  'http://localhost:5000/api/Product/v1' \
+  -H 'accept: text/plain' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "Coca-Cola",
+  "category": 2,
+  "price": 4,
+  "description": "Soft drink"
+}'
+```
+
+You can add, remove and edit as many products you wish.
+In order to list all products we have at the system, it is available a `GET` endpoint at: `api/Product/v1`
+
+```shell
+curl -X 'GET' \
+  'http://localhost:5000/api/Product/v1' \
+  -H 'accept: text/plain'
+```
+
+if executed the command to create products above, it should return a response similar to:
+
+```shell
+[
+  {
+    "id": "828b9890-5705-4f12-bfea-195fff4a5203",
+    "name": "X-Tudo",
+    "category": 0,
+    "price": 14.5,
+    "description": "Delicious Brazilian sandwich",
+    "images": []
+  },
+  {
+    "id": "6728d665-f255-4b9c-af45-b23fae7a9f04",
+    "name": "Coca-Cola",
+    "category": 2,
+    "price": 4,
+    "description": "Soft drink",
+    "images": []
+  }
+]
+```
+
+### Submitting an Order
+
+Now that we already have a `client` and some `products`, we can submit a new `Order`.
+Basically, the order receives a client and a `list of products and quantities`, returning if valid, and `order identifier` and a `total amount value` for that `order summation`  
+
+For doing that, is there a `POST` endpoint, `api/Order/v1/Confirm`. <br>
+This endpoint receives a `json body payload`, and it contains some special details. It expects to have a `client identifier`. So, at the "identifier" property, `should be passed` a user `CPF` or `Id`. <br>
+
+One submition payload could be:
+
+```shell
+curl -X 'POST' \
+  'http://localhost:5000/api/Order/v1/Confirm' \
+  -H 'accept: text/plain' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "identifier": "{user-cpf-or-id}",
+  "items": [
+    {
+      "productId": "{product-one-id}",
+      "quantity": 2
+    },
+    {
+      "productId": "{product-two-id}",
+      "quantity": 2
+    }
+  ]
+}'
+```
+
+The response data should be something similar to:
+
+```shell
+{
+  "orderId": "73d1d9d6-d969-4b50-83ff-bf41cc3b9b0e",
+  "total": 37,
+  "notifications": [],
+  "isValid": true
+}
+```
+Where the total, is the sum of all products values and quantities that composed that order submission.
+
+### Listing orders
+
+<details>
+
+The api provides an endpoint to list all orders submitted. It can be found at `api/Order/v1/GetAll`.
+A curl example can be:
+
+```shell
+curl -X 'GET' \
+  'http://localhost:5000/api/Order/v1/GetAll' \
+  -H 'accept: text/plain'
+```
+
+</details>
+
+### Order (fake)Checkout
+
+This process is one of the most important actions from the system. Here, it tries to verify if the payment went well, if so, the `Order state` will be changed to `Confirmed` and a new `Kitchen Order` will be automatically created. if not, it will keep it open for a while, expecting to have a positive response in a near future.
+Basically, it is a `POST` endpoint, that should receive at its payload, an `order identifier`. The endpoint is: `api/Order/v1/Checkout`.
+
+Follows a CURL example:
+
+```shell
+curl -X 'POST' \
+  'http://localhost:5000/api/Order/v1/Checkout' \
+  -H 'accept: text/plain' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "orderId": "{orderId}"
+}'
+```
+
+It was design so simulate a checkout done by [MercadoPago](https://www.mercadopago.com.br/pagar-com-qr), so, it will simulate an integration with an external service. Something like the sequence diagram bellow  
+
+#### Basic sequence diagram:
+
+##### Submitting order
+```mermaid
+sequenceDiagram
+Client ->> Api: Submit order
+Api ->> MercadoPago: Request payment QR Code
+MercadoPago -->> Api: Returns a valid QR Code
+Api -->> Client: Present QR Code to be Paid
+```
+
+##### Fake checkout
+
+```mermaid
+sequenceDiagram
+Api ->> MercadoPago: Request payment Status
+MercadoPago -->> Api: Returns positive
+Api -->> Api: Creates Kitchen Order
+Api -->> Client: Notify Order Accepted
+```
+
+### Kitchen Order
+At this point, we should be able to `List` all `kitchen orders` and update its status.
+To list all order, there is the `GET` endpoint `api/KitchenOrder/v1`. 
+
+After the checkout, you can execute the following CURL command if you wish:
+```shell
+curl -X 'GET' \
+  'http://localhost:5000/api/KitchenOrder/v1' \
+  -H 'accept: text/plain'
+```
+
+The order status can be changes by using the following `POST` endpoint `api/KitchenOrder/v1/UpdateStatus` and it just receives the order identifier as argument.
+```shell
+curl -X 'PUT' \
+  'http://localhost:5000/api/KitchenOrder/v1/UpdateStatus' \
+  -H 'accept: text/plain' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "orderId": "73d1d9d6-d969-4b50-83ff-bf41cc3b9b0e"
+}'
+```
+The order can have only those states:
+
+  - Received = 0,
+  - Preparing = 1,
+  - Done = 2,
+  - Finished = 3,
 
 ## Stack
 
