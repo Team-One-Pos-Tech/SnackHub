@@ -34,7 +34,7 @@ So, `please, make sure you have docker and docker compose installed at your envi
 
 ### Using Docker Compose
 
-For a simpler setup, `navigate to the solutions root folder in your terminal and execute`:
+For a simpler setup, `navigate to the folder /deploy at solutions root folder in your terminal and execute`:
 
 ```sh
 docker compose up -d
@@ -47,6 +47,18 @@ The api will expose two main endpoint, they are:
 In order to make it simpler to test, it exposes swagger as a way to interact with the api, it can be accessed at:
 - http://localhost:5000/swagger
 
+### Cleanning the environment after applicatoin execution - Optional
+
+<details>
+
+To clean up your environment after test execution, you can simply execute the following command at the `same path you had executed the docker compose up -d` command:
+
+```shell
+docker compose down --rmi all --remove-orphans --volumes
+```
+
+</details>
+
 ## Application folder Structure
 <details>
 
@@ -55,9 +67,6 @@ In order to make it simpler to test, it exposes swagger as a way to interact wit
 ├── deploy
 │   ├── docker-compose.yml
 │   └── Dockerfile
-├── docker-compose.dcproj
-├── docker-compose.override.yml
-├── docker-compose.yml
 ├── launchSettings.json
 ├── LICENSE
 ├── Makefile
@@ -75,7 +84,6 @@ In order to make it simpler to test, it exposes swagger as a way to interact wit
 │   │   │   ├── KitchenOrderController.cs
 │   │   │   ├── OrderController.cs
 │   │   │   └── ProductController.cs
-│   │   ├── Dockerfile
 │   │   ├── Extensions
 │   │   │   ├── AddNotificationsExtensions.cs
 │   │   │   ├── MongoDbExtensions.cs
