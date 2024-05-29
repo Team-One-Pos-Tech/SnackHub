@@ -31,8 +31,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{77933C
 		deploy\Dockerfile = deploy\Dockerfile
 	EndProjectSection
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{56C85B9E-8A3D-48CA-A213-1C08B95124EE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnackHub.Domain.Tests", "test\SnackHub.Domain.Tests\SnackHub.Domain.Tests.csproj", "{97310B09-4EF8-4E7A-A20B-FF2510B98307}"
 EndProject
 Global
@@ -61,10 +59,6 @@ Global
 		{4CBC465F-2FE8-464E-AFE0-725436ED5813}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CBC465F-2FE8-464E-AFE0-725436ED5813}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CBC465F-2FE8-464E-AFE0-725436ED5813}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56C85B9E-8A3D-48CA-A213-1C08B95124EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56C85B9E-8A3D-48CA-A213-1C08B95124EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56C85B9E-8A3D-48CA-A213-1C08B95124EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56C85B9E-8A3D-48CA-A213-1C08B95124EE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{97310B09-4EF8-4E7A-A20B-FF2510B98307}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{97310B09-4EF8-4E7A-A20B-FF2510B98307}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97310B09-4EF8-4E7A-A20B-FF2510B98307}.Release|Any CPU.ActiveCfg = Release|Any CPU
