@@ -58,6 +58,13 @@ namespace SnackHub.Domain.ValueObjects
             digito = digito + resto.ToString();
             return cpf.EndsWith(digito);
         }
+        
+        public static bool TryParse(string value, out CPF cpf)
+        {
+            cpf = new CPF(value);
+            
+            return cpf.IsValid();
+        }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {

@@ -4,6 +4,7 @@ using SnackHub.Domain.Base;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.ValueObjects;
 
+using ClientEntity = SnackHub.Domain.Entities.Client;
 using OrderFactory = SnackHub.Domain.Entities.Order.Factory;
 using OrderItemFactory = SnackHub.Domain.ValueObjects.OrderItem.Factory;
 
@@ -28,11 +29,11 @@ public class ConfirmOrderUseCase : IConfirmOrderUseCase
     public async Task<ConfirmOrderResponse> Execute(ConfirmOrderRequest request)
     {
         var response = new ConfirmOrderResponse();
-        
-        var clientExists = await _clientRepository.ExistsByIdAsync(request.ClientId);
-        if (!clientExists)
+
+        var client = await GetClient(request.Identifier);
+        if (client is null)
         {
-            response.AddNotification(nameof(request.ClientId), "Client not found");
+            response.AddNotification(nameof(request.Identifier), "Client not found");
             return response;
         }
         
@@ -45,12 +46,13 @@ public class ConfirmOrderUseCase : IConfirmOrderUseCase
 
         try
         {
-            var order = OrderFactory.Create(request.ClientId, orderItems);
+            var order = OrderFactory.Create(client.Id, orderItems);
             order.Confirm();
             
             await _orderRepository.AddAsync(order);
             
-            response.Id = order.Id;
+            response.OrderId = order.Id;
+            response.Total = order.Total;
         } 
         catch (DomainException e)
         {
@@ -58,6 +60,21 @@ public class ConfirmOrderUseCase : IConfirmOrderUseCase
         }
 
         return response;
+    }
+
+    private async Task<ClientEntity?> GetClient(string identifier)
+    {
+        if (Guid.TryParse(identifier, out var clientId))
+        {
+            return await _clientRepository.GetClientByIdAsync(clientId);
+        }
+        
+        if (CPF.TryParse(identifier, out var cpf))
+        {
+            return await _clientRepository.GetClientByCpfAsync(cpf);
+        }
+
+        return null;
     }
     
     private async Task<(IReadOnlyCollection<OrderItem>, bool)> GetOrderItems(IEnumerable<ConfirmOrderRequest.Item> items)

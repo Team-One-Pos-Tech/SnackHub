@@ -11,9 +11,9 @@ namespace SnackHub.Domain.Entities
         public string Description { get; private set; }
         public List<string> Images { get; private set; }
 
-        public Product(string name, Category category, decimal price, string description, List<string> images)
+        public Product(string name, Category category, decimal price, string description, List<string> images, Guid id = default)
         {
-            Id = Guid.NewGuid();
+            Id = id == default ? Guid.NewGuid() : id;
             Name = name;
             Category = category;
             Price = price;

@@ -9,7 +9,6 @@ services:
       - "27017:27017"
     
   snack-hub-app:
-    image: team-one-pos-tech/snack-hub
     build:
       context: ../
       dockerfile: deploy/Dockerfile

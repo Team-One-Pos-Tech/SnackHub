@@ -38,9 +38,14 @@ namespace SnackHub.Infra.Repositories.MongoDB
             return await MongoCollection.Find(_ => true).ToListAsync();
         }
 
-        public Task<IEnumerable<Product>> GetByIdsAsync(IEnumerable<Guid> ids)
+        public async Task<IEnumerable<Product>> GetByIdsAsync(IEnumerable<Guid> ids)
         {
-            throw new NotImplementedException();
+            return await ListByPredicateAsync(p => ids.Contains(p.Id));
+        }
+        
+        public async Task<IEnumerable<Product>> GetByCategory(Category category)
+        {
+            return await MongoCollection.Find(product => product.Category == category).ToListAsync();
         }
     }
 

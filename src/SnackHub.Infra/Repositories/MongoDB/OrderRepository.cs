@@ -16,7 +16,7 @@ public sealed class OrderRepository : BaseRepository<Order>, IOrderRepository
         await InsertAsync(order);
     }
     
-    public async Task SaveAsync(Order order)
+    public async Task EditAsync(Order order)
     {
         await UpdateByPredicateAsync(x => x.Id.Equals(order.Id), order);
     }
@@ -24,5 +24,10 @@ public sealed class OrderRepository : BaseRepository<Order>, IOrderRepository
     public async Task<Order?> GetByIdAsync(Guid id)
     {
         return await FindByPredicateAsync(x => x.Id.Equals(id));
+    }
+
+    public async Task<IEnumerable<Order>> ListAllAsync()
+    {
+        return await ListByPredicateAsync(order => order.Id != Guid.Empty); // Todo: Add Better Filter, Possible by date
     }
 }

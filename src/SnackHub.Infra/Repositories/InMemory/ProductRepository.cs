@@ -7,8 +7,8 @@ namespace SnackHub.Infra.Repositories.InMemory
     {
         private readonly List<Product> products = new List<Product>
         {
-            new Product("X-Tudo", Category.Lanche, 22.50m, "Sem Cebola", new List<string> { "imageA1.jpg", "imageA2.jpg" }),
-            new Product("Coca-Cola", Category.Bebida, 8.50m, "Sem Gelo", new List<string> { "imageB1.jpg" })
+            new Product("X-Tudo", Category.Snack, 22.50m, "Sem Cebola", new List<string> { "imageA1.jpg", "imageA2.jpg" }),
+            new Product("Coca-Cola", Category.Snack, 8.50m, "Sem Gelo", new List<string> { "imageB1.jpg" })
         };
 
         public async Task AddAsync(Product product)
@@ -56,9 +56,14 @@ namespace SnackHub.Infra.Repositories.InMemory
             return await Task.FromResult(products.AsEnumerable());
         }
 
-        Task<IEnumerable<Product>> IProductRepository.GetByIdsAsync(IEnumerable<Guid> ids)
+        public async Task<IEnumerable<Product>> GetByIdsAsync(IEnumerable<Guid> ids)
         {
-          throw new NotImplementedException();
+            return await Task.FromResult(products.Where(p => ids.Contains(p.Id)));
+        }
+        
+        public async Task<IEnumerable<Product>> GetByCategory(Category category)
+        {
+            return await Task.FromResult(products.Where(p => p.Category == category));
         }
     }
 }

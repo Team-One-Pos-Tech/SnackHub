@@ -78,9 +78,8 @@ public class CancelOrderShould
             .BeEquivalentTo(new
             {
                 Key = nameof(request.OrderId),
-                Message = "Order is already accepted and cannot be cancelled"
+                Message = "Order is already accepted and cannot be cancelled at this time"
             });
-        
     }
     
     [Test]
@@ -96,7 +95,7 @@ public class CancelOrderShould
             .Setup(repository => repository.GetByIdAsync(It.IsAny<Guid>()))
             .ReturnsAsync(order);
         _orderRepositoryMock
-            .Setup(repository => repository.SaveAsync(Capture.In(captures)));
+            .Setup(repository => repository.EditAsync(Capture.In(captures)));
         
         var response = await _cancelOrderUseCase.Execute(request);
         
@@ -107,7 +106,7 @@ public class CancelOrderShould
         _orderRepositoryMock
             .Verify(repository => repository.GetByIdAsync(order.Id), Times.Once);
         _orderRepositoryMock
-            .Verify(repository => repository.SaveAsync(It.IsAny<Domain.Entities.Order>()), Times.Once);
+            .Verify(repository => repository.EditAsync(It.IsAny<Domain.Entities.Order>()), Times.Once);
         captures
             .Single()
             .Should()
