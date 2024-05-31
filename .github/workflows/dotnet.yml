@@ -30,6 +30,6 @@ jobs:
           username: '${{github.actor}}'
           password: '${{secrets.GITHUB_TOKEN}}'
       - name: Build Image
-        run: docker build -t ghcr.io/team-one-pos-tech/snack-hub:${GITHUB_SHA::7} -f ./src/SnackHub.Api/Dockerfile .  --build-arg  "PASSWORD_ENV_SEEDED=Mf@7BF5uAN5rDBl7ZTCTqL%c&2ApeqCykva"
+        run: docker build -t ghcr.io/team-one-pos-tech/snack-hub -f ./src/SnackHub.Api/Dockerfile .  --build-arg  "PASSWORD_ENV_SEEDED=Mf@7BF5uAN5rDBl7ZTCTqL%c&2ApeqCykva"
       - name: Push Image
         run: docker push ghcr.io/team-one-pos-tech/snack-hub
