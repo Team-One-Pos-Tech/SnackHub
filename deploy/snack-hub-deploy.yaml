@@ -1,0 +1,25 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snack-hub-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snack-hub
+  template:
+    metadata:
+      name: snack-hub
+      labels:
+        app: snack-hub
+    spec:
+      containers:
+        - name: snack-hub
+          image: kassiosan/snack-hub-app:latest
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+    
