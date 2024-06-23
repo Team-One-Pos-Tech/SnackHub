@@ -29,6 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{77933C
 	ProjectSection(SolutionItems) = preProject
 		deploy\docker-compose.yml = deploy\docker-compose.yml
 		deploy\Dockerfile = deploy\Dockerfile
+		deploy\app-deployment.yaml = deploy\app-deployment.yaml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnackHub.Domain.Tests", "test\SnackHub.Domain.Tests\SnackHub.Domain.Tests.csproj", "{97310B09-4EF8-4E7A-A20B-FF2510B98307}"
