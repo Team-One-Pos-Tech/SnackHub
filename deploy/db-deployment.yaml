@@ -1,10 +1,9 @@
 ﻿apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: snack-hub-db-deployment
-  labels:
-    app: snack-hub-db
+  name: snack-hub-db-stateful
 spec:
+  serviceName: snack-hub-db-service
   replicas: 1
   selector:
     matchLabels:
@@ -27,7 +26,14 @@ spec:
           envFrom:
             - configMapRef:
                 name: snack-hub-db-configmap
-      
+          volumeMounts:
+            - name: snack-hub-db-storage
+              mountPath: /data/db
+      volumes:
+        - name: snack-hub-db-storage
+          persistentVolumeClaim:
+            claimName: snack-hub-db-pvc
+              
 ---
 apiVersion: v1
 kind: Service
@@ -49,3 +55,16 @@ metadata:
 data:
   MONGO_INITDB_ROOT_USERNAME: "admin"
   MONGO_INITDB_ROOT_PASSWORD: "admin"
+  
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: snack-hub-db-pvc
+spec:
+    accessModes:
+        - ReadWriteOnce
+    resources:
+        requests:
+          storage: 1Gi
+      
