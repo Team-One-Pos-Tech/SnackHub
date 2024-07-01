@@ -22,17 +22,9 @@ spec:
             limits:
               memory: "128Mi"
               cpu: "500m"
-          env:
-            - name: Storage__MongoDb__Host
-              value: snack-hub-db-service
-            - name: Storage__MongoDb__Port
-              value: "27017"
-            - name: Storage__MongoDb__UserName
-              value: admin
-            - name: Storage__MongoDb__Password
-              value: admin
-            - name: Storage__MongoDb__Database
-              value: snackhub
+          envFrom:
+            - configMapRef:
+                name: snack-hub-configmap
 
 ---
 apiVersion: v1
@@ -46,3 +38,15 @@ spec:
       - port: 8080
         nodePort: 30000
   type: NodePort
+  
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: snack-hub-configmap
+data:
+  Storage__MongoDb__Host: "snack-hub-db-service"
+  Storage__MongoDb__Port: "27017"
+  Storage__MongoDb__UserName: "admin"
+  Storage__MongoDb__Password: "admin"
+  Storage__MongoDb__Database: "snackhub"

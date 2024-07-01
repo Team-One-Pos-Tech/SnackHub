@@ -24,11 +24,9 @@ spec:
             limits:
               memory: "462Mi"
               cpu: "2000m"
-          env:
-            - name: MONGO_INITDB_ROOT_USERNAME
-              value: admin
-            - name: MONGO_INITDB_ROOT_PASSWORD
-              value: admin
+          envFrom:
+            - configMapRef:
+                name: snack-hub-db-configmap
       
 ---
 apiVersion: v1
@@ -42,3 +40,12 @@ spec:
       - port: 27017
         nodePort: 30001
   type: NodePort
+  
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: snack-hub-db-configmap
+data:
+  MONGO_INITDB_ROOT_USERNAME: "admin"
+  MONGO_INITDB_ROOT_PASSWORD: "admin"
