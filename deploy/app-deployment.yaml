@@ -25,6 +25,13 @@ spec:
           envFrom:
             - configMapRef:
                 name: snack-hub-configmap
+          livenessProbe:
+            httpGet: 
+              path: /api/Product/v1 #/health
+              port: 8080
+            periodSeconds: 10
+            failureThreshold: 3
+            initialDelaySeconds: 30
 
 ---
 apiVersion: v1
