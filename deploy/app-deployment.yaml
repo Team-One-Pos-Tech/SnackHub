@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: snack-hub-app-deployment
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: snack-hub
@@ -27,7 +27,7 @@ spec:
               cpu: "500m"
           envFrom:
             - configMapRef:
-                name: snack-hub-configmap
+                name: snack-hub-app-configmap
           livenessProbe:
             httpGet: 
               path: /api/Product/v1 #/health
@@ -66,14 +66,13 @@ spec:
       app: snack-hub
   ports:
       - port: 8080
-        nodePort: 30000
-  type: NodePort
+  type: LoadBalancer
   
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: snack-hub-configmap
+  name: snack-hub-app-configmap
 data:
   Storage__MongoDb__Host: "snack-hub-db-service"
   Storage__MongoDb__Port: "27017"

@@ -22,7 +22,7 @@ spec:
           resources:
             limits:
               memory: "462Mi"
-              cpu: "2000m"
+              cpu: "1000m"
           envFrom:
             - configMapRef:
                 name: snack-hub-db-configmap
