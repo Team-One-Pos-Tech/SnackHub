@@ -28,6 +28,7 @@ public sealed class OrderRepository : BaseRepository<Order>, IOrderRepository
 
     public async Task<IEnumerable<Order>> ListAllAsync()
     {
-        return await ListByPredicateAsync(order => order.Id != Guid.Empty); // Todo: Add Better Filter, Possible by date
+        var orders = await ListByPredicateAsync(_ => true);
+        return orders.OrderBy(o => o.CreatedAt);
     }
 }

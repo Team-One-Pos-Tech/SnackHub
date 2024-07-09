@@ -1,6 +1,7 @@
 using MongoDB.Driver;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Entities;
+using SnackHub.Domain.ValueObjects;
 
 namespace SnackHub.Infra.Repositories.MongoDB;
 
@@ -28,6 +29,15 @@ public class KitchenOrderRepository : BaseRepository<KitchenOrder>, IKitchenOrde
 
     public async Task<IEnumerable<KitchenOrder>> ListAllAsync()
     {
-        return await ListByPredicateAsync(kitchenRequest => kitchenRequest.Id != Guid.Empty); // Todo: Add Better Filter, Possible by date
+        var orders = await ListByPredicateAsync(_ => true);
+        return orders.OrderBy(o => o.CreatedAt);
+    }
+    
+    public async Task<IEnumerable<KitchenOrder>> ListCurrentAsync()
+    {
+        var orders = await ListByPredicateAsync(ko => ko.Status != KitchenOrderStatus.Finished);
+        return orders
+            .OrderByDescending(ko => ko.Status)
+            .ThenBy(ko => ko.CreatedAt);
     }
 }
