@@ -34,8 +34,8 @@ public class KitchenOrder : Entity<Guid>, IAggregateRoot
         Status = Status switch
         {
             KitchenOrderStatus.Received => KitchenOrderStatus.Preparing,
-            KitchenOrderStatus.Preparing => KitchenOrderStatus.Finished,
-            KitchenOrderStatus.Finished => KitchenOrderStatus.Done,
+            KitchenOrderStatus.Preparing => KitchenOrderStatus.Done,
+            KitchenOrderStatus.Done => KitchenOrderStatus.Finished,
             _ => Status
         };
         
