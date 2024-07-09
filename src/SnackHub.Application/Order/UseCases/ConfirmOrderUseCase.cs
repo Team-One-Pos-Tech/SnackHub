@@ -53,6 +53,7 @@ public class ConfirmOrderUseCase : IConfirmOrderUseCase
             
             response.OrderId = order.Id;
             response.Total = order.Total;
+            response.CreatedAt = order.CreatedAt;
         } 
         catch (DomainException e)
         {

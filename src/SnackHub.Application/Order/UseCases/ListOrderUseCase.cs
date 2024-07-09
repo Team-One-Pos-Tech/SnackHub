@@ -16,18 +16,14 @@ public class ListOrderUseCase : IListOrderUseCase
     public async Task<IEnumerable<OrderResponse>> Execute()
     {
         var orders = await _orderRepository.ListAllAsync();
-
-        return (from order in orders
-            let items = order
-                .Items
-                .Select(item =>
-                    new OrderResponse.OrderItem(item.ProductName, item.Quantity))
-                .ToList()
-            select new OrderResponse
-            {
-                Id = order.Id,
-                Items = items,
-                Status = order.Status.ToString()
-            }).ToList();
+        
+        return orders.Select(o => new OrderResponse
+        {
+            Id = o.Id,
+            Items = o.Items.Select(i => (i.ProductName, i.Quantity)).ToList(),
+            Status = o.Status.ToString(),
+            CreatedAt = o.CreatedAt,
+            UpdatedAt = o.UpdatedAt
+        }).ToList();
     }
 }

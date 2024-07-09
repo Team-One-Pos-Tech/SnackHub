@@ -5,8 +5,8 @@ namespace SnackHub.Application.Order.Models;
 public class OrderResponse : Notifiable<Notification>
 {
     public required Guid Id { get; init; }
-    public required IEnumerable<OrderItem> Items { get; init; } = [];
+    public required IEnumerable<(string ProductName, int Quantity)> Items { get; init; } = [];
     public required string Status { get; init; } = string.Empty;
-
-    public record OrderItem(string ProductName, int Quantity);
+    public required DateTimeOffset CreatedAt { get; init; }
+    public required DateTimeOffset? UpdatedAt { get; init; }
 }

@@ -29,6 +29,8 @@ public class KitchenOrder : Entity<Guid>, IAggregateRoot
 
     public void UpdateStatus()
     {
+        var previousStatus = Status;
+        
         Status = Status switch
         {
             KitchenOrderStatus.Received => KitchenOrderStatus.Preparing,
@@ -36,6 +38,11 @@ public class KitchenOrder : Entity<Guid>, IAggregateRoot
             KitchenOrderStatus.Finished => KitchenOrderStatus.Done,
             _ => Status
         };
+        
+        if (previousStatus != Status)
+        {
+            UpdatedAt = DateTimeOffset.UtcNow;
+        }
     }
     
     public static class Factory

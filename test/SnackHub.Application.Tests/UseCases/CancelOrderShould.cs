@@ -100,9 +100,12 @@ public class CancelOrderShould
         var response = await _cancelOrderUseCase.Execute(request);
         
         response
-            .IsValid
             .Should()
-            .BeTrue();
+            .BeEquivalentTo(new
+            {
+                CancelledAt = order.UpdatedAt,
+                IsValid = true
+            });
         _orderRepositoryMock
             .Verify(repository => repository.GetByIdAsync(order.Id), Times.Once);
         _orderRepositoryMock

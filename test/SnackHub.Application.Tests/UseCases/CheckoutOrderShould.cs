@@ -116,21 +116,15 @@ public class CheckoutOrderShould
         var request = new CheckoutOrderRequest { OrderId = orderId  };
         
         var response = await _checkoutOrderUseCase.Execute(request);
-        
-        response
-            .IsValid
-            .Should()
-            .BeTrue();
-        response
-            .Notifications
-            .Should()
-            .BeEmpty();
+
         response
             .Should()
             .BeEquivalentTo(new
             {
+                IsValid = true,
                 TransactionId = "some-transaction-id",
-                PaymentStatus = "Success"
+                PaymentStatus = "Success",
+                ProcessedAt = order.UpdatedAt
             });
         _orderRepositoryMock
             .Verify(repository => repository.GetByIdAsync(orderId), Times.Once);
