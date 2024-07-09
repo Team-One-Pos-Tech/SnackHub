@@ -42,6 +42,7 @@ public class CreateKitchenOrderUseCase : ICreateKitchenOrderUseCase
                 .ToList();
 
             await _kitchenOrderRepository.AddAsync(new Domain.Entities.KitchenOrder(order.Id, items));
+            
             return response;
         }
         catch (Exception exception)

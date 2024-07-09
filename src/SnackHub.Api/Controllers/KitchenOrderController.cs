@@ -9,12 +9,12 @@ namespace SnackHub.Controllers;
 [Route("api/[controller]/v1")]
 public class KitchenOrderController : ControllerBase
 {
-    private readonly IListKitchenOrdertUseCase _listKitchenOrdertUseCase;
+    private readonly IListKitchenOrderUseCase _listKitchenOrderUseCase;
     private readonly IUpdateKitchenOrderStatusUseCase _updateKitchenOrderStatusUseCase;
 
-    public KitchenOrderController(IListKitchenOrdertUseCase listKitchenOrdertUseCase, IUpdateKitchenOrderStatusUseCase updateKitchenOrderStatusUseCase)
+    public KitchenOrderController(IListKitchenOrderUseCase listKitchenOrderUseCase, IUpdateKitchenOrderStatusUseCase updateKitchenOrderStatusUseCase)
     {
-        _listKitchenOrdertUseCase = listKitchenOrdertUseCase;
+        _listKitchenOrderUseCase = listKitchenOrderUseCase;
         _updateKitchenOrderStatusUseCase = updateKitchenOrderStatusUseCase;
     }
     
@@ -23,7 +23,7 @@ public class KitchenOrderController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<KitchenOrderResponse>>> GetAll()
     {
-        var requests = await _listKitchenOrdertUseCase.Execute();
+        var requests = await _listKitchenOrderUseCase.Execute();
         return Ok(requests);
     }
     

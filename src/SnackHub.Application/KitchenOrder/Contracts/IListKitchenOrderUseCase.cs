@@ -2,7 +2,7 @@ using SnackHub.Application.KitchenOrder.Models;
 
 namespace SnackHub.Application.KitchenOrder.Contracts;
 
-public interface IListKitchenOrdertUseCase
+public interface IListKitchenOrderUseCase
 {
     Task<IEnumerable<KitchenOrderResponse>> Execute();
 }

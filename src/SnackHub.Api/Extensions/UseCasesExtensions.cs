@@ -25,6 +25,6 @@ public static class UseCasesExtensions
             .AddScoped<IGetByCategoryUseCase, GetByCategoryUseCase>()
             .AddScoped<ICreateKitchenOrderUseCase, CreateKitchenOrderUseCase>()
             .AddScoped<IUpdateKitchenOrderStatusUseCase, UpdateKitchenOrderStatusUseCase>()
-            .AddScoped<IListKitchenOrdertUseCase, ListKitchenOrdertUseCase>();
+            .AddScoped<IListKitchenOrderUseCase, ListKitchenOrderUseCase>();
     }
 }
