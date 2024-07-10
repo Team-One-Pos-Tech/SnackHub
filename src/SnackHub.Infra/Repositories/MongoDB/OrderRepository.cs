@@ -36,7 +36,7 @@ public sealed class OrderRepository : BaseRepository<Order>, IOrderRepository
     public async Task<IEnumerable<Order>> ListAllAsync()
     {
         var query = MongoCollection.AsQueryable()
-            .OrderBy(ko => ko.CreatedAt);
+            .OrderBy(o => o.CreatedAt);
         
         _logger.LogDebug("MongoDB query: {Query}", query);
         

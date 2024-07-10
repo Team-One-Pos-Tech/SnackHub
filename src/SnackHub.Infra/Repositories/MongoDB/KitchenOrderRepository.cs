@@ -36,15 +36,21 @@ public class KitchenOrderRepository : BaseRepository<KitchenOrder>, IKitchenOrde
 
     public async Task<IEnumerable<KitchenOrder>> ListAllAsync()
     {
-        var orders = await ListByPredicateAsync(_ => true);
-        return orders.OrderBy(o => o.CreatedAt);
+        var query = MongoCollection.AsQueryable()
+            .OrderBy(ko => ko.CreatedAt);
+        
+        _logger.LogDebug("MongoDB query: {Query}", query);
+        
+        var result = query.ToList();
+        
+        return await Task.FromResult(result);
     }
     
     public async Task<IEnumerable<KitchenOrder>> ListCurrentAsync()
     {
         var query = MongoCollection.AsQueryable()
             .Where(ko => ko.Status != KitchenOrderStatus.Finished)
-            .OrderBy(ko => (int)ko.Status)
+            .OrderByDescending(ko => (int)ko.Status)
             .ThenBy(ko => ko.CreatedAt);
 
         _logger.LogDebug("MongoDB query: {Query}", query);
