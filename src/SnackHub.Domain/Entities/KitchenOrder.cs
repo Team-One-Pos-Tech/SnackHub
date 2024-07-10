@@ -41,7 +41,7 @@ public class KitchenOrder : Entity<Guid>, IAggregateRoot
         
         if (previousStatus != Status)
         {
-            UpdatedAt = DateTimeOffset.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
         }
     }
     

@@ -6,5 +6,5 @@ public class CheckoutOrderResponse : Notifiable<Notification>
 {
     public string? TransactionId { get; set; }
     public string? PaymentStatus { get; set; }
-    public DateTimeOffset? ProcessedAt { get; set; }
+    public DateTime? ProcessedAt { get; set; }
 };

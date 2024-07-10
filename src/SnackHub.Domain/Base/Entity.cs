@@ -14,9 +14,9 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>
 
     public virtual TId Id { get; }
     
-    public virtual DateTimeOffset CreatedAt { get; protected set; } = DateTimeOffset.UtcNow;
+    public virtual DateTime CreatedAt { get; protected set; } = DateTime.UtcNow;
     
-    public virtual DateTimeOffset? UpdatedAt { get; protected set; } = DateTimeOffset.UtcNow;
+    public virtual DateTime? UpdatedAt { get; protected set; } = DateTime.UtcNow;
 
     public static bool operator ==(Entity<TId> left, Entity<TId> right)
     {

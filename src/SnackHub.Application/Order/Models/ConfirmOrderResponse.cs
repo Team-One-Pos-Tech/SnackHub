@@ -6,5 +6,5 @@ public class ConfirmOrderResponse : Notifiable<Notification>
 {
     public Guid? OrderId { get; set; }
     public decimal? Total { get; set; }
-    public DateTimeOffset? CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; }
 }

@@ -44,7 +44,7 @@ public class Order : Entity<Guid>, IAggregateRoot
         }
 
         Status = OrderStatus.Confirmed;
-        UpdatedAt = DateTimeOffset.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
     }
 
     public void Cancel()
@@ -55,7 +55,7 @@ public class Order : Entity<Guid>, IAggregateRoot
         }
 
         Status = OrderStatus.Cancelled;
-        UpdatedAt = DateTimeOffset.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
     }
 
     public void Checkout(bool accepted)
@@ -66,7 +66,7 @@ public class Order : Entity<Guid>, IAggregateRoot
         }
 
         Status = accepted ? OrderStatus.Accepted : OrderStatus.Declined;
-        UpdatedAt = DateTimeOffset.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
     }
 
     private string? GetStatusDescription()
