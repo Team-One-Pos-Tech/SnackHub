@@ -19,20 +19,42 @@ spec:
           ports:
             - containerPort: 8080
           resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
             limits:
               memory: "128Mi"
               cpu: "500m"
-          env:
-            - name: Storage__MongoDb__Host
-              value: snack-hub-db-service
-            - name: Storage__MongoDb__Port
-              value: "27017"
-            - name: Storage__MongoDb__UserName
-              value: admin
-            - name: Storage__MongoDb__Password
-              value: admin
-            - name: Storage__MongoDb__Database
-              value: snackhub
+          envFrom:
+            - configMapRef:
+                name: snack-hub-app-configmap
+          livenessProbe:
+            httpGet: 
+              path: /api/Product/v1 #/health
+              port: 8080
+            periodSeconds: 10
+            failureThreshold: 3
+            initialDelaySeconds: 30
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: snack-hub-app-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: snack-hub-app-deployment
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
 
 ---
 apiVersion: v1
@@ -44,5 +66,16 @@ spec:
       app: snack-hub
   ports:
       - port: 8080
-        nodePort: 30000
-  type: NodePort
+  type: LoadBalancer
+  
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: snack-hub-app-configmap
+data:
+  Storage__MongoDb__Host: "snack-hub-db-service"
+  Storage__MongoDb__Port: "27017"
+  Storage__MongoDb__UserName: "admin"
+  Storage__MongoDb__Password: "admin"
+  Storage__MongoDb__Database: "snackhub"
