@@ -27,36 +27,51 @@ This application is based on DDD and you can find the `Event Storm` diagrams and
  - [Event Storm](https://miro.com/app/board/uXjVKUq0krI=/?share_link_id=69852294691)
  - [Ubiquitous Language](https://funny-language-87c.notion.site/Linguagem-Ub-qua-4edadb2ca03e438e8df846940bfe90b3)
 
+## Kubernetes Cloud Architecture
+The application is designed to be deployed on a Kubernetes cluster, it is a simple architecture, but it is enough to show how it can be done. The architecture is composed by the following services:
+![K8s Cloud Architecture](https://i.ibb.co/wsv1sgj/Snack-Hub-K8s-Architecture.png)
+
 ## Running the Application
 
 This application is a webapi, based on `dotnet core`, to make it easy to execute it, it makes use of `docker/docker compose`.
 So, `please, make sure you have docker and docker compose installed at your environment`.
 
 ### Using Docker Compose
-
-For a simpler setup, `navigate to the folder /deploy at solutions root folder in your terminal and execute`:
-
-```sh
-docker compose up -d
-```
-This command will automatically build and start all the necessary services, including the `SnackHub api` and `MongoDB`, based on the configuration in the `docker-compose.yml` file.
-The api will expose two main endpoint, they are:
-
- - A http endpoint, that can be access by: http://localhost:5000
-
-In order to make it simpler to test, it exposes swagger as a way to interact with the api, it can be accessed at:
-- http://localhost:5000/swagger
-
-### Cleanning the environment after applicatoin execution - Optional
-
 <details>
+  <summary>Click me</summary>
+  For a simpler setup, `navigate to the folder /deploy at solutions root folder in your terminal and execute`:
+  
+  ```sh
+  docker compose up -d
+  ```
+  This command will automatically build and start all the necessary services, including the `SnackHub api` and `MongoDB`, based on the configuration in the `docker-compose.yml` file.
+  The api will expose two main endpoint, they are:
 
-To clean up your environment after test execution, you can simply execute the following command at the `same path you had executed the docker compose up -d` command:
+  - A http endpoint, that can be access by: http://localhost:5000
 
-```shell
-docker compose down --rmi all --remove-orphans --volumes
-```
+  In order to make it simpler to test, it exposes swagger as a way to interact with the api, it can be accessed at:
+  - http://localhost:5000/swagger
+  
+  ### Cleanning the environment after applicatoin execution - Optional
 
+  <details>
+  
+  To clean up your environment after test execution, you can simply execute the following command at the `same path you had executed the docker compose up -d` command:
+  
+  ```shell
+  docker compose down --rmi all --remove-orphans --volumes
+  ```
+  
+  </details>
+</details>
+
+### Using Kubernetes
+<details>
+  <summary>Click me</summary>
+    Ensure your Kubernetes cluster is running. 
+    Navigate to the folder ./deploy at solutions root folder in your terminal and execute:
+
+    PowerShell -ExecutionPolicy Bypass -File .\deploy_kubernetes.ps1
 </details>
 
 ## Application folder Structure
