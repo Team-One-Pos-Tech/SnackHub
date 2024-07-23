@@ -30,6 +30,8 @@ public class CancelOrderUseCase : ICancelOrderUseCase
             order.Cancel();
             
             await _orderRepository.EditAsync(order);
+            
+            response.CancelledAt = order.UpdatedAt;
         }
         catch (DomainException e)
         {

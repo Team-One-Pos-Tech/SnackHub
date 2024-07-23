@@ -38,10 +38,11 @@ public class CreateKitchenOrderUseCase : ICreateKitchenOrderUseCase
         {
             var items = order
                 .Items
-                .Select(orderItem => KitchenOrdertItem.Factory.Create(orderItem.ProductName, orderItem.Quantity))
+                .Select(orderItem => KitchenOrderItem.Factory.Create(orderItem.ProductName, orderItem.Quantity))
                 .ToList();
 
             await _kitchenOrderRepository.AddAsync(new Domain.Entities.KitchenOrder(order.Id, items));
+            
             return response;
         }
         catch (Exception exception)

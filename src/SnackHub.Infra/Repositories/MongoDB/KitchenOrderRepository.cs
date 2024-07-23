@@ -1,14 +1,22 @@
+using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Entities;
+using SnackHub.Domain.ValueObjects;
 
 namespace SnackHub.Infra.Repositories.MongoDB;
 
 public class KitchenOrderRepository : BaseRepository<KitchenOrder>, IKitchenOrderRepository
 {
-    public KitchenOrderRepository(IMongoDatabase mongoDatabase, string collectionName = "KitchenRequest") 
+    private readonly ILogger<KitchenOrderRepository> _logger;
+    
+    public KitchenOrderRepository(
+        ILogger<KitchenOrderRepository> logger,
+        IMongoDatabase mongoDatabase,
+        string collectionName = "KitchenRequest") 
         : base(mongoDatabase, collectionName)
     {
+        _logger = logger;
     }
 
     public async Task<KitchenOrder?> GetByOderIdAsync(Guid orderId)
@@ -28,6 +36,27 @@ public class KitchenOrderRepository : BaseRepository<KitchenOrder>, IKitchenOrde
 
     public async Task<IEnumerable<KitchenOrder>> ListAllAsync()
     {
-        return await ListByPredicateAsync(kitchenRequest => kitchenRequest.Id != Guid.Empty); // Todo: Add Better Filter, Possible by date
+        var query = MongoCollection.AsQueryable()
+            .OrderBy(ko => ko.CreatedAt);
+        
+        _logger.LogDebug("MongoDB query: {Query}", query);
+        
+        var result = query.ToList();
+        
+        return await Task.FromResult(result);
+    }
+    
+    public async Task<IEnumerable<KitchenOrder>> ListCurrentAsync()
+    {
+        var query = MongoCollection.AsQueryable()
+            .Where(ko => ko.Status != KitchenOrderStatus.Finished)
+            .OrderByDescending(ko => (int)ko.Status)
+            .ThenBy(ko => ko.CreatedAt);
+
+        _logger.LogDebug("MongoDB query: {Query}", query);
+        
+        var result = query.ToList();
+        
+        return await Task.FromResult(result);
     }
 }

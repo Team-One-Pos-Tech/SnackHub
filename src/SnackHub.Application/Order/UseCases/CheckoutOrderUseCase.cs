@@ -19,7 +19,8 @@ public class CheckoutOrderUseCase : ICheckoutOrderUseCase
     
     public CheckoutOrderUseCase(
         IOrderRepository orderRepository, 
-        IPaymentGatewayService paymentGatewayService, ICreateKitchenOrderUseCase kitchenOrderUseCase)
+        IPaymentGatewayService paymentGatewayService,
+        ICreateKitchenOrderUseCase kitchenOrderUseCase)
     {
         _orderRepository = orderRepository;
         _paymentGatewayService = paymentGatewayService;
@@ -49,13 +50,15 @@ public class CheckoutOrderUseCase : ICheckoutOrderUseCase
             var paymentResponse = await _paymentGatewayService.Process(paymentRequest);
             var isSuccessful = PaymentStatus.Success.Equals(paymentResponse.Status);
             
+            order.Checkout(isSuccessful);
+            
+            await _orderRepository.EditAsync(order);
+
             response.TransactionId = paymentResponse.TransactionId;
             response.PaymentStatus = Enum.GetName(paymentResponse.Status);
-            
-            order.Checkout(isSuccessful);
-            await _orderRepository.EditAsync(order);
-            
-            // TODO: raise event that will trigger "Pedido" creation
+            response.ProcessedAt = order.UpdatedAt;
+           
+            // TODO: raise event that will trigger "KitchenOrder" creation
             // TODO: move this function to a event like in a near future(MediatR ??)
             await SubmitKitchenOrderAsync(order);
         }

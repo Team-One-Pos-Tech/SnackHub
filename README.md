@@ -410,12 +410,12 @@ Where the total, is the sum of all products values and quantities that composed 
 
 <details>
 
-The api provides an endpoint to list all orders submitted. It can be found at `api/Order/v1/GetAll`.
+The api provides an endpoint to list all orders submitted. It can be found at `api/Order/v1`.
 A curl example can be:
 
 ```shell
 curl -X 'GET' \
-  'http://localhost:5000/api/Order/v1/GetAll' \
+  'http://localhost:5000/api/Order/v1' \
   -H 'accept: text/plain'
 ```
 

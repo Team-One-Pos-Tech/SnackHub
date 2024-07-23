@@ -6,7 +6,7 @@ using SnackHub.Extensions;
 namespace SnackHub.Controllers;
 
 [ApiController]
-[Route("api/[controller]/v1/[action]")]
+[Route("api/[controller]/v1")]
 public class OrderController : ControllerBase
 {
     private readonly IConfirmOrderUseCase _confirmOrderUseCase;
@@ -35,7 +35,7 @@ public class OrderController : ControllerBase
         return Ok(orders);
     }
     
-    [HttpPost(Name = "Confirm")]
+    [HttpPost("Confirm")]
     [ProducesResponseType(typeof(ConfirmOrderResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
@@ -48,7 +48,7 @@ public class OrderController : ControllerBase
             : ValidationProblem(ModelState.AddNotifications(response.Notifications));
     }
     
-    [HttpPut(Name = "Cancel")]
+    [HttpPut("Cancel")]
     [ProducesResponseType(typeof(CancelOrderResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
@@ -61,7 +61,7 @@ public class OrderController : ControllerBase
             : ValidationProblem(ModelState.AddNotifications(response.Notifications));
     }
     
-    [HttpPost(Name = "Checkout")]
+    [HttpPost("Checkout")]
     [ProducesResponseType(typeof(CheckoutOrderResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]

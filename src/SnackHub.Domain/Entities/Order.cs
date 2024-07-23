@@ -10,7 +10,7 @@ public class Order : Entity<Guid>, IAggregateRoot
     public virtual OrderStatus Status { get; private set; }
     public decimal Total => Items.Sum(o => o.Total);
 
-    protected Order( ): base(Guid.NewGuid()) 
+    protected Order(): base(Guid.NewGuid()) 
     {
         Items = [];
     }
@@ -44,6 +44,7 @@ public class Order : Entity<Guid>, IAggregateRoot
         }
 
         Status = OrderStatus.Confirmed;
+        UpdatedAt = DateTime.UtcNow;
     }
 
     public void Cancel()
@@ -54,6 +55,7 @@ public class Order : Entity<Guid>, IAggregateRoot
         }
 
         Status = OrderStatus.Cancelled;
+        UpdatedAt = DateTime.UtcNow;
     }
 
     public void Checkout(bool accepted)
@@ -64,6 +66,7 @@ public class Order : Entity<Guid>, IAggregateRoot
         }
 
         Status = accepted ? OrderStatus.Accepted : OrderStatus.Declined;
+        UpdatedAt = DateTime.UtcNow;
     }
 
     private string? GetStatusDescription()

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Entities;
@@ -6,9 +7,15 @@ namespace SnackHub.Infra.Repositories.MongoDB;
 
 public sealed class OrderRepository : BaseRepository<Order>, IOrderRepository
 {
-    public OrderRepository(IMongoDatabase mongoDatabase, string collectionName = "Orders") 
+    private readonly ILogger<OrderRepository> _logger;
+    
+    public OrderRepository(
+        ILogger<OrderRepository> logger,
+        IMongoDatabase mongoDatabase, 
+        string collectionName = "Orders") 
         : base(mongoDatabase, collectionName)
     {
+        _logger = logger;
     }
     
     public async Task AddAsync(Order order)
@@ -28,6 +35,13 @@ public sealed class OrderRepository : BaseRepository<Order>, IOrderRepository
 
     public async Task<IEnumerable<Order>> ListAllAsync()
     {
-        return await ListByPredicateAsync(order => order.Id != Guid.Empty); // Todo: Add Better Filter, Possible by date
+        var query = MongoCollection.AsQueryable()
+            .OrderBy(o => o.CreatedAt);
+        
+        _logger.LogDebug("MongoDB query: {Query}", query);
+        
+        var result = query.ToList();
+        
+        return await Task.FromResult(result);
     }
 }

@@ -8,4 +8,5 @@ public interface IKitchenOrderRepository
     Task EditAsync(KitchenOrder kitchenOrder);
     Task<KitchenOrder?> GetByOderIdAsync(Guid orderId);
     Task<IEnumerable<KitchenOrder>> ListAllAsync();
+    Task<IEnumerable<KitchenOrder>> ListCurrentAsync();
 }

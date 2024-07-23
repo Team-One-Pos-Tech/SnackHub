@@ -192,15 +192,13 @@ public class ConfirmOrderShould
         
         var order = captures.Single();
         response
-            .IsValid
-            .Should()
-            .BeTrue();
-        response
             .Should()
             .BeEquivalentTo(new
             {
+                IsValid = true,
                 OrderId = order.Id,
-                Total = 10m
+                Total = 10m,
+                CreatedAt = order.CreatedAt
             });
         order
             .Should()
