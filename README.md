@@ -26,10 +26,7 @@ The application touches some domains and let the user execute some use cases, th
 This application is based on DDD and you can find the `Event Storm` diagrams and `Ubiquitous Language` by following those links:  
  - [Event Storm](https://miro.com/app/board/uXjVKUq0krI=/?share_link_id=69852294691)
  - [Ubiquitous Language](https://github.com/Team-One-Pos-Tech/SnackHub/wiki/Ubiquitous-Language)
-
-## Kubernetes Cloud Architecture
-The application is designed to be deployed on a Kubernetes cluster, it is a simple architecture, but it is enough to show how it can be done. The architecture is composed by the following services:
-![K8s Cloud Architecture](https://i.ibb.co/wsv1sgj/Snack-Hub-K8s-Architecture.png)
+ - [Architecture](https://github.com/Team-One-Pos-Tech/SnackHub/wiki/Architecture)
 
 ## Running the Application
 
