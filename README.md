@@ -28,7 +28,7 @@ This application is based on DDD and you can find the `Event Storm` diagrams and
  - [Ubiquitous Language](https://github.com/Team-One-Pos-Tech/SnackHub/wiki/Ubiquitous-Language)
  - [Architecture](https://github.com/Team-One-Pos-Tech/SnackHub/wiki/Architecture)
  - [Running the Application](https://github.com/Team-One-Pos-Tech/SnackHub/wiki/Running-the-Application)
- - [Testing this application](https://github.com/Team-One-Pos-Tech/SnackHub/wiki/Running-the-Application)
+ - [Testing this application](https://github.com/Team-One-Pos-Tech/SnackHub/wiki/Testing-this-application)
 
 ## Application folder Structure
 <details>
