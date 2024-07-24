@@ -25,7 +25,7 @@ The application touches some domains and let the user execute some use cases, th
 ## Documentation
 This application is based on DDD and you can find the `Event Storm` diagrams and `Ubiquitous Language` by following those links:  
  - [Event Storm](https://miro.com/app/board/uXjVKUq0krI=/?share_link_id=69852294691)
- - [Ubiquitous Language](https://funny-language-87c.notion.site/Linguagem-Ub-qua-4edadb2ca03e438e8df846940bfe90b3)
+ - [Ubiquitous Language](https://github.com/Team-One-Pos-Tech/SnackHub/wiki/Ubiquitous-Language)
 
 ## Kubernetes Cloud Architecture
 The application is designed to be deployed on a Kubernetes cluster, it is a simple architecture, but it is enough to show how it can be done. The architecture is composed by the following services:
