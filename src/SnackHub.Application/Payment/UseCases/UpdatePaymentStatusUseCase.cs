@@ -5,7 +5,7 @@ using SnackHub.Domain.Contracts;
 
 namespace SnackHub.Application.Payment.UseCases
 {
-    public class UpdatePaymentStatusUseCase : IPaymentService
+    public class UpdatePaymentStatusUseCase : IPaymentUseCases
     {
         private readonly IPaymentRepository _paymentRepository;
 
