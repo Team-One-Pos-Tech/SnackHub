@@ -1,5 +1,5 @@
 using SnackHub.Application.Client.Contracts;
-using SnackHub.Application.Client.UseCases;
+using SnackHub.Application.Client.Validators;
 
 namespace SnackHub.Extensions;
 

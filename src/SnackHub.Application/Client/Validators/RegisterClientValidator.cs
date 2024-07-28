@@ -3,7 +3,7 @@ using SnackHub.Application.Client.Models;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.ValueObjects;
 
-namespace SnackHub.Application.Client.UseCases
+namespace SnackHub.Application.Client.Validators
 {
     public class RegisterClientValidator(IClientRepository _clientRepository) : IRegisterClientValidator
     {
