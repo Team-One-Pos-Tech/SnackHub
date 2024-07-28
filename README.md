@@ -6,24 +6,8 @@ It intends to apply the concepts presented so far, such as Domain Driven Design,
 The API handles a few operations on a small fast food restaurant, including: <br>
 The application touches some domains and let the user execute some use cases, they are:
 
-- Clients domain
-  - Create new clients;
-  - Get a registered client by `Id` or by `CPF`;
-- Products domain
-  - Create, Update and Delete products;
-  - Get a product by Id;
-  - Get a `list of products` by `Category`;
-  - Get a list containing all registered products;
-- Order domain
-  - Confirm a new order by passing a client identifier and registered products;
-  - Cancel a non-accept(non-paid) order;
-  - `Checkout/Pay` the order, creating a new `Kitchen Order`;
-- Kitchen Order domain
-  - Get a `list containing all registered Kitchen orders approved/created`;
-  - Update the `Kitchen order state`;
-
 ## Documentation
-This application is based on DDD and you can find the `Event Storm` diagrams and `Ubiquitous Language` by following those links:  
+This application is based on DDD and you can find the resources by following the links:  
  - [Event Storm](https://miro.com/app/board/uXjVKUq0krI=/?share_link_id=69852294691)
  - [Ubiquitous Language](https://github.com/Team-One-Pos-Tech/SnackHub/wiki/Ubiquitous-Language)
  - [Architecture](https://github.com/Team-One-Pos-Tech/SnackHub/wiki/Architecture)
