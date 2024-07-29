@@ -58,6 +58,16 @@ public class Order : Entity<Guid>, IAggregateRoot
         UpdatedAt = DateTime.UtcNow;
     }
 
+    public void UpdateOrderStatus(OrderStatus newStatus)
+    {
+        if (Status == newStatus)
+        {
+            throw new DomainException($"Order is already {GetStatusDescription()}");
+        }
+
+        Status = newStatus;
+    }
+
     public void Checkout(bool accepted)
     {
         if (Status != OrderStatus.Confirmed)

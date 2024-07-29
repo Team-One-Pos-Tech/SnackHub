@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SnackHub.Application.Order.Contracts;
 using SnackHub.Application.Order.Models;
+using SnackHub.Application.Order.UseCases;
 using SnackHub.Extensions;
 
 namespace SnackHub.Controllers;
@@ -13,17 +14,23 @@ public class OrderController : ControllerBase
     private readonly ICancelOrderUseCase _cancelOrderUseCase;
     private readonly ICheckoutOrderUseCase _checkoutOrderUseCase;
     private readonly IListOrderUseCase _listOrderUseCase;
+    private readonly ICheckPaymentStatusUseCase _checkPaymentStatusUseCase;
+    private readonly IUpdateOrderStatusUseCase _updateOrderStatusUseCase;
 
     public OrderController(
         IConfirmOrderUseCase confirmOrderUseCase,
         ICancelOrderUseCase cancelOrderUseCase,
         ICheckoutOrderUseCase checkoutOrderUseCase, 
-        IListOrderUseCase listOrderUseCase)
+        IListOrderUseCase listOrderUseCase,
+        ICheckPaymentStatusUseCase checkPaymentStatusUseCase,
+        IUpdateOrderStatusUseCase updateOrderStatusUseCase)
     {
         _confirmOrderUseCase = confirmOrderUseCase;
         _cancelOrderUseCase = cancelOrderUseCase;
         _checkoutOrderUseCase = checkoutOrderUseCase;
         _listOrderUseCase = listOrderUseCase;
+        _checkPaymentStatusUseCase = checkPaymentStatusUseCase;
+        _updateOrderStatusUseCase = updateOrderStatusUseCase;
     }
     
     [HttpGet]
@@ -73,4 +80,33 @@ public class OrderController : ControllerBase
             ? Ok(response) 
             : ValidationProblem(ModelState.AddNotifications(response.Notifications));
     }
+
+    [HttpGet("{orderId:guid}/payment-status")]
+    [ProducesResponseType(typeof(CheckPaymentStatusResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<CheckPaymentStatusResponse>> CheckPaymentStatus(Guid orderId)
+    {
+        var request = new CheckPaymentStatusRequest { OrderId = orderId };
+        var response = await _checkPaymentStatusUseCase.Execute(request);
+
+        return response.IsValid
+            ? Ok(response)
+            : NotFound();
+    }
+
+    [HttpPut("{orderId:guid}/status")]
+    [ProducesResponseType(typeof(UpdateOrderStatusResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult<UpdateOrderStatusResponse>> UpdateOrderStatus(Guid orderId)
+    {
+        var request = new UpdateOrderStatusRequest { OrderId = orderId };
+        var response = await _updateOrderStatusUseCase.Execute(request);
+
+        return response.IsValid
+            ? Ok(response)
+            : ValidationProblem(ModelState.AddNotifications(response.Notifications));
+    }
+
+
 }
