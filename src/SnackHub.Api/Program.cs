@@ -17,7 +17,7 @@ builder.Services.AddAuthentication(options =>
 })
     .AddJwtBearer(options =>
     {
-        options.Authority = "https://keycloak.forinnovation.com.br/auth/realms/master";
+        options.Authority = "https://keycloak.forinnovation.com.br/realms/snackhub";
         options.Audience = "snakhubapi";
         options.RequireHttpsMetadata = false; // Defina como true em produção
         options.TokenValidationParameters = new TokenValidationParameters
