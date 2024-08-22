@@ -10,7 +10,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 ARG PASSWORD_ENV_SEEDED
-ENV PASSWORD_ENV_SEEDED=$PASSWORD_ENV_SEEDED
+ENV PASSWORD_ENV_SEEDED=dGVzdGU=
 RUN dotnet dev-certs https -ep /src/aspnetapp.pfx -p ${PASSWORD_ENV_SEEDED}
 
 COPY ["src/SnackHub.Api/SnackHub.Api.csproj", "src/SnackHub.Api/"]
