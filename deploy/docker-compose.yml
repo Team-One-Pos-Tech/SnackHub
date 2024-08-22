@@ -11,16 +11,21 @@ services:
   snackhubapi:
     build:
       context: ../
-      dockerfile: ../src/SnackHub.Api/Dockerfile
+      dockerfile: src/SnackHub.Api/Dockerfile
     container_name: snackhubapi
     environment:
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=dGVzdGU=
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/aspnetapp.pfx
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development
       - Storage:MongoDb:Host=mongodb
       - Storage:MongoDb:Port=27017
       - Storage:MongoDb:UserName=admin
       - Storage:MongoDb:Password=admin
       - Storage:MongoDb:Database=snackhub
     ports:
-      - "5000:8080"
+      - "5000:80"
+      - "5001:443"
     depends_on:
       - mongodb
     links:

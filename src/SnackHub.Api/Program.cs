@@ -108,7 +108,9 @@ var app = builder.Build();
     });
 }
 
-//app.UseHttpsRedirection();
+if (bool.TryParse(builder.Configuration.GetSection("https").Value, out var result) && result)
+    app.UseHttpsRedirection();
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMongoDbConventions();
