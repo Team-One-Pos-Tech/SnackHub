@@ -10,25 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-    .AddJwtBearer(options =>
-    {
-        options.Authority = "https://keycloak.forinnovation.com.br/realms/snackhub";
-        options.Audience = "snakhubapi";
-        options.RequireHttpsMetadata = false; // Defina como true em produção
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Xl38f3J22o6ikk4LnoW8Wyykn1QShZYJ")),
-        };
-    });
+builder.Services.AddAuthenticationSetup(builder.Configuration);
+
+
 
 builder.Services.AddCors(options =>
 {

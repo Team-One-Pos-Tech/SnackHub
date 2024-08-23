@@ -11,20 +11,10 @@ namespace SnackHub.Controllers
         [Authorize]
         public IActionResult GetCurrentUser()
         {
-            var userName = User.Identity?.Name;
-
-            if (userName == null)
-            {
-                return Unauthorized();
-            }
-
-            var claims = User.Claims.Select(c => new { c.Type, c.Value }).ToList();
-
             return Ok(new
             {
-                UserName = userName,
-                Claims = claims
-            });
+                Claims = User.Claims.Select(c => new { c.Type, c.Value }).ToList()
+        });
         }
     }
 }
