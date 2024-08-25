@@ -1,4 +1,3 @@
-using SnackHub.Application.Payment.Models;
 using SnackHub.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +9,8 @@ builder.Services.AddControllers();
 builder
     .Services
     .AddEndpointsApiExplorer()
-    .AddSwaggerGen();
+    .AddSwaggerGen()
+    .AddAuthenticationExtension(builder.Configuration);
 
 builder
     .Services
@@ -23,14 +23,11 @@ builder
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-// }
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseMongoDbConventions();
 app.MapControllers();
+app.UseAuthentication();
 app.Run();
