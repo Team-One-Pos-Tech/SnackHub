@@ -40,7 +40,7 @@ public class AuthenticationController(IConfiguration Configuration) : Controller
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
 
-            return Ok(new { Token = tokenString });
+            return Ok(tokenString);
         }
         else
         {

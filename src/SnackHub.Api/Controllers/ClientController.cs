@@ -19,8 +19,7 @@ namespace SnackHub.Controllers
             _registerClientUseCase = registerClientUseCase;
         }
         
-        [HttpGet, Authorize]
-        [HttpGet("{id:guid}")]
+        [HttpGet("{id:guid}"), Authorize]
         public async Task<ActionResult<GetClientResponse>> GetById([FromRoute] Guid id)
         {
             var clientResponse = await _getClientUseCase.Execute(id);
@@ -40,7 +39,7 @@ namespace SnackHub.Controllers
             return Ok(clientResponse);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         [ProducesResponseType(typeof(RegisterClientResponse),
             StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails),
