@@ -1,5 +1,7 @@
 using Microsoft.OpenApi.Models;
+using SnackHub.Domain.Contracts;
 using SnackHub.Extensions;
+using SnackHub.Infra.Gateways;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,9 @@ builder.Services
     {
         options.SwaggerDoc("v1", new OpenApiInfo { Title = "Snack Hub API", Version = "v1" });
         options.AddAuthorizationOptions();
-    });
+    })
+    .AddHttpClient<SignUpFunctionGateway>(c => c.BaseAddress = new System.Uri("http://127.0.0.1:3000/signup"));
+
 
 builder
     .Services
@@ -23,7 +27,8 @@ builder
     .AddRepositories()
     .AddServices()
     .AddUseCases()
-    .AddValidators();
+    .AddValidators()
+    .AddScoped<ISignUpFunctionGateway, SignUpFunctionGateway>();
 
 var app = builder.Build();
 

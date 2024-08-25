@@ -3,6 +3,9 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using SnackHub.Application.Client.Models;
+using SnackHub.Domain.Contracts;
+using SnackHub.Domain.Models;
 
 namespace SnackHub.Controllers;
 
@@ -13,38 +16,53 @@ public class LoginViewModel
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthenticationController(IConfiguration Configuration) : ControllerBase
+public class AuthenticationController(IConfiguration Configuration, ISignUpFunctionGateway signUpFunctionGateway) : ControllerBase
 {
-    [HttpPost, Route("login")]
-    public IActionResult Login([FromBody] LoginViewModel user)
+    // [HttpPost, Route("signin")]
+    // public IActionResult SignIn([FromBody] LoginViewModel user)
+    // {
+    //     if (user == null)
+    //     {
+    //         return BadRequest("Request do cliente inválido");
+    //     }
+    //
+    //     if (user.Cpf == "40481414061")
+    //     {
+    //         var _secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]));
+    //         var _issuer = Configuration["Jwt:Issuer"];
+    //         var _audience = Configuration["Jwt:Audience"];
+    //
+    //         var signinCredentials = new SigningCredentials(_secretKey, SecurityAlgorithms.HmacSha256);
+    //
+    //         var tokeOptions = new JwtSecurityToken(
+    //             issuer: _issuer,
+    //             audience: _audience,
+    //             claims: new List<Claim>(),
+    //             expires: DateTime.Now.AddMinutes(20),
+    //             signingCredentials: signinCredentials);
+    //
+    //         var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+    //
+    //         return Ok(tokenString);
+    //     }
+    //     else
+    //     {
+    //         return Unauthorized();
+    //     }
+    // }
+    
+    
+    [HttpPost, Route("signup")]
+    public async Task<IActionResult> SignUp([FromBody] RegisterClientRequest user)
     {
-        if (user == null)
+        var signUpRequest = new SignUpRequest
         {
-            return BadRequest("Request do cliente inválido");
-        }
+            Name = user.Name,
+            Cpf = user.CPF
+        };
+        
+        await signUpFunctionGateway.Execute(signUpRequest);
 
-        if (user.Cpf == "40481414061")
-        {
-            var _secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]));
-            var _issuer = Configuration["Jwt:Issuer"];
-            var _audience = Configuration["Jwt:Audience"];
-
-            var signinCredentials = new SigningCredentials(_secretKey, SecurityAlgorithms.HmacSha256);
-
-            var tokeOptions = new JwtSecurityToken(
-                issuer: _issuer,
-                audience: _audience,
-                claims: new List<Claim>(),
-                expires: DateTime.Now.AddMinutes(20),
-                signingCredentials: signinCredentials);
-
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-
-            return Ok(tokenString);
-        }
-        else
-        {
-            return Unauthorized();
-        }
+        return Ok();
     }
 }
