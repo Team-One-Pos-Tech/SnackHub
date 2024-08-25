@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SnackHub.Application.Client.Contracts;
 using SnackHub.Application.Client.Models;
@@ -18,6 +19,7 @@ namespace SnackHub.Controllers
             _registerClientUseCase = registerClientUseCase;
         }
         
+        [HttpGet, Authorize]
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<GetClientResponse>> GetById([FromRoute] Guid id)
         {
