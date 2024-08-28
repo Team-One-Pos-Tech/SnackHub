@@ -18,7 +18,7 @@ builder.Services
         options.SwaggerDoc("v1", new OpenApiInfo { Title = "Snack Hub API", Version = "v1" });
         options.AddAuthorizationOptions();
     })
-    .AddHttpClient<SignUpFunctionGateway>(c => c.BaseAddress = new System.Uri("http://127.0.0.1:3000/signup"));
+    .AddHttpClient();
 
 
 builder
