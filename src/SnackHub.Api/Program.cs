@@ -1,7 +1,5 @@
 using Microsoft.OpenApi.Models;
-using SnackHub.Domain.Contracts;
 using SnackHub.Extensions;
-using SnackHub.Infra.Gateways;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +26,7 @@ builder
     .AddServices()
     .AddUseCases()
     .AddValidators()
-    .AddScoped<ISignUpFunctionGateway, SignUpFunctionGateway>();
+    .AddGateways();
 
 var app = builder.Build();
 
