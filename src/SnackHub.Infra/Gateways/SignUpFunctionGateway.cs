@@ -9,13 +9,15 @@ public class SignUpFunctionGateway(HttpClient httpClient) : ISignUpFunctionGatew
 {
     public async Task Execute(SignUpRequest request)
     {
+        var functionUrl = Environment.GetEnvironmentVariable("SIGN_UP_FUNCTION_URL");
+        
         using StringContent jsonContent = new(
             JsonSerializer.Serialize(request),
             Encoding.Default,
             "application/json");
 
         using HttpResponseMessage response = await httpClient.PostAsync(
-            "http://127.0.0.1:3000/signup",
+            functionUrl,
             jsonContent);
     }
 }

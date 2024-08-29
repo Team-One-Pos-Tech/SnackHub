@@ -1,8 +1,6 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using SnackHub.Application.Client.Contracts;
-using SnackHub.Application.Client.UseCases;
 
 namespace SnackHub.Extensions;
 
