@@ -60,8 +60,15 @@ public class AuthenticationController(IConfiguration Configuration, ISignUpFunct
             Name = user.Name,
             Cpf = user.CPF
         };
-        
-        await signUpFunctionGateway.Execute(signUpRequest);
+
+        try
+        {
+            await signUpFunctionGateway.Execute(signUpRequest);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
 
         return Ok();
     }

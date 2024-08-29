@@ -19,5 +19,12 @@ public class SignUpFunctionGateway(HttpClient httpClient) : ISignUpFunctionGatew
         using HttpResponseMessage response = await httpClient.PostAsync(
             functionUrl,
             jsonContent);
+
+        var responseData = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(responseData);
+        }
     }
 }
