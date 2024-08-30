@@ -20,8 +20,6 @@ public class AuthenticationController(IConfiguration Configuration,
     [HttpPost, Route("signup")]
     public async Task<IActionResult> SignUp([FromBody] RegisterClientRequest user)
     {
-        var defaultPassword = Environment.GetEnvironmentVariable("DEFAULT_USERS_PASSWORD");
-        
         var request = new RegisterClientRequest(user.Name, user.CPF);
 
         var response = await registerClientUseCase.Execute(request);
@@ -33,21 +31,28 @@ public class AuthenticationController(IConfiguration Configuration,
 
         try
         {
-            var signUpRequest = new SignUpRequest()
-            {
-                Name = user.Name,
-                Cpf = user.CPF,
-                Password = defaultPassword!
-            };
-            
-            await signUpFunctionGateway.Execute(signUpRequest);
+            await RegisterOnIdentityProvider(user);
 
-            return Ok();
+            return Ok("User registered successfully");
         }
         catch (Exception e)
         {
             return BadRequest(e.Message);
         }
+    }
+
+    private async Task RegisterOnIdentityProvider(RegisterClientRequest user)
+    {
+        var defaultPassword = Environment.GetEnvironmentVariable("DEFAULT_USERS_PASSWORD");
+        
+        var signUpRequest = new SignUpRequest()
+        {
+            Name = user.Name,
+            Cpf = user.CPF,
+            Password = defaultPassword!
+        };
+
+        await signUpFunctionGateway.Execute(signUpRequest);
     }
 
     [HttpPost, Route("signin")]

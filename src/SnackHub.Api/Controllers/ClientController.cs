@@ -39,22 +39,5 @@ namespace SnackHub.Controllers
             return Ok(clientResponse);
         }
 
-        [HttpPost, Authorize]
-        [ProducesResponseType(typeof(RegisterClientResponse),
-            StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ValidationProblemDetails),
-            StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<ActionResult<RegisterClientResponse>> Post(RegisterClientRequest request)
-        {
-            var response = await _registerClientUseCase.Execute(request);
-
-            if (!response.IsValid) 
-            {
-                return ValidationProblem(ModelState.AddNotifications(response.Notifications));
-            }
-
-            return Ok(response);
-        }
     }
 }
