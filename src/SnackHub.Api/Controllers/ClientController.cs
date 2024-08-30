@@ -7,7 +7,7 @@ using SnackHub.Extensions;
 namespace SnackHub.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/v1")]
+    [Route("api/[controller]/v1"), Authorize]
     public class ClientController: ControllerBase
     {
         private readonly IGetClientUseCase _getClientUseCase;
@@ -19,7 +19,7 @@ namespace SnackHub.Controllers
             _registerClientUseCase = registerClientUseCase;
         }
         
-        [HttpGet("{id:guid}"), Authorize]
+        [HttpGet("{id:guid}")]
         public async Task<ActionResult<GetClientResponse>> GetById([FromRoute] Guid id)
         {
             var clientResponse = await _getClientUseCase.Execute(id);

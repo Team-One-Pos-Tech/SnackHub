@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using SnackHub.Application.Client.Models;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Models.Gateways;
-using SnackHub.Domain.Models.Gateways.Models;
 
 namespace SnackHub.Controllers;
 
@@ -15,63 +14,6 @@ public class LoginViewModel
 [ApiController]
 public class AuthenticationController(IConfiguration Configuration, ISignUpFunctionGateway signUpFunctionGateway, ISignInFunctionGateway signInFunctionGateway) : ControllerBase
 {
-    // [HttpPost, Route("signin")]
-    // public IActionResult SignIn([FromBody] LoginViewModel user)
-    // {
-    //     if (user == null)
-    //     {
-    //         return BadRequest("Request do cliente inválido");
-    //     }
-    //
-    //     if (user.Cpf == "40481414061")
-    //     {
-    //         var _secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]));
-    //         var _issuer = Configuration["Jwt:Issuer"];
-    //         var _audience = Configuration["Jwt:Audience"];
-    //
-    //         var signinCredentials = new SigningCredentials(_secretKey, SecurityAlgorithms.HmacSha256);
-    //
-    //         var tokeOptions = new JwtSecurityToken(
-    //             issuer: _issuer,
-    //             audience: _audience,
-    //             claims: new List<Claim>(),
-    //             expires: DateTime.Now.AddMinutes(20),
-    //             signingCredentials: signinCredentials);
-    //
-    //         var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-    //
-    //         return Ok(tokenString);
-    //     }
-    //     else
-    //     {
-    //         return Unauthorized();
-    //     }
-    // }
-    
-    [HttpPost, Route("signin")]
-    public async Task<IActionResult> SignIn([FromBody] LoginViewModel user)
-    {
-        var defaultPassword = Environment.GetEnvironmentVariable("DEFAULT_USERS_PASSWORD");
-        
-        var signInRequest = new SignInRequest()
-        {
-            Username = user.Cpf,
-            Password = defaultPassword!
-        };
-
-        try
-        {
-            var authResponse = await signInFunctionGateway.Execute(signInRequest);
-            return Ok(authResponse);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-
-    }
-    
-    
     [HttpPost, Route("signup")]
     public async Task<IActionResult> SignUp([FromBody] RegisterClientRequest user)
     {
@@ -94,5 +36,28 @@ public class AuthenticationController(IConfiguration Configuration, ISignUpFunct
         }
 
         return Ok();
+    }
+    
+    [HttpPost, Route("signin")]
+    public async Task<IActionResult> SignIn([FromBody] LoginViewModel user)
+    {
+        var defaultPassword = Environment.GetEnvironmentVariable("DEFAULT_USERS_PASSWORD");
+        
+        var signInRequest = new SignInRequest()
+        {
+            Username = user.Cpf,
+            Password = defaultPassword!
+        };
+
+        try
+        {
+            var authResponse = await signInFunctionGateway.Execute(signInRequest);
+            return Ok(authResponse);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+
     }
 }
