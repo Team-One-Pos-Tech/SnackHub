@@ -1,14 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SnackHub.Application.Client.Models;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Models.Gateways;
+using SnackHub.Models;
 
 namespace SnackHub.Controllers;
 
-public class LoginViewModel
-{
-    public string Cpf { get; set; }
-}
 
 [Route("api/[controller]")]
 [ApiController]
@@ -39,7 +37,7 @@ public class AuthenticationController(IConfiguration Configuration, ISignUpFunct
     }
     
     [HttpPost, Route("signin")]
-    public async Task<IActionResult> SignIn([FromBody] LoginViewModel user)
+    public async Task<IActionResult> SignIn([FromBody] LoginModel user)
     {
         var defaultPassword = Environment.GetEnvironmentVariable("DEFAULT_USERS_PASSWORD");
         
