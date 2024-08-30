@@ -9,6 +9,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "SIGN_UP_FUNCTION_URL": "https://3qi3bn2xhg.execute-api.us-east-1.amazonaws.com/Prod/signup",
+        "SIGN_IN_FUNCTION_URL": "http://127.0.0.1:3000/signIn",
         "DEFAULT_USERS_PASSWORD": "Default-password-99!"
       }
     }

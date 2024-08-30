@@ -9,6 +9,7 @@ public static class GatewaysExtensions
     public static IServiceCollection AddGateways(this IServiceCollection serviceCollection)
     {
         return serviceCollection
-            .AddScoped<ISignUpFunctionGateway, SignUpFunctionGateway>();
+            .AddScoped<ISignUpFunctionGateway, SignUpFunctionGateway>()
+            .AddScoped<ISignInFunctionGateway, SignInFunctionGateway>();
     }
 }

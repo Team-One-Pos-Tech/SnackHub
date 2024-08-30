@@ -13,7 +13,7 @@ public class LoginViewModel
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthenticationController(IConfiguration Configuration, ISignUpFunctionGateway signUpFunctionGateway) : ControllerBase
+public class AuthenticationController(IConfiguration Configuration, ISignUpFunctionGateway signUpFunctionGateway, ISignInFunctionGateway signInFunctionGateway) : ControllerBase
 {
     // [HttpPost, Route("signin")]
     // public IActionResult SignIn([FromBody] LoginViewModel user)
@@ -47,6 +47,29 @@ public class AuthenticationController(IConfiguration Configuration, ISignUpFunct
     //         return Unauthorized();
     //     }
     // }
+    
+    [HttpPost, Route("signin")]
+    public async Task<IActionResult> SignIn([FromBody] LoginViewModel user)
+    {
+        var defaultPassword = Environment.GetEnvironmentVariable("DEFAULT_USERS_PASSWORD");
+        
+        var signInRequest = new SignInRequest()
+        {
+            Username = user.Cpf,
+            Password = defaultPassword!
+        };
+
+        try
+        {
+            var authResponse = await signInFunctionGateway.Execute(signInRequest);
+            return Ok(authResponse);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+
+    }
     
     
     [HttpPost, Route("signup")]

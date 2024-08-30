@@ -5,5 +5,5 @@ namespace SnackHub.Domain.Contracts;
 
 public interface ISignInFunctionGateway
 {
-    public Task<AuthResponseType> Execute(SignUpRequest request);
+    public Task<AuthResponseType> Execute(SignInRequest request);
 }

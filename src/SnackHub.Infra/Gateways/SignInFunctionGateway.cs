@@ -8,7 +8,7 @@ namespace SnackHub.Infra.Gateways;
 
 public class SignInFunctionGateway(HttpClient httpClient) : ISignInFunctionGateway
 {
-    public async Task<AuthResponseType> Execute(SignUpRequest request)
+    public async Task<AuthResponseType> Execute(SignInRequest request)
     {
         var signInUrl = Environment.GetEnvironmentVariable("SIGN_IN_FUNCTION_URL");
         
