@@ -8,7 +8,8 @@
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "SIGN_UP_FUNCTION_URL": "https://3qi3bn2xhg.execute-api.us-east-1.amazonaws.com/Prod/signup"
+        "SIGN_UP_FUNCTION_URL": "https://3qi3bn2xhg.execute-api.us-east-1.amazonaws.com/Prod/signup",
+        "DEFAULT_USERS_PASSWORD": "Default-password-99!"
       }
     }
   }

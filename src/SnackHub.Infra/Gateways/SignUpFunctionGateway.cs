@@ -9,7 +9,7 @@ public class SignUpFunctionGateway(HttpClient httpClient) : ISignUpFunctionGatew
 {
     public async Task Execute(SignUpRequest request)
     {
-        var functionUrl = Environment.GetEnvironmentVariable("SIGN_UP_FUNCTION_URL");
+        var signUpUrl = Environment.GetEnvironmentVariable("SIGN_UP_FUNCTION_URL");
         
         using StringContent jsonContent = new(
             JsonSerializer.Serialize(request),
@@ -17,7 +17,7 @@ public class SignUpFunctionGateway(HttpClient httpClient) : ISignUpFunctionGatew
             "application/json");
 
         using HttpResponseMessage response = await httpClient.PostAsync(
-            functionUrl,
+            signUpUrl,
             jsonContent);
 
         var responseData = await response.Content.ReadAsStringAsync();

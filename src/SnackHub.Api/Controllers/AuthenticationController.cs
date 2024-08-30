@@ -1,8 +1,4 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using SnackHub.Application.Client.Models;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Models;
@@ -55,10 +51,13 @@ public class AuthenticationController(IConfiguration Configuration, ISignUpFunct
     [HttpPost, Route("signup")]
     public async Task<IActionResult> SignUp([FromBody] RegisterClientRequest user)
     {
+        var defaultPassword = Environment.GetEnvironmentVariable("DEFAULT_USERS_PASSWORD");
+        
         var signUpRequest = new SignUpRequest
         {
             Name = user.Name,
-            Cpf = user.CPF
+            Cpf = user.CPF,
+            Password = defaultPassword!
         };
 
         try
