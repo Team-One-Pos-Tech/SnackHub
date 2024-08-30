@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using SnackHub.Application.Client.Models;
 using SnackHub.Domain.Contracts;
-using SnackHub.Domain.Models;
+using SnackHub.Domain.Models.Gateways;
+using SnackHub.Domain.Models.Gateways.Models;
 
 namespace SnackHub.Controllers;
 
@@ -53,7 +54,7 @@ public class AuthenticationController(IConfiguration Configuration, ISignUpFunct
     {
         var defaultPassword = Environment.GetEnvironmentVariable("DEFAULT_USERS_PASSWORD");
         
-        var signUpRequest = new SignUpRequest
+        var signUpRequest = new SignUpRequest()
         {
             Name = user.Name,
             Cpf = user.CPF,

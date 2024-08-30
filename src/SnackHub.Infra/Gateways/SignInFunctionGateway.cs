@@ -6,11 +6,11 @@ using SnackHub.Domain.Models.Gateways.Models;
 
 namespace SnackHub.Infra.Gateways;
 
-public class SignUpFunctionGateway(HttpClient httpClient) : ISignUpFunctionGateway
+public class SignInFunctionGateway(HttpClient httpClient) : ISignInFunctionGateway
 {
-    public async Task Execute(SignUpRequest request)
+    public async Task<AuthResponseType> Execute(SignUpRequest request)
     {
-        var signUpUrl = Environment.GetEnvironmentVariable("SIGN_UP_FUNCTION_URL");
+        var signInUrl = Environment.GetEnvironmentVariable("SIGN_IN_FUNCTION_URL");
         
         using StringContent jsonContent = new(
             JsonSerializer.Serialize(request),
@@ -18,14 +18,18 @@ public class SignUpFunctionGateway(HttpClient httpClient) : ISignUpFunctionGatew
             "application/json");
 
         using HttpResponseMessage response = await httpClient.PostAsync(
-            signUpUrl,
+            signInUrl,
             jsonContent);
 
-        var responseData = await response.Content.ReadAsStringAsync();
+        var responseHttp = await response.Content.ReadAsStringAsync();
         
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception(responseData);
+            throw new Exception(responseHttp);
         }
+        
+        var authResponse = JsonSerializer.Deserialize<AuthResponseType>(responseHttp);
+        
+        return authResponse!;
     }
 }

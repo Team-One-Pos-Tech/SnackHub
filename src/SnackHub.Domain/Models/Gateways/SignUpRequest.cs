@@ -1,4 +1,4 @@
-namespace SnackHub.Domain.Models;
+namespace SnackHub.Domain.Models.Gateways;
 
 public class SignUpRequest
 {
