@@ -229,3 +229,4 @@ The application need to be configured with some variables, as follows
 | Storage:MongoDb:Database | snackhub              | string  |
 
 When executing the api through the `docker compose`, it will be configured by using the `.env` file found at the solutions root folder.
+docker compose -p snackhub -f docker-compose.yml up -d

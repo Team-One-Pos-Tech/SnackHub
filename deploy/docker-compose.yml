@@ -2,6 +2,7 @@ services:
   mongodb:
     image: mongo
     container_name: mongodb
+    restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin
@@ -13,6 +14,7 @@ services:
       context: ../
       dockerfile: src/SnackHub.Api/Dockerfile
     container_name: snackhubapi
+    restart: always
     environment:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=dGVzdGU=
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/aspnetapp.pfx
@@ -24,7 +26,7 @@ services:
       - Storage:MongoDb:Password=admin
       - Storage:MongoDb:Database=snackhub
     ports:
-      - "5000:80"
+      - "5002:80"
       - "5001:443"
     depends_on:
       - mongodb
