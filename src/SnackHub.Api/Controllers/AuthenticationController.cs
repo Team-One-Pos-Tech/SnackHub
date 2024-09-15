@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SnackHub.Application.Client.Contracts;
 using SnackHub.Application.Client.Models;
+using SnackHub.Configuration;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Models.Gateways;
 using SnackHub.Extensions;
@@ -17,6 +19,9 @@ public class AuthenticationController(
     ISignInFunctionGateway signInFunctionGateway, 
     IRegisterClientUseCase registerClientUseCase) : ControllerBase
 {
+
+    const string DEFAULT_USERS_PASSWORD = "Default-password-99!";
+
     [HttpPost, Route("signup")]
     public async Task<IActionResult> SignUp([FromBody] RegisterClientRequest user)
     {
@@ -43,14 +48,12 @@ public class AuthenticationController(
 
     private async Task RegisterOnIdentityProvider(RegisterClientRequest user)
     {
-        var defaultPassword = Environment.GetEnvironmentVariable("DEFAULT_USERS_PASSWORD");
-        
         var signUpRequest = new SignUpRequest()
         {
             Name = user.Name,
             Cpf = user.CPF,
             Email = user.Email,
-            Password = defaultPassword!
+            Password = DEFAULT_USERS_PASSWORD
         };
 
         await signUpFunctionGateway.Execute(signUpRequest);
@@ -59,12 +62,10 @@ public class AuthenticationController(
     [HttpPost, Route("signin")]
     public async Task<IActionResult> SignIn([FromBody] LoginModel user)
     {
-        var defaultPassword = Environment.GetEnvironmentVariable("DEFAULT_USERS_PASSWORD");
-        
         var signInRequest = new SignInRequest()
         {
             Username = user.Cpf,
-            Password = defaultPassword!
+            Password = DEFAULT_USERS_PASSWORD
         };
 
         try
