@@ -12,7 +12,7 @@ namespace SnackHub.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthenticationController(IConfiguration Configuration, 
+public class AuthenticationController(
     ISignUpFunctionGateway signUpFunctionGateway, 
     ISignInFunctionGateway signInFunctionGateway, 
     IRegisterClientUseCase registerClientUseCase) : ControllerBase
@@ -49,6 +49,7 @@ public class AuthenticationController(IConfiguration Configuration,
         {
             Name = user.Name,
             Cpf = user.CPF,
+            Email = user.Email,
             Password = defaultPassword!
         };
 
