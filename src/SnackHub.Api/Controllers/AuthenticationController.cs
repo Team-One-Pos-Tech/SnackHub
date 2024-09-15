@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using SnackHub.Application.Authentication.Contracts;
 using SnackHub.Application.Client.Contracts;
 using SnackHub.Application.Client.Models;
 using SnackHub.Configuration;
@@ -16,7 +17,7 @@ namespace SnackHub.Controllers;
 [ApiController]
 public class AuthenticationController(
     ISignUpFunctionGateway signUpFunctionGateway, 
-    ISignInFunctionGateway signInFunctionGateway, 
+    ISignInUseCase signInUseCase, 
     IRegisterClientUseCase registerClientUseCase) : ControllerBase
 {
 
@@ -62,22 +63,10 @@ public class AuthenticationController(
     [HttpPost, Route("signin")]
     public async Task<IActionResult> SignIn([FromBody] LoginModel user)
     {
-        var signInRequest = new SignInRequest()
-        {
-            Username = user.Cpf,
-            Password = DEFAULT_USERS_PASSWORD
-        };
+        var signInRequest = new SignInRequest(user.Cpf, DEFAULT_USERS_PASSWORD);
 
-        try
-        {
-            var authResponse = await signInFunctionGateway.Execute(signInRequest);
-            
-            return Ok(authResponse.IdToken);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
+        var response = await signInUseCase.Execute(signInRequest);
 
+        return Ok(response);
     }
 }

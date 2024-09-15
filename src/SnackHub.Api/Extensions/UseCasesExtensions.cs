@@ -1,3 +1,5 @@
+using SnackHub.Application.Authentication.Contracts;
+using SnackHub.Application.Authentication.UseCases;
 using SnackHub.Application.Client.Contracts;
 using SnackHub.Application.Client.UseCases;
 using SnackHub.Application.Contracts;
@@ -28,6 +30,7 @@ public static class UseCasesExtensions
             .AddScoped<ICreateKitchenOrderUseCase, CreateKitchenOrderUseCase>()
             .AddScoped<IUpdateKitchenOrderStatusUseCase, UpdateKitchenOrderStatusUseCase>()
             .AddScoped<IListKitchenOrderUseCase, ListKitchenOrderUseCase>()
-            .AddScoped<IPaymentUseCases, UpdatePaymentStatusUseCase>();
+            .AddScoped<IPaymentUseCases, UpdatePaymentStatusUseCase>()
+            .AddScoped<ISignInUseCase, SignInUseCase>();
     }
 }

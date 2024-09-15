@@ -71,7 +71,7 @@ namespace SnackHub.Application.Tests.UseCases
             // Assert
 
             mockSignInFunctionGateway.Verify(
-                gateway => gateway.Execute(It.Is<SignInRequest>(req => req.Cpf == anonymousUsername)),
+                gateway => gateway.Execute(It.Is<SignInRequest>(req => req.Username == anonymousUsername)),
                 Times.Once
             );
 

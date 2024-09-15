@@ -5,11 +5,11 @@ public record SignInRequest
 
     public SignInRequest(string cpf, string password)
     {
-        Cpf = cpf;
+        Username = cpf;
         Password = password;
     }
 
-    public string Cpf { get; set; }
+    public string Username { get; set; }
 
     public string Password { get; set; }
 }

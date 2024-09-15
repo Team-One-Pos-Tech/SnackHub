@@ -1,4 +1,5 @@
-﻿using SnackHub.Application.Authentication.Models;
+﻿using SnackHub.Application.Authentication.Contracts;
+using SnackHub.Application.Authentication.Models;
 using SnackHub.Application.Client.Contracts;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Models.Gateways;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SnackHub.Application.Authentication.UseCases
 {
-    public class SignInUseCase
+    public class SignInUseCase : ISignInUseCase
     {
         private const string AnonymousUsername = "00000000000";
 
@@ -23,9 +24,9 @@ namespace SnackHub.Application.Authentication.UseCases
 
         public async Task<SignInResponse> Execute(SignInRequest request)
         {
-            if (string.IsNullOrWhiteSpace(request.Cpf))
+            if (string.IsNullOrWhiteSpace(request.Username))
             {
-                request.Cpf = AnonymousUsername;
+                request.Username = AnonymousUsername;
             }
 
             var response = await _signInFunction.Execute(request);
