@@ -52,7 +52,7 @@ namespace SnackHub.Application.Tests.UseCases
         {
             // Arrange
 
-            var anonymousCpf = "00000000000";
+            var anonymousUsername = "00000000000";
 
             var mockSignInFunctionGateway = new Mock<ISignInFunctionGateway>();
 
@@ -71,7 +71,7 @@ namespace SnackHub.Application.Tests.UseCases
             // Assert
 
             mockSignInFunctionGateway.Verify(
-                gateway => gateway.Execute(It.Is<SignInRequest>(req => req.Username == anonymousCpf)),
+                gateway => gateway.Execute(It.Is<SignInRequest>(req => req.Cpf == anonymousUsername)),
                 Times.Once
             );
 

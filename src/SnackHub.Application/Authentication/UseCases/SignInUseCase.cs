@@ -12,15 +12,22 @@ namespace SnackHub.Application.Authentication.UseCases
 {
     public class SignInUseCase
     {
+        private const string AnonymousUsername = "00000000000";
+
         private readonly ISignInFunctionGateway _signInFunction;
 
         public SignInUseCase(ISignInFunctionGateway signInFunction)
         {
-            this._signInFunction = signInFunction;
+            _signInFunction = signInFunction;
         }
 
         public async Task<SignInResponse> Execute(SignInRequest request)
         {
+            if (string.IsNullOrWhiteSpace(request.Cpf))
+            {
+                request.Cpf = AnonymousUsername;
+            }
+
             var response = await _signInFunction.Execute(request);
 
             return new SignInResponse(response.IdToken);
