@@ -6,19 +6,17 @@ using SnackHub.Domain.Models.Gateways.Models;
 
 namespace SnackHub.Infra.Gateways;
 
-public class SignUpFunctionGateway(HttpClient httpClient) : ISignUpFunctionGateway
+public class SignUpFunctionGateway(HttpClient httpClient, string signUpFunctionUrl) : ISignUpFunctionGateway
 {
     public async Task Execute(SignUpRequest request)
     {
-        var signUpUrl = Environment.GetEnvironmentVariable("SIGN_UP_FUNCTION_URL");
-        
         using StringContent jsonContent = new(
             JsonSerializer.Serialize(request),
             Encoding.Default,
             "application/json");
 
         using HttpResponseMessage response = await httpClient.PostAsync(
-            signUpUrl,
+            signUpFunctionUrl,
             jsonContent);
 
         var responseData = await response.Content.ReadAsStringAsync();

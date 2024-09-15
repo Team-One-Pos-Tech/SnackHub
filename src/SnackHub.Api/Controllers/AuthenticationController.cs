@@ -72,7 +72,7 @@ public class AuthenticationController(
         {
             var authResponse = await signInFunctionGateway.Execute(signInRequest);
             
-            return Ok(authResponse.AuthenticationResult.IdToken);
+            return Ok(authResponse.IdToken);
         }
         catch (Exception e)
         {

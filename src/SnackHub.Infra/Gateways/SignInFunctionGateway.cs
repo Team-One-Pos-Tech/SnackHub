@@ -6,19 +6,17 @@ using SnackHub.Domain.Models.Gateways.Models;
 
 namespace SnackHub.Infra.Gateways;
 
-public class SignInFunctionGateway(HttpClient httpClient) : ISignInFunctionGateway
+public class SignInFunctionGateway(HttpClient httpClient, string signInFunctionUrl) : ISignInFunctionGateway
 {
     public async Task<AuthResponseType> Execute(SignInRequest request)
     {
-        var signInUrl = Environment.GetEnvironmentVariable("SIGN_IN_FUNCTION_URL");
-        
         using StringContent jsonContent = new(
             JsonSerializer.Serialize(request),
             Encoding.Default,
             "application/json");
 
         using HttpResponseMessage response = await httpClient.PostAsync(
-            signInUrl,
+            signInFunctionUrl,
             jsonContent);
 
         var responseHttp = await response.Content.ReadAsStringAsync();

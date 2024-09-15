@@ -26,7 +26,7 @@ builder
     .AddServices()
     .AddUseCases()
     .AddValidators()
-    .AddGateways();
+    .AddGateways(builder.Configuration);
 
 var app = builder.Build();
 
