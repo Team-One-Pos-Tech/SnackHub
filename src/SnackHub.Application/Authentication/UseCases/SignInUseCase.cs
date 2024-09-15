@@ -12,18 +12,18 @@ namespace SnackHub.Application.Authentication.UseCases
 {
     public class SignInUseCase
     {
-        private ISignInFunctionGateway object1;
-        private IRegisterClientUseCase object2;
+        private readonly ISignInFunctionGateway _signInFunction;
 
-        public SignInUseCase(ISignInFunctionGateway object1, IRegisterClientUseCase object2)
+        public SignInUseCase(ISignInFunctionGateway signInFunction)
         {
-            this.object1 = object1;
-            this.object2 = object2;
+            this._signInFunction = signInFunction;
         }
 
-        public Task<SignInResponse> Execute(SignInRequest request)
+        public async Task<SignInResponse> Execute(SignInRequest request)
         {
-            throw new NotImplementedException();
+            var response = await _signInFunction.Execute(request);
+
+            return new SignInResponse(response.IdToken);
         }
     }
 }

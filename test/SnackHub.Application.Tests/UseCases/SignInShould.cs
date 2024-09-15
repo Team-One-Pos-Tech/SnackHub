@@ -2,14 +2,9 @@
 using Moq;
 using SnackHub.Application.Authentication.Models;
 using SnackHub.Application.Authentication.UseCases;
-using SnackHub.Application.Client.Contracts;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Models.Gateways;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SnackHub.Domain.Models.Gateways.Models;
 
 namespace SnackHub.Application.Tests.UseCases
 {
@@ -26,9 +21,12 @@ namespace SnackHub.Application.Tests.UseCases
             // Arrange
 
             var mockSignInFunctionGateway = new Mock<ISignInFunctionGateway>();
-            var mockRegisterClientUseCase = new Mock<IRegisterClientUseCase>();
 
-            var signInUseCase = new SignInUseCase(mockSignInFunctionGateway.Object, mockRegisterClientUseCase.Object);
+            mockSignInFunctionGateway
+                .Setup(gateway => gateway.Execute(It.IsAny<SignInRequest>()))
+                .ReturnsAsync(new AuthResponseType("token", true));
+
+            var signInUseCase = new SignInUseCase(mockSignInFunctionGateway.Object);
 
             var request = new SignInRequest("Ednaldo Pereira", "72860763023");
 
