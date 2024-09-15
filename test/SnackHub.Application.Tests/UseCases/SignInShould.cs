@@ -28,7 +28,7 @@ namespace SnackHub.Application.Tests.UseCases
 
             var signInUseCase = new SignInUseCase(mockSignInFunctionGateway.Object);
 
-            var request = new SignInRequest("Ednaldo Pereira", "72860763023");
+            var request = new SignInRequest("72860763023", "123");
 
             // Act
 
@@ -44,7 +44,6 @@ namespace SnackHub.Application.Tests.UseCases
                 .IdToken
                 .Should()
                 .NotBeNull();
-
 
         }
     }
