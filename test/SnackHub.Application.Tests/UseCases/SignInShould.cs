@@ -46,5 +46,44 @@ namespace SnackHub.Application.Tests.UseCases
                 .NotBeNull();
 
         }
+
+        [Test]
+        public async Task AuthenticateAnonymousUserWhenCpfIsEmpty()
+        {
+            // Arrange
+
+            var anonymousCpf = "00000000000";
+
+            var mockSignInFunctionGateway = new Mock<ISignInFunctionGateway>();
+
+            mockSignInFunctionGateway
+                .Setup(gateway => gateway.Execute(It.IsAny<SignInRequest>()))
+                .ReturnsAsync(new AuthResponseType("token", true));
+
+            var signInUseCase = new SignInUseCase(mockSignInFunctionGateway.Object);
+
+            var request = new SignInRequest("", "DefaultPassword");
+
+            // Act
+
+            SignInResponse response = await signInUseCase.Execute(request);
+
+            // Assert
+
+            mockSignInFunctionGateway.Verify(
+                gateway => gateway.Execute(It.Is<SignInRequest>(req => req.Username == anonymousCpf)),
+                Times.Once
+            );
+
+            response
+                .Should()
+                .NotBeNull();
+
+            response
+                .IdToken
+                .Should()
+                .NotBeNull();
+
+        }
     }
 }
