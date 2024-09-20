@@ -14,11 +14,18 @@ namespace SnackHub.Application.Authentication.UseCases
     {
         private readonly ISignUpFunctionGateway _signUpFunctionGateway = signUpFunctionGateway;
 
-        public async Task Execute(SignUpRequest request)
+        public async Task<RegisterClientResponse> Execute(SignUpRequest request)
         {
             var response = await registerClient.Execute(new RegisterClientRequest(request.Name, request.Cpf));
 
+            if (!response.IsValid)
+            {
+                return response;
+            }
+
             await _signUpFunctionGateway.Execute(request);
+
+            return response;
         }
     }
 }

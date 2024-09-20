@@ -70,14 +70,11 @@ namespace SnackHub.Application.Tests.UseCases
 
             // Act
 
-            await signInUseCase.Execute(request);
+            var registerClientResponse = await signInUseCase.Execute(request);
 
             // Assert
 
-            mockRegisterClientUseCase.Verify(
-                gateway => gateway.Execute(It.IsAny<RegisterClientRequest>()),
-                Times.Never
-            );
+            registerClientResponse.IsValid.Should().BeFalse();
 
             mockSignUpFunctionGateway.Verify(
                 gateway => gateway.Execute(It.IsAny<SignUpRequest>()),
