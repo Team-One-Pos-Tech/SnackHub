@@ -20,8 +20,7 @@ public class AuthenticationController(
     ISignInUseCase signInUseCase, 
     IRegisterClientUseCase registerClientUseCase) : ControllerBase
 {
-
-    const string DEFAULT_USERS_PASSWORD = "Default-password-99!";
+    private const string DefaultUsersPassword = "Default-password-99!";
 
     [HttpPost, Route("signup")]
     public async Task<IActionResult> SignUp([FromBody] RegisterClientRequest user)
@@ -49,13 +48,12 @@ public class AuthenticationController(
 
     private async Task RegisterOnIdentityProvider(RegisterClientRequest user)
     {
-        var signUpRequest = new SignUpRequest()
-        {
-            Name = user.Name,
-            Cpf = user.CPF,
-            Email = user.Email,
-            Password = DEFAULT_USERS_PASSWORD
-        };
+        var signUpRequest = new SignUpRequest(
+            user.Name,
+            user.CPF,
+            DefaultUsersPassword,
+            user.Email
+        );
 
         await signUpFunctionGateway.Execute(signUpRequest);
     }
@@ -63,7 +61,7 @@ public class AuthenticationController(
     [HttpPost, Route("signin")]
     public async Task<IActionResult> SignIn([FromBody] LoginModel user)
     {
-        var signInRequest = new SignInRequest(user.Cpf, DEFAULT_USERS_PASSWORD);
+        var signInRequest = new SignInRequest(user.Cpf, DefaultUsersPassword);
 
         var response = await signInUseCase.Execute(signInRequest);
 
