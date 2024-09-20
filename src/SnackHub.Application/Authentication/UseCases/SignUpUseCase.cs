@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SnackHub.Application.Authentication.UseCases
 {
-    public class SignUpUseCase(ISignUpFunctionGateway signUpFunctionGateway)
+    public class SignUpUseCase(ISignUpFunctionGateway signUpFunctionGateway, Client.Contracts.IRegisterClientUseCase @object)
     {
         private readonly ISignUpFunctionGateway _signUpFunctionGateway = signUpFunctionGateway;
 
