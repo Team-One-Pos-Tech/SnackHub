@@ -16,37 +16,13 @@ namespace SnackHub.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class AuthenticationController(
-    ISignUpFunctionGateway signUpFunctionGateway, 
-    ISignInUseCase signInUseCase, 
-    IRegisterClientUseCase registerClientUseCase) : ControllerBase
+    ISignInUseCase signInUseCase,
+    ISignUpUseCase signUpUseCase) : ControllerBase
 {
     private const string DefaultUsersPassword = "Default-password-99!";
 
     [HttpPost, Route("signup")]
     public async Task<IActionResult> SignUp([FromBody] RegisterClientRequest user)
-    {
-        var request = new RegisterClientRequest(user.Name, user.CPF);
-
-        var response = await registerClientUseCase.Execute(request);
-        
-        if (!response.IsValid) 
-        {
-            return ValidationProblem(ModelState.AddNotifications(response.Notifications));
-        }
-
-        try
-        {
-            await RegisterOnIdentityProvider(user);
-
-            return Ok("User registered successfully");
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
-
-    private async Task RegisterOnIdentityProvider(RegisterClientRequest user)
     {
         var signUpRequest = new SignUpRequest(
             user.Name,
@@ -55,7 +31,14 @@ public class AuthenticationController(
             user.Email
         );
 
-        await signUpFunctionGateway.Execute(signUpRequest);
+        var response = await signUpUseCase.Execute(signUpRequest);
+        
+        if (!response.IsValid) 
+        {
+            return ValidationProblem(ModelState.AddNotifications(response.Notifications));
+        }
+
+        return Ok(response);
     }
 
     [HttpPost, Route("signin")]

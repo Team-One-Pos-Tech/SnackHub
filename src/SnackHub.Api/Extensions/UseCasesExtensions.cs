@@ -31,6 +31,7 @@ public static class UseCasesExtensions
             .AddScoped<IUpdateKitchenOrderStatusUseCase, UpdateKitchenOrderStatusUseCase>()
             .AddScoped<IListKitchenOrderUseCase, ListKitchenOrderUseCase>()
             .AddScoped<IPaymentUseCases, UpdatePaymentStatusUseCase>()
-            .AddScoped<ISignInUseCase, SignInUseCase>();
+            .AddScoped<ISignInUseCase, SignInUseCase>()
+            .AddScoped<ISignUpUseCase, SignUpUseCase>();
     }
 }
