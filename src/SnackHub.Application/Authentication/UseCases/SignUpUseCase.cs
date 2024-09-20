@@ -12,7 +12,7 @@ namespace SnackHub.Application.Authentication.UseCases
 
         public async Task<RegisterClientResponse> Execute(SignUpRequest request)
         {
-            var response = await registerClient.Execute(new RegisterClientRequest(request.Name, request.Cpf));
+            var response = await registerClient.Execute(new RegisterClientRequest(request.Name, request.Username));
 
             if (!response.IsValid)
             {
