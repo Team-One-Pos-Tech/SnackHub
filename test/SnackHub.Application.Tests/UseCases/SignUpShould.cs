@@ -47,7 +47,7 @@ namespace SnackHub.Application.Tests.UseCases
             // Assert
 
             mockRegisterClientUseCase.Verify(
-                gateway => gateway.Execute(It.Is<RegisterClientRequest>(req => req.CPF == request.Cpf)),
+                gateway => gateway.Execute(It.Is<RegisterClientRequest>(req => req.CPF == request.Username)),
                 Times.Once
             );
 
@@ -97,7 +97,7 @@ namespace SnackHub.Application.Tests.UseCases
             // Assert
 
             mockSignUpFunctionGateway.Verify(
-                gateway => gateway.Execute(It.Is<SignUpRequest>(req => req.Cpf == request.Cpf)),
+                gateway => gateway.Execute(It.Is<SignUpRequest>(req => req.Username == request.Username)),
                 Times.Once
             );
 
