@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SnackHub.Application.Order.Contracts;
 using SnackHub.Application.Order.Models;
@@ -7,7 +8,7 @@ using SnackHub.Extensions;
 namespace SnackHub.Controllers;
 
 [ApiController]
-[Route("api/[controller]/v1")]
+[Route("api/[controller]/v1"), Authorize]
 public class OrderController : ControllerBase
 {
     private readonly IConfirmOrderUseCase _confirmOrderUseCase;
