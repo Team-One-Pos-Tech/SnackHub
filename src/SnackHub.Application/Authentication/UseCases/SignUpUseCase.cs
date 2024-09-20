@@ -10,16 +10,16 @@ namespace SnackHub.Application.Authentication.UseCases
 {
     public class SignUpUseCase
     {
-        private ISignUpFunctionGateway @object;
+        private readonly ISignUpFunctionGateway _signUpFunctionGateway;
 
-        public SignUpUseCase(ISignUpFunctionGateway @object)
+        public SignUpUseCase(ISignUpFunctionGateway signUpFunctionGateway)
         {
-            this.@object = @object;
+            _signUpFunctionGateway = signUpFunctionGateway;
         }
 
-        public Task Execute(SignUpRequest request)
+        public async Task Execute(SignUpRequest request)
         {
-            throw new NotImplementedException();
+            await _signUpFunctionGateway.Execute(request);
         }
     }
 }
