@@ -8,14 +8,9 @@ using System.Threading.Tasks;
 
 namespace SnackHub.Application.Authentication.UseCases
 {
-    public class SignUpUseCase
+    public class SignUpUseCase(ISignUpFunctionGateway signUpFunctionGateway)
     {
-        private readonly ISignUpFunctionGateway _signUpFunctionGateway;
-
-        public SignUpUseCase(ISignUpFunctionGateway signUpFunctionGateway)
-        {
-            _signUpFunctionGateway = signUpFunctionGateway;
-        }
+        private readonly ISignUpFunctionGateway _signUpFunctionGateway = signUpFunctionGateway;
 
         public async Task Execute(SignUpRequest request)
         {

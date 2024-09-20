@@ -16,7 +16,7 @@ namespace SnackHub.Application.Tests.UseCases
         }
 
         [Test]
-        public async Task RegisterUser()
+        public async Task RegisterUserOnAuthenticationProvider()
         {
             // Arrange
 
