@@ -54,6 +54,39 @@ namespace SnackHub.Application.Tests.UseCases
         }
 
         [Test]
+        public async Task ValidateRegisterClient()
+        {
+            // Arrange
+
+            var response = new RegisterClientResponse();
+
+            response.AddNotification("CPF", "CPF is invalid.");
+
+            mockRegisterClientUseCase
+                .Setup(useCase => useCase.Execute(It.IsAny<RegisterClientRequest>()))
+                .ReturnsAsync(response);
+
+            var request = new SignUpRequest("Ednaldo Pereira", "12345678911", "Default", "email@email.com");
+
+            // Act
+
+            await signInUseCase.Execute(request);
+
+            // Assert
+
+            mockRegisterClientUseCase.Verify(
+                gateway => gateway.Execute(It.IsAny<RegisterClientRequest>()),
+                Times.Never
+            );
+
+            mockSignUpFunctionGateway.Verify(
+                gateway => gateway.Execute(It.IsAny<SignUpRequest>()),
+                Times.Never
+            );
+
+        }
+
+        [Test]
         public async Task RegisterUserOnAuthenticationProvider()
         {
             // Arrange
