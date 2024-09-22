@@ -24,7 +24,7 @@ public class AuthenticationController(
     private const string DefaultUsersPassword = "Default-password-99!";
 
     /// <summary>
-    /// Registers a new user.
+    /// Registers a new user
     /// </summary>
     /// <param name="user"></param>
     /// <returns>Action result indicating the outcome of the registration.</returns>
@@ -49,7 +49,7 @@ public class AuthenticationController(
     }
 
     /// <summary>
-    /// Authenticates a user.
+    /// Authenticates a user
     /// </summary>
     /// <param name="user">To sign in as an Anonymous User the CPF value should be empty</param>
     /// <returns>Action result indicating the outcome of the authentication</returns>
