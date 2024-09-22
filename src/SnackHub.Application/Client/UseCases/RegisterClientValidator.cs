@@ -24,6 +24,12 @@ namespace SnackHub.Application.Client.UseCases
                 return false;
             }
 
+            if (string.IsNullOrEmpty(registerClientRequest.Email))
+            {
+                response.AddNotification("Email", "Email cannot be empty.");
+                return false;
+            }
+
             return true;
         }
     }

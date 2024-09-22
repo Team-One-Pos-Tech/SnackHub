@@ -89,5 +89,27 @@ namespace SnackHub.Application.Tests.UseCases
             });
 
         }
+
+        [Test]
+        public async Task Validate_Empty_Email()
+        {
+            // Arrange
+
+            var registerClientRequest = new RegisterClientRequest(name: "John Doe", cpf: "728.607.630-23");
+
+            var response = new RegisterClientResponse();
+
+            // Act
+            var isValid = await _registerClientValidator.IsValid(registerClientRequest, response);
+
+            // Assert
+            Assert.That(isValid, Is.False);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(response.Notifications.First().Key, Is.EqualTo("Email"));
+                Assert.That(response.Notifications.First().Message, Is.EqualTo("Email cannot be empty."));
+            });
+        }
     }
 }
