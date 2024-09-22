@@ -12,7 +12,9 @@ using SnackHub.Models;
 
 namespace SnackHub.Controllers;
 
-
+/// <summary>
+/// Handles user authentication.
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class AuthenticationController(
@@ -21,6 +23,11 @@ public class AuthenticationController(
 {
     private const string DefaultUsersPassword = "Default-password-99!";
 
+    /// <summary>
+    /// Registers a new user.
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns>Action result indicating the outcome of the registration.</returns>
     [HttpPost, Route("signup")]
     public async Task<IActionResult> SignUp([FromBody] RegisterClientRequest user)
     {
@@ -41,6 +48,11 @@ public class AuthenticationController(
         return Ok(response);
     }
 
+    /// <summary>
+    /// Authenticates a user.
+    /// </summary>
+    /// <param name="user">To sign in as an Anonymous User the CPF value should be empty</param>
+    /// <returns>Action result indicating the outcome of the authentication</returns>
     [HttpPost, Route("signin")]
     public async Task<IActionResult> SignIn([FromBody] LoginModel user)
     {

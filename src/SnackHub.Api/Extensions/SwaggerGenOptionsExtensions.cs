@@ -15,7 +15,7 @@ public static class SwaggerGenOptionsExtensions
             BearerFormat = "JWT",
             In = ParameterLocation.Header,
             Description =
-                "JWT Authorization header using the Bearer scheme. Put just your token in the text input below",
+                "JWT Authorization header using the Bearer scheme. Get your token on /signIn.",
         });
         options.AddSecurityRequirement(new OpenApiSecurityRequirement
         {
