@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.OpenApi.Models;
 using SnackHub.Extensions;
 
@@ -11,10 +12,16 @@ builder.Services
 builder.Services
     .AddEndpointsApiExplorer()
     .AddAuthenticationExtension(builder.Configuration)
+    .AddEndpointsApiExplorer()
     .AddSwaggerGen(options =>
     {
         options.SwaggerDoc("v1", new OpenApiInfo { Title = "Snack Hub API", Version = "v1" });
         options.AddAuthorizationOptions();
+        
+        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        options.IncludeXmlComments(xmlPath);
+        
     })
     .AddHttpClient();
 
