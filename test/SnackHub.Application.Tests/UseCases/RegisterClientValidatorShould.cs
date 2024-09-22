@@ -27,6 +27,8 @@ namespace SnackHub.Application.Tests.UseCases
 
             var registerClientRequest = new RegisterClientRequest(name: "John Doe", cpf: "728.607.630-23");
 
+            registerClientRequest.Email = "email";
+
             var response = new RegisterClientResponse();
 
             // Act

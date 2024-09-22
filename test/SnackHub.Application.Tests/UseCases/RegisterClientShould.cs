@@ -28,6 +28,8 @@ namespace SnackHub.Application.Tests.UseCases
             // Arrange
             var registerClientRequest = new RegisterClientRequest(name: "John Doe", cpf: "728.607.630-23");
 
+            registerClientRequest.Email = "email";
+
             // Act
             await registerClientCase.Execute(registerClientRequest);
 
@@ -44,6 +46,8 @@ namespace SnackHub.Application.Tests.UseCases
         {
             // Arrange
             var registerClientRequest = new RegisterClientRequest(name: "John Doe", cpf: "728.607.630-23");
+
+            registerClientRequest.Email = "email";
 
             // Act
             await registerClientCase.Execute(registerClientRequest);
