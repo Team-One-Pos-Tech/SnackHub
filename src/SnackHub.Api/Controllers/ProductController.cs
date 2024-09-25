@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SnackHub.Application.Contracts;
 using SnackHub.Application.Models;
 using SnackHub.Domain.Entities;
@@ -7,7 +8,7 @@ using SnackHub.Extensions;
 namespace SnackHub.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/v1")]
+    [Route("api/[controller]/v1"), Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IGetProductUseCase _getProductUseCase;

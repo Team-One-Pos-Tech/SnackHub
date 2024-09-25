@@ -19,6 +19,8 @@ services:
       - Storage:MongoDb:UserName=admin
       - Storage:MongoDb:Password=admin
       - Storage:MongoDb:Database=snackhub
+      - Auth:Lambda:SignUpUrl=https://3qi3bn2xhg.execute-api.us-east-1.amazonaws.com/Prod/signup
+      - Auth:Lambda:SignInUrl=https://3z9i9oglwh.execute-api.us-east-1.amazonaws.com/Prod/signIn
     ports:
       - "5000:8080"
     depends_on:

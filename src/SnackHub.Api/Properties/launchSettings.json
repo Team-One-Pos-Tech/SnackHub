@@ -7,7 +7,9 @@
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "Auth:Lambda:SignUpUrl": "https://3qi3bn2xhg.execute-api.us-east-1.amazonaws.com/Prod/signup",
+        "Auth:Lambda:SignInUrl": "https://3z9i9oglwh.execute-api.us-east-1.amazonaws.com/Prod/signIn"
       }
     }
   }

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: snack-hub
-          image: kassiosan/snack-hub-app:latest
+          image: ghcr.io/team-one-pos-tech/snack-hub:latest
           ports:
             - containerPort: 8080
           resources:
@@ -78,4 +78,6 @@ data:
   Storage__MongoDb__Port: "27017"
   Storage__MongoDb__UserName: "admin"
   Storage__MongoDb__Password: "admin"
-  Storage__MongoDb__Database: "snackhub"
+  Storage__MongoDb__Database: "snackhub"  
+  Auth__Lambda__SignUpUrl: "https://3qi3bn2xhg.execute-api.us-east-1.amazonaws.com/Prod/signup"  
+  Auth__Lambda__SignInUrl: "https://3z9i9oglwh.execute-api.us-east-1.amazonaws.com/Prod/signIn"
