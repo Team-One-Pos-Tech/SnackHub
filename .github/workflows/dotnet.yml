@@ -4,7 +4,7 @@ name: CI Build
 
 jobs:
   build-and-test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Setup .NET
@@ -20,7 +20,7 @@ jobs:
   
   create-and-publish-image:
     permissions: write-all
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:     
       - uses: actions/checkout@v4
       - name: Login to GitHub Container Registry
