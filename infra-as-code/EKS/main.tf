@@ -9,9 +9,24 @@ terraform {
 
 provider "aws" {
   region = local.region
+  assume_role {
+    role_arn = local.LabRoleArn
+  }
 }
 
-data "aws_availability_zones" "available" {}
+variable "LabRoleName" {
+  description = "Name for the LabRole IAM role"
+  default     = "LabRole"
+}
+
+variable "PrincipalRoleName" {
+  description = "Name for the Principal IAM role"
+  default     = "voclabs"
+}
+
+variable "policyarn" {
+  default = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+}
 
 locals {
   name   = "snack-hub"
@@ -25,6 +40,10 @@ locals {
     GithubRepo = "https://github.com/Team-One-Pos-Tech/SnackHub"
     GithubOrg  = "https://github.com/Team-One-Pos-Tech"
   }
+
+  account_id = data.aws_caller_identity.current.account_id
+  LabRoleArn = "arn:aws:iam::${local.account_id}:role/${var.LabRoleName}"
+  PrincipalArn = "arn:aws:iam::${local.account_id}:role/${var.PrincipalRoleName}"
 }
 
 module "vpc" {
