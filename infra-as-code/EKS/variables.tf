@@ -1,13 +1,15 @@
-variable "LabRoleName" {
-  description = "Name for the LabRole IAM role"
-  default     = "LabRole"
+variable "nodeName" {
+  default = "ng-snack-hub"
 }
 
-variable "PrincipalRoleName" {
-  description = "Name for the Principal IAM role"
-  default     = "voclabs"
+variable "account_id" {
+  default = "211847419790"
 }
 
-variable "policyarn" {
-  default = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+variable "accessConfig" {
+  default = "API_AND_CONFIG_MAP"
+}
+
+variable "policyArn" {
+  default = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
 }
