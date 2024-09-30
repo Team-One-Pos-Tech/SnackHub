@@ -4,7 +4,7 @@ resource "aws_eks_node_group" "eks_node_group" {
   node_role_arn   = "arn:aws:iam::${var.account_id}:role/LabRole"
   subnet_ids      = module.vpc.private_subnets
   disk_size       = 20
-  instance_types  = ["m5d.large"]
+  instance_types  = ["t3.micro"]
   capacity_type   = "ON_DEMAND"
 
   scaling_config {
