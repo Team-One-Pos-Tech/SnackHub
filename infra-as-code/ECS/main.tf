@@ -36,7 +36,7 @@ resource "aws_subnet" "snack-hub-subnet" {
 
 }
 
-resource "aws_instance" "k8s-node" {
+resource "aws_snack_hub_instance" "k8s-node" {
 
   ami           = "ami-0e86e20dae9224db8"
   instance_type = "t3.micro"
