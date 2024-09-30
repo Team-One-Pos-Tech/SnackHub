@@ -12,8 +12,6 @@ locals {
   }
 }
 
-data "aws_availability_zones" "available" {}
-
 resource "aws_eks_cluster" "snack_hub" {
   name     = "${local.name}-cluster"
   role_arn = "arn:aws:iam::${var.account_id}:role/LabRole"
