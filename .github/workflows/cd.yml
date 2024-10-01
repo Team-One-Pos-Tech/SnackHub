@@ -68,6 +68,12 @@ jobs:
           
       - name: Deploy to EKS
         run: |
+          echo "Database name - ${{ env.MONGO_DB_SNACK_HUB_DATABASE }}"
           kubectl apply -f ./deploy/app-deployment.yaml
-          kubectl apply -f ./deploy/db-stateful.yaml   
-
+        env:
+          Auth__Lambda__SignUpUrl: ${{ env.LAMBDA_SIGN_UP }}
+          Auth__Lambda__SignInUrl: ${{ env.LAMBDA_SIGN_IN }}
+          Storage__MongoDb__Host: ${{ env.MONGO_DB_ATLAS_URL }}
+          Storage__MongoDb__Database: ${{ env.MONGO_DB_SNACK_HUB_DATABASE }}
+          Storage__MongoDb__UserName: ${{ secrets.MONGO_DB_ATLAS_USER_NAME }}
+          Storage__MongoDb__Password: ${{ secrets.MONGO_DB_ATLAS_USER_PASSWORD }}
