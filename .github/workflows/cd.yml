@@ -9,14 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.0.x
+
       - name: Restore dependencies
         run: dotnet restore SnackHub.sln
+
       - name: Build
         run: dotnet build SnackHub.sln --no-restore
+
       - name: Test
         run: dotnet test SnackHub.sln --no-build --verbosity normal
   
@@ -27,14 +31,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:     
       - uses: actions/checkout@v4
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: '${{github.actor}}'
           password: '${{secrets.GITHUB_TOKEN}}'
+
       - name: Build Image
         run: docker build -t ghcr.io/team-one-pos-tech/snack-hub -f ./src/SnackHub.Api/Dockerfile --target final .  --build-arg  "PASSWORD_ENV_SEEDED=Mf@7BF5uAN5rDBl7ZTCTqL%c&2ApeqCykva"
+      
       - name: Push Image
         run: docker push ghcr.io/team-one-pos-tech/snack-hub
 
@@ -45,6 +52,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Authenticate on AWS
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -52,10 +60,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ secrets.AWS_REGION }}
+
       - name: Configure kubectl
         run: |
           aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ secrets.AWS_REGION }}
           kubectl get svc # Check if kubectl is working
+          
       - name: Deploy to EKS
         run: |
           kubectl apply -f ./deploy/app-deployment.yaml
