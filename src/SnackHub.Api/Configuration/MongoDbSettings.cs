@@ -7,4 +7,6 @@ public record MongoDbSettings
     public string UserName { get; set; }
     public string Password { get; set; }
     public string Database { get; set; }
+    public bool Isfull { get; set; }
+    public string ConnectionFull { get; set; }
 }
