@@ -38,9 +38,10 @@ builder
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+if (bool.TryParse(builder.Configuration.GetSection("https").Value, out var result) && result)
+    app.UseHttpsRedirection();
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMongoDbConventions();
