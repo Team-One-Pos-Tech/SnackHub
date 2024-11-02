@@ -8,13 +8,12 @@ namespace SnackHub.Application.Authentication.UseCases;
 
 public class SignInUseCase(IAuthService auth, IGetClientUseCase getClientUseCase) : ISignInUseCase
 {
-    private const string AnonymousUsername = "00000000000";
-
     public async Task<SignInResponse> Execute(SignInRequest request)
     {
         if (string.IsNullOrWhiteSpace(request.Username))
         {
-            request.Username = AnonymousUsername;
+            var authResponse = await auth.Execute(request);
+            return new SignInResponse(authResponse.IdToken);
         }
         
         var client = await getClientUseCase.Execute(request.Username);

@@ -93,10 +93,6 @@ namespace SnackHub.Application.Tests.UseCases
             mockSignInFunctionGateway
                 .Setup(gateway => gateway.Execute(It.IsAny<SignInRequest>()))
                 .ReturnsAsync(new AuthResponseType("token", true));
-            
-            mockGetClient
-                .Setup(getClient => getClient.Execute(It.IsAny<string>()))
-                .ReturnsAsync(new GetClientResponse("Maycon Jordan", new CPF("72860763023")));
 
             var request = new SignInRequest("", "DefaultPassword");
 
@@ -107,7 +103,8 @@ namespace SnackHub.Application.Tests.UseCases
             // Assert
 
             mockSignInFunctionGateway.Verify(
-                gateway => gateway.Execute(It.Is<SignInRequest>(req => req.Username == anonymousUsername)),
+                gateway => gateway.
+                    Execute(It.Is<SignInRequest>(req => req.Username == "")),
                 Times.Once
             );
 

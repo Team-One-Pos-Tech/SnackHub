@@ -14,10 +14,10 @@ public static class GatewaysExtensions
             new SignUpFunctionGateway(new HttpClient(), settings.SignUpUrl);
 
         var signInFunctionGateway =
-            new SignInFunctionGateway(new HttpClient(), settings.SignInUrl);
+            new AuthService(new HttpClient(), settings.SignInUrl);
 
         serviceCollection.AddSingleton<ISignUpFunctionGateway>(_ => signUpFunctionGateway);
-        serviceCollection.AddSingleton<ISignInFunctionGateway>(_ => signInFunctionGateway);
+        serviceCollection.AddSingleton<IAuthService>(_ => signInFunctionGateway);
 
         return serviceCollection;
     }
