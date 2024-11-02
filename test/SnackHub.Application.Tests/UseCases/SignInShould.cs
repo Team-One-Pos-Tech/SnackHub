@@ -7,6 +7,7 @@ using SnackHub.Application.Client.Models;
 using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Models.Gateways;
 using SnackHub.Domain.Models.Gateways.Models;
+using SnackHub.Domain.ValueObjects;
 
 namespace SnackHub.Application.Tests.UseCases
 {
@@ -33,6 +34,10 @@ namespace SnackHub.Application.Tests.UseCases
             mockSignInFunctionGateway
                 .Setup(gateway => gateway.Execute(It.IsAny<SignInRequest>()))
                 .ReturnsAsync(new AuthResponseType("token", true));
+            
+            mockGetClient
+                .Setup(getClient => getClient.Execute(It.IsAny<string>()))
+                .ReturnsAsync(new GetClientResponse("Maycon Jordan", new CPF("72860763023")));
 
             var request = new SignInRequest("72860763023", "123");
 
@@ -70,18 +75,16 @@ namespace SnackHub.Application.Tests.UseCases
             // Assert
 
             response
-                .Should()
-                .NotBeNull();
-
-            response
                 .IdToken
                 .Should()
-                .NotBeNull();
+                .BeNull();
 
+            response.Notifications.First().Message.Should()
+                .Be( "User not found");
         }
 
         [Test]
-        public async Task AuthenticateAnonymousUserWhenCpfIsEmpty()
+        public async Task Authenticate_Anonymous_User_When_Cpf_Is_Empty()
         {
             // Arrange
 
@@ -90,6 +93,10 @@ namespace SnackHub.Application.Tests.UseCases
             mockSignInFunctionGateway
                 .Setup(gateway => gateway.Execute(It.IsAny<SignInRequest>()))
                 .ReturnsAsync(new AuthResponseType("token", true));
+            
+            mockGetClient
+                .Setup(getClient => getClient.Execute(It.IsAny<string>()))
+                .ReturnsAsync(new GetClientResponse("Maycon Jordan", new CPF("72860763023")));
 
             var request = new SignInRequest("", "DefaultPassword");
 

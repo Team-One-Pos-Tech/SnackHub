@@ -16,6 +16,15 @@ public class SignInUseCase(IAuthService auth, IGetClientUseCase getClientUseCase
         {
             request.Username = AnonymousUsername;
         }
+        
+        var client = await getClientUseCase.Execute(request.Username);
+
+        if (client == null)
+        {
+            var signInResponse = new SignInResponse(null);
+            signInResponse.AddNotification("User", "User not found");
+            return signInResponse;
+        }
 
         var response = await auth.Execute(request);
 
