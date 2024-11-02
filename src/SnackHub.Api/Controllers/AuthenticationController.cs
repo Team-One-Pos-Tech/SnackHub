@@ -1,11 +1,6 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using SnackHub.Application.Authentication.Contracts;
-using SnackHub.Application.Client.Contracts;
 using SnackHub.Application.Client.Models;
-using SnackHub.Configuration;
-using SnackHub.Domain.Contracts;
 using SnackHub.Domain.Models.Gateways;
 using SnackHub.Extensions;
 using SnackHub.Models;
