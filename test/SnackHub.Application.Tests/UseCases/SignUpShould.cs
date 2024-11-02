@@ -83,25 +83,5 @@ namespace SnackHub.Application.Tests.UseCases
 
         }
 
-        [Test]
-        public async Task RegisterUserOnAuthenticationProvider()
-        {
-            // Arrange
-
-            var request = new SignUpRequest("Ednaldo Pereira", "12345678911", "Default", "email@email.com");
-
-            // Act
-
-            await signInUseCase.Execute(request);
-
-            // Assert
-
-            mockSignUpFunctionGateway.Verify(
-                gateway => gateway.Execute(It.Is<SignUpRequest>(req => req.Username == request.Username)),
-                Times.Once
-            );
-
-        }
-
     }
 }

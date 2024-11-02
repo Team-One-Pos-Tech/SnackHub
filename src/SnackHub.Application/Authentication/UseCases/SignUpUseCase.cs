@@ -6,21 +6,16 @@ using SnackHub.Domain.Models.Gateways;
 
 namespace SnackHub.Application.Authentication.UseCases
 {
-    public class SignUpUseCase(ISignUpFunctionGateway signUpFunctionGateway, IRegisterClientUseCase registerClient) : ISignUpUseCase
+    public class SignUpUseCase(IRegisterClientUseCase registerClient) : ISignUpUseCase
     {
-        private readonly ISignUpFunctionGateway _signUpFunctionGateway = signUpFunctionGateway;
-
         public async Task<RegisterClientResponse> Execute(SignUpRequest request)
         {
-            var response = await registerClient.Execute(new RegisterClientRequest(request.Name, request.Username));
-
-            if (!response.IsValid)
-            {
-                return response;
-            }
-
-            await _signUpFunctionGateway.Execute(request);
-
+            var response = await registerClient.Execute(
+                new RegisterClientRequest(request.Name, request.Username)
+                {
+                    Email = request.Email
+                });
+            
             return response;
         }
     }
