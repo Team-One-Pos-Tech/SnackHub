@@ -1,7 +1,6 @@
-using System.Net;
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 
 namespace SnackHub.Extensions;
 
@@ -9,32 +8,24 @@ public static class AuthenticationExtensions
 {
     public static IServiceCollection AddAuthenticationExtension(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        var cognitoIssuer = $"https://cognito-idp.{configuration["AWS:Region"]}.amazonaws.com/{configuration["AWS:UserPoolId"]}";
-        var audience = configuration["AWS:ClientId"];
-        
         serviceCollection.AddAuthentication(opt =>
-        {
-            opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters()
             {
-                ValidateIssuer = true,
-                ValidIssuer = cognitoIssuer,
-                ValidateAudience = true,
-                ValidAudience = audience,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    var json = new WebClient().DownloadString($"{cognitoIssuer}/.well-known/jwks.json");
-                    var keys = JsonConvert.DeserializeObject<JsonWebKeySet>(json).Keys;
-                    return keys;
-                }
-            };
-        });
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = configuration["Jwt:Issuer"],
+                    ValidAudience = configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!))
+                };
+            });
 
         return serviceCollection;
     }
