@@ -30,7 +30,7 @@ namespace SnackHub.Application.Tests.UseCases
                 .Setup(useCase => useCase.Execute(It.IsAny<RegisterClientRequest>()))
                 .ReturnsAsync(new RegisterClientResponse());
 
-            signInUseCase = new SignUpUseCase(mockSignUpFunctionGateway.Object, mockRegisterClientUseCase.Object);
+            signInUseCase = new SignUpUseCase(mockRegisterClientUseCase.Object);
         }
 
         [Test]
