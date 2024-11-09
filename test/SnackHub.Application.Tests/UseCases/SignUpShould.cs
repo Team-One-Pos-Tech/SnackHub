@@ -30,7 +30,7 @@ namespace SnackHub.Application.Tests.UseCases
                 .Setup(useCase => useCase.Execute(It.IsAny<RegisterClientRequest>()))
                 .ReturnsAsync(new RegisterClientResponse());
 
-            signInUseCase = new SignUpUseCase(mockSignUpFunctionGateway.Object, mockRegisterClientUseCase.Object);
+            signInUseCase = new SignUpUseCase(mockRegisterClientUseCase.Object);
         }
 
         [Test]
@@ -79,26 +79,6 @@ namespace SnackHub.Application.Tests.UseCases
             mockSignUpFunctionGateway.Verify(
                 gateway => gateway.Execute(It.IsAny<SignUpRequest>()),
                 Times.Never
-            );
-
-        }
-
-        [Test]
-        public async Task RegisterUserOnAuthenticationProvider()
-        {
-            // Arrange
-
-            var request = new SignUpRequest("Ednaldo Pereira", "12345678911", "Default", "email@email.com");
-
-            // Act
-
-            await signInUseCase.Execute(request);
-
-            // Assert
-
-            mockSignUpFunctionGateway.Verify(
-                gateway => gateway.Execute(It.Is<SignUpRequest>(req => req.Username == request.Username)),
-                Times.Once
             );
 
         }

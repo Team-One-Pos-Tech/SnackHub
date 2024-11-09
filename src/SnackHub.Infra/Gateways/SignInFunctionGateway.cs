@@ -6,7 +6,7 @@ using SnackHub.Domain.Models.Gateways.Models;
 
 namespace SnackHub.Infra.Gateways;
 
-public class SignInFunctionGateway(HttpClient httpClient, string signInFunctionUrl) : ISignInFunctionGateway
+public class AuthService(HttpClient httpClient, string signInFunctionUrl) : IAuthService
 {
     public async Task<AuthResponseType> Execute(SignInRequest request)
     {

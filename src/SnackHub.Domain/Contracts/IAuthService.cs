@@ -3,7 +3,7 @@ using SnackHub.Domain.Models.Gateways.Models;
 
 namespace SnackHub.Domain.Contracts;
 
-public interface ISignInFunctionGateway
+public interface IAuthService
 {
     public Task<AuthResponseType> Execute(SignInRequest request);
 }
