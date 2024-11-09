@@ -12,9 +12,9 @@ public class JwtAuthService(IConfiguration configuration): IAuthService
 {
     public Task<AuthResponseType> Execute(SignInRequest request)
     {
-        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!));
-        var issuer = configuration["Jwt:Issuer"];
-        var audience = configuration["Jwt:Audience"];
+        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Auth:Key"]!));
+        var issuer = configuration["Auth:Issuer"];
+        var audience = configuration["Auth:Audience"];
                         
         var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
