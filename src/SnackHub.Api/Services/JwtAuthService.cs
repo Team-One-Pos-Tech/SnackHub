@@ -12,7 +12,8 @@ public class JwtAuthService(IConfiguration configuration): IAuthService
 {
     public Task<AuthResponseType> Execute(SignInRequest request)
     {
-        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Auth:Key"]!));
+        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Auth:Key"] ??
+                throw new ApplicationException("JWT key is not configured.")));
         var issuer = configuration["Auth:Issuer"];
         var audience = configuration["Auth:Audience"];
                         
