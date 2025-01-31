@@ -10,9 +10,8 @@ public static class MongoDbExtensions
     public static IServiceCollection AddMongoDb(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         var settings = configuration.GetSection("Storage:MongoDb").Get<MongoDbSettings>();
-        var connection = $"mongodb+srv://{settings.UserName}:{settings.Password}@{settings.Host}{(settings.Port == default ? "" : $":{settings.Port}")}";
-        if (settings.Isfull)
-            connection = settings.ConnectionFull;
+
+        var connection = settings.ConnectionString;
 
         var mongoClient = new MongoClient(connection);
 
